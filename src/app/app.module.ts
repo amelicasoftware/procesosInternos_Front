@@ -6,11 +6,15 @@ import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common
 import { FormComponent } from './components/forms/form.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { EjemploComponent } from './components/ejemplo/ejemplo.component';
+import { ConferenciasEspecializadasComponent } from './components/conferencias-especializadas/conferencias-especializadas.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FormComponent
+    FormComponent,
+    EjemploComponent,
+    ConferenciasEspecializadasComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,149 @@
+<div class="container is-max-desktop">
+    <h2>Conferencias especializadas</h2>
+    <form [formGroup]="form">
+      <div class="field">
+        <label class="label">Ponente/Conferencista</label>
+        <div class="control">
+          <input
+            type="text"
+            class="input"
+            placeholder=""
+            formControlName="autores_Padre"
+          />
+        </div>
+      </div>
+  
+      <div class="field">
+        <label class="label">Titulo de la conferencia</label>
+        <div class="control">
+          <input
+            type="text"
+            class="input"
+            placeholder=""
+            formControlName="titulo"
+          />
+        </div>
+      </div>
+  
+      <div class="field">
+        <label class="label">Tipo de participación</label>
+        <div class="control">
+          <input
+            type="text"
+            class="input"
+            placeholder=""
+            formControlName="tipoparticipacion"
+          />
+        </div>
+      </div>
+  
+      <div class="field">
+        <label class="label">Evento</label>
+        <div class="control">
+          <input
+            type="text"
+            class="input"
+            placeholder=""
+            formControlName="tipoproinv"
+          />
+        </div>
+      </div>
+  
+      <div class="field">
+        <label class="label">Institución organizadora</label>
+        <div class="control">
+          <input
+            type="text"
+            class="input"
+            placeholder=""
+            formControlName="institucion"
+          />
+        </div>
+      </div>
+  
+      <div class="field">
+        <label class="label">País</label>
+        <div>
+          <ng-select [multiple]="true" [formControl]="paises">
+            <ng-option *ngFor="let item of lista" [value]="item.cveentnac">{{
+              item.nomentnac
+            }}</ng-option>
+            <ng-option [value]="'custom'">Custom</ng-option>
+          </ng-select>
+        </div>
+      </div>
+  
+      <div class="field">
+        <label class="label">Año</label>
+        <div class="control">
+          <input
+            type="number"
+            class="input"
+            placeholder=""
+            formControlName="anio"
+          />
+        </div>
+      </div>
+  
+      <div class="field">
+        <label class="label">Alcance</label>
+        <div class="select">
+          <select formControlName="alcance">
+            <option value="1">Institucional</option>
+            <option value="2">Nacional</option>
+            <option value="3">Lationamérica</option>
+            <option value="3">Otras regiones</option>
+          </select>
+        </div>
+      </div>
+  
+      <div class="field">
+        <label class="label">Fecha de captura</label>
+        <div class="control">
+          <input
+            type="date"
+            class="input"
+            placeholder=""
+            formControlName="fechaCaptura"
+          />
+        </div>
+      </div>
+  
+      <div class="field">
+        <label class="label">Realizado</label>
+        <div class="control">
+          <input
+            type="text"
+            class="input"
+            placeholder=""
+            formControlName="Realizado"
+          />
+        </div>
+      </div>
+  
+      <div class="field">
+        <label class="label">Agenda</label>
+        <div class="control">
+          <input
+            type="text"
+            class="input"
+            placeholder=""
+            formControlName="Agenda"
+          />
+        </div>
+      </div>
+  
+      <div class="field">
+        <label class="label">Información Adicional</label>
+        <div class="control">
+          <input
+            type="text"
+            class="input"
+            placeholder=""
+            formControlName="resumen"
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+  

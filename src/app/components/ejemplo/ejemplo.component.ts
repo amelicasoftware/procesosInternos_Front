@@ -2,13 +2,12 @@ import { newArray } from '@angular/compiler/src/util';
 import { Component, OnInit, NgModule } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicePruebaService } from 'src/app/Services/service-prueba.service';
-
 @Component({
-  selector: 'app-form',
-  templateUrl: './form.component.html',
-  styleUrls: ['./form.component.css']
+  selector: 'app-ejemplo',
+  templateUrl: './ejemplo.component.html',
+  styleUrls: ['./ejemplo.component.css']
 })
-export class FormComponent implements OnInit {
+export class EjemploComponent implements OnInit {
   valor: number = 0;
   seleccion:any = {id:0,name:''};
   typeForm = new FormControl('Selecciona un formulario');

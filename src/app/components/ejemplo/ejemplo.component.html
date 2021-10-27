@@ -1,0 +1,80 @@
+<div class="container is-widescreen">
+    <h3>Formulario Artículos científicos</h3>
+    <form [formGroup]="form">
+      <p>
+        Título de artículo: <br />
+        <input class="" type="text" formControlName="titulo" />
+      </p>
+      <span class="tag is-danger is-light">dato invalido</span>
+      <p>
+        Revista: <br />
+        <input class="input" type="text" formControlName="fuente" />
+      </p>
+      <p>
+        Volúmen: <br />
+        <input class="input" type="text" formControlName="volumen" />
+      </p>
+      <p>
+        Año: <br />
+        <input class="input" type="number" formControlName="anio" />
+      </p>
+      <p>
+        DOI/Enlace: <br />
+        <input class="input" type="email" formControlName="enlace" />
+      </p>
+      <p>Autor/es: <br /></p>
+  
+      <div class="field has-addons">
+        <div class="control has-icons-left">
+          <input
+            type="text"
+            class="input"
+            placeholder="Escribe el nombre del autor"
+            [formControl]="autor"
+          />
+          <span class="icon is-medium is-left">
+            <i class="fa fa-futbol-o"></i>
+          </span>
+        </div>
+        <div class="control" (click)="addAutor(autor.value)">
+          <a class="button is-info">Agregar</a>
+        </div>
+      </div>
+      <p>
+        <input class="input" type="text" formControlName="autores_Padre" />
+      </p>
+      <!-- <p>
+              Pais: <br />
+              <select class="select is-info" formControlName="cvepais" >
+                  <option [value]="item.cveentnac" *ngFor="let item of lista">{{item.nomentnac}}</option>
+              </select>
+          </p> -->
+      <p>
+        Pais: <br />
+        <ng-select
+          class="select is-info"
+          [multiple]="true"
+          [formControl]="paises"
+        >
+          <ng-option *ngFor="let item of lista" [value]="item.cveentnac">{{
+            item.nomentnac
+          }}</ng-option>
+          <ng-option [value]="'custom'">Custom</ng-option>
+        </ng-select>
+      </p>
+      <p>
+        Resumen: <br />
+        <textarea cols="30" rows="5" formControlName="resumen"></textarea>
+      </p>
+      <p>
+        Alcance: <br />
+        <select formControlName="alcance">
+          <option value="1">Institucional</option>
+          <option value="2">Nacional</option>
+          <option value="3">Lationamérica</option>
+          <option value="3">Otras regiones</option>
+        </select>
+      </p>
+    </form>
+  </div>
+  
