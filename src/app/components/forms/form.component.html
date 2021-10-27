@@ -1,22 +1,23 @@
 <div>
-    <nav class="navbar is-transparent">
-        <div class="navbar-brand">
-          <a class="navbar-item" href="https://bulma.io">
-            <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
-          </a>
-          <div class="navbar-burger" data-target="navbarExampleTransparentExample">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        </div>
-      
-        <div id="navbarExampleTransparentExample" class="navbar-menu">
-          <div class="navbar-start">
-            <a class="navbar-item" href="https://bulma.io/">
-              Home
-            </a>
-            <!-- <div class="navbar-item has-dropdown is-hoverable">
+  <nav class="navbar is-transparent">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://bulma.io">
+        <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox"
+          width="112" height="28">
+      </a>
+      <div class="navbar-burger" data-target="navbarExampleTransparentExample">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div id="navbarExampleTransparentExample" class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item" href="https://bulma.io/">
+          Home
+        </a>
+        <!-- <div class="navbar-item has-dropdown is-hoverable">
               <a class="navbar-link" href="https://bulma.io/documentation/overview/start/">
                 Docs
               </a>
@@ -45,111 +46,153 @@
                 </a>
               </div>
             </div> -->
-            <select class="select is-link"
-                    palceholder="Selecciona un formulario" 
-                    [formControl]="typeForm">
-                <option value="1">Artículos científicos</option>
-                <option value="2">Capítulos de libro científico</option>
-                <option value="3">Libros científicos</option>
-            </select>
-          </div>
-      
-          <div class="navbar-end">
-            <div class="navbar-item">
-              <div class="field is-grouped">
-                <p class="control">
-                  <a class="bd-tw-button button" data-social-network="Twitter" data-social-action="tweet" data-social-target="https://bulma.io" target="_blank" href="https://twitter.com/intent/tweet?text=Bulma: a modern CSS framework based on Flexbox&amp;hashtags=bulmaio&amp;url=https://bulma.io&amp;via=jgthms">
-                    <span class="icon">
-                      <i class="fab fa-twitter"></i>
-                    </span>
-                    <span>
-                      Tweet
-                    </span>
-                  </a>
-                </p>
-                <p class="control">
-                  <a class="button is-primary" href="https://github.com/jgthms/bulma/releases/download/0.9.3/bulma-0.9.3.zip">
-                    <span class="icon">
-                      <i class="fas fa-download"></i>
-                    </span>
-                    <span>Download</span>
-                  </a>
-                </p>
-              </div>
-            </div>
+        <select class="select is-link" palceholder="Selecciona un formulario" [formControl]="typeForm">
+          <option value="1">Artículos científicos</option>
+          <option value="2">Capítulos de libro científico</option>
+          <option value="3">Libros científicos</option>
+        </select>
+      </div>
+
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="field is-grouped">
+            <p class="control">
+              <a class="bd-tw-button button" data-social-network="Twitter" data-social-action="tweet"
+                data-social-target="https://bulma.io" target="_blank"
+                href="https://twitter.com/intent/tweet?text=Bulma: a modern CSS framework based on Flexbox&amp;hashtags=bulmaio&amp;url=https://bulma.io&amp;via=jgthms">
+                <span class="icon">
+                  <i class="fab fa-twitter"></i>
+                </span>
+                <span>
+                  Tweet
+                </span>
+              </a>
+            </p>
+            <p class="control">
+              <a class="button is-primary"
+                href="https://github.com/jgthms/bulma/releases/download/0.9.3/bulma-0.9.3.zip">
+                <span class="icon">
+                  <i class="fas fa-download"></i>
+                </span>
+                <span>Download</span>
+              </a>
+            </p>
           </div>
         </div>
-      </nav>
+      </div>
+    </div>
+  </nav>
 </div>
 
 <div class="container is-widescreen">
-    <h3>Formulario Artículos científicos</h3>
-    <form [formGroup]="form">
-        <p>
-            Título de artículo: <br />
-            <input class="" type="text" formControlName="titulo">
-        </p>
-        <span class="tag is-danger is-light">dato invalido</span>
-        <p>
-            Revista: <br />
-            <input class="input" type="text" formControlName="fuente">
-        </p>
-        <p>
-            Volúmen: <br />
-            <input class="input" type="text" formControlName="volumen">
-        </p>
-        <p>
-            Año: <br />
-            <input class="input" type="number" formControlName="anio">
-        </p>
-        <p>
-            DOI/Enlace: <br />
-            <input class="input" type="email" formControlName="enlace">
-        </p>
-        <p>
-        Autor/es: <br />
-        <div class="field has-addons">
-            <div class="control has-icons-left">
-            <input type="text" class="input" placeholder="Escribe el nombre del autor"
-                    [formControl]="autor">
-            <span class="icon is-medium is-left">
-                <i class="fa fa-futbol-o"></i>
-            </span>
-            </div>
-            <div class="control" (click)="addAutor(autor.value)">
-                <a class="button is-info">Agregar</a>
-            </div>
+  <h3>Formulario Artículos científicos</h3>
+  <form [formGroup]="form">
+    <p>
+      Título de artículo: <br />
+      <input class="input" type="text" formControlName="TITPROYINV"
+        [ngClass]="{'is-danger' : campoEsValido('TITPROYINV')}">
+      <span class="tag is-danger is-light" *ngIf="campoEsValido('TITPROYINV')">
+        Este campo es obligatorio
+      </span>
+    </p>
+    <!-- <span class="tag is-danger is-light">dato invalido</span> -->
+    <p>
+      Revista: <br />
+      <input class="input" type="text" formControlName="FTEPROYINV"
+        [ngClass]="{'is-danger' : campoEsValido('FTEPROYINV')}">
+      <span class="tag is-danger is-light" *ngIf="campoEsValido('FTEPROYINV')">
+        Este campo es obligatorio
+      </span>
+    </p>
+    <p>
+      Volúmen: <br />
+      <input class="input" type="text" formControlName="VOLPROYINV">
+    </p>
+    <p>
+      Año: <br />
+      <input class="input" type="number" formControlName="ANIOPROYINV"
+        [ngClass]="{'is-danger' : campoEsValido('ANIOPROYINV')}">
+      <span class="tag is-danger is-light" *ngIf="campoEsValido('ANIOPROYINV')">
+        Este campo es obligatorio
+      </span>
+    </p>
+    <p>
+      DOI/Enlace: <br />
+      <input class="input" type="email" formControlName="URLPROYINV"
+        [ngClass]="{'is-danger' : campoEsValido('URLPROYINV')}">
+      <span class="tag is-danger is-light" *ngIf="campoEsValido('URLPROYINV')">
+        Este campo es obligatorio
+      </span>
+    </p>
+    Autor/es: <br />
+    <div class="field has-addons">
+      <div class="control has-icons-left">
+        <input type="text" class="input" placeholder="Escribe el nombre del autor" [formControl]="autor"
+          (keyup.enter)="addAutor(autor.value)">
+        <span class="icon is-medium is-left">
+          <i class="fa  fa-user"></i>
+        </span>
+      </div>
+      <div class="control" (click)="addAutor(autor.value)">
+        <a class="button is-info">Agregar</a>
+      </div>
+    </div>
+    <div>
+      <span class="tag is-danger is-light" *ngIf="campoEsValido('AUTPROYINV')">
+        Necesita agregar por lo menos un autor
+      </span>
+    </div>
+    <label class="col-sm-3 col-form-label">Autor/es</label>
+    <div formArrayName="AUTPROYINV">
+      <div class="field has-addons" *ngFor="let autor of autoresArr.controls; let i = index">
+        <div class="control has-icons-left">
+          <input type="text" class="input" [formControlName]="i" readonly="readonly">
+          <span class="icon is-medium is-left">
+            <i class="fa  fa-user"></i>
+          </span>
         </div>
-        <p>
-            <input class="input" type="text" formControlName="autores_Padre">
-        </p>
-        <!-- <p>
-            Pais: <br />
-            <select class="select is-info" formControlName="cvepais" >
-                <option [value]="item.cveentnac" *ngFor="let item of lista">{{item.nomentnac}}</option>
-            </select>
-        </p> -->
-        <p>
-            Pais: <br />
-            <ng-select class="select is-info" [multiple]="true" [formControl]="paises">
-                <ng-option *ngFor="let item of lista" [value]="item.cveentnac">{{item.nomentnac}}</ng-option>
-                <ng-option [value]="'custom'">Custom</ng-option>
-            </ng-select>
-        </p>
-        <p>
-            Resumen: <br />
-            <textarea cols="30" rows="5" formControlName="resumen"></textarea>
-        </p>
-        <p>
-            Alcance: <br />
-            <select formControlName="alcance">
-                <option value="1">Institucional</option>
-                <option value="2">Nacional</option>
-                <option value="3">Lationamérica</option>
-                <option value="3">Otras regiones</option>
-            </select>
-        </p>
-
-
-    </form>
+        <div class="control" (click)="borrar(i)">
+          <a class="button is-danger">Eliminar</a>
+        </div>
+      </div>
+    </div>
+    <div>
+      Pais: <br />
+      <ng-select class="select is-multiple" [multiple]="true" [formControl]="pais">
+        <ng-option *ngFor="let item of lista" [value]="item.cveentnac">{{item.nomentnac}}</ng-option>
+      </ng-select>
+    </div>
+    <span class="tag is-danger is-light" *ngIf="campoEsValido('URLPROYINV')">
+      Este campo es obligatorio
+    </span>
+    <br>
+    <p>
+      Resumen: <br />
+      <textarea class="textarea is-link" cols="30" rows="5" formControlName="RSMPROYINV"></textarea>
+    </p>
+    <div>
+      ALCPROYINV: <br />
+      <div class="select is-link" [ngClass]="{'is-danger' : campoEsValido('ALCPROYINV')}">
+        <select formControlName="ALCPROYINV">
+          <option value="Institucional">Institucional</option>
+          <option value="Nacional">Nacional</option>
+          <option value="Lationamérica">Lationamérica</option>
+          <option value="Otras regiones">Otras regiones</option>
+        </select>
+      </div>
+    </div>
+    <span class="tag is-danger is-light" *ngIf="campoEsValido('ALCPROYINV')">
+      Este campo es obligatorio
+    </span>
+    <br>
+    <button type="button" class="button is-success" (click)="guardar()">
+      Guardar
+    </button>
+  </form>
 </div>
+
+
+
+<span>Valid</span>
+<pre>{{ form.valid }}</pre>
+<br>

@@ -1,6 +1,6 @@
 import { newArray } from '@angular/compiler/src/util';
 import { Component, OnInit, NgModule } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicePruebaService } from 'src/app/Services/service-prueba.service';
 
 @Component({
@@ -11,23 +11,16 @@ import { ServicePruebaService } from 'src/app/Services/service-prueba.service';
 export class FormComponent implements OnInit {
 
   typeForm = new FormControl('Selecciona un formulario');
-  autor = new FormControl('');
-  paises = new FormControl('');
+  autor: FormControl = this.fb.control('', Validators.required );
+  pais = new FormControl('');
   form!: FormGroup;
   autores: String [] = [];
   lista:any[]=[];
-  selectedCars = [3];
-    cars = [
-        { id: 1, name: 'Volvo' },
-        { id: 2, name: 'Saab', disabled: true },
-        { id: 3, name: 'Opel' },
-        { id: 4, name: 'Audi' },
-    ];
-
-    dato: boolean = true;
+  dato: boolean = true;
 
   constructor(
-    private servicePruebaService : ServicePruebaService
+    private servicePruebaService : ServicePruebaService,
+    private fb: FormBuilder
   ) {
     this.buildForm();
   }
@@ -37,54 +30,79 @@ export class FormComponent implements OnInit {
       console.log(valor);
     });
 
-    this.paises.valueChanges.subscribe( valor => {
+    this.pais.valueChanges.subscribe( valor => {
       console.log(valor);
+      this.paisesArr?.setValue(valor);
     });
 
     this.servicePruebaService.getPaises().subscribe( paises => {
       console.log(paises);
       this.lista = paises;
-    })
+    });
   }
 
   private buildForm() {
-    this.form = new FormGroup({
-      titulo: new FormControl('', [Validators.required, Validators.maxLength(200)]),
-      tipoproinv: new FormControl('', [Validators.required]),
-      resumen: new FormControl('', [Validators.required]),
-      cvepais: new FormControl('', [Validators.required]),
-      anio: new FormControl('', [Validators.required]),
-      enlace: new FormControl('', [Validators.required]),
-      volumen: new FormControl('', [Validators.required]),
-      fuente: new FormControl('', [Validators.required]),
-      institucion: new FormControl(''),
-      autores_Padre: new FormControl(''),
-      tipoparticipacion: new FormControl(''),
+    this.form = this.fb.group({
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      TPOPROYINV: new FormControl(''),
+      RSMPROYINV: new FormControl(''),
+      CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)] ),
+      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(2021)]),
+      AUTPROYINV: this.fb.array([], [Validators.required, Validators.min(1)] ),
+      URLPROYINV: new FormControl('', [Validators.required]),
+      VOLPROYINV: new FormControl(''),
+      FTEPROYINV: new FormControl('', [Validators.required]),
+      INSPROYINV: new FormControl(''),
+      AUTPADPROY: new FormControl(''),
+      PARPROYINV: new FormControl(''),
       integrantes: new FormControl(''),
-      alcance: new FormControl('', [Validators.required]),
-      periodo: new FormControl(''),
-      fechaCaptura: new FormControl(''),
-      realizado: new FormControl(''),
-      agenda: new FormControl(''),
-      tipoActividad: new FormControl(''),
-      infoAdicional: new FormControl(''),
+      ALCPROYINV: new FormControl('', [Validators.required]),
+      PRDPROYINV: new FormControl(''),
+      MESPROYINV: new FormControl(''),
+      FECCAPPROY: new FormControl(''),
+      REAPROYINV: new FormControl(''),
+      AGDREDPROY: new FormControl(''),
+      TPOACTPROY: new FormControl(''),
+      INFADCPROY: new FormControl('')
     });
 
-    this.form.valueChanges
-      .subscribe(value => {
-        console.log(value);
-      });
+    // this.form.valueChanges
+    //   .subscribe(value => {
+    //     console.log(value);
+    //   });
+  }
+
+  campoEsValido( campo: string ) {
+    return this.form.controls[campo].errors 
+            && this.form.controls[campo].touched;
+  }
+
+  get autoresArr() {
+    return this.form.get('AUTPROYINV') as FormArray;
+  }
+
+  get paisesArr(){
+    return this.form.get('CVEPAISPRO');
   }
 
   addAutor(nombre: String){
-    this.autores.push(nombre);
-    console.log(this.autores);
+    this.autoresArr.push( this.fb.control(this.autor.value, Validators.required ) );    
+    console.log(this.autoresArr.length);
     this.autor.reset();
   }
 
-  toggleDisabled() {
-    const car: any = this.cars[1];
-    car.disabled = !car.disabled;
-}
+  borrar( i: number ) {
+    this.autoresArr.removeAt(i);
+  }
 
+  guardar() {
+    
+    if ( this.form.invalid ) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    // imprimir el valor del formulario, sólo si es válido
+    console.log(this.form.value);
+  }
 }
