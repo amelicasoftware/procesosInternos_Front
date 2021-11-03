@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
+import { ROUTES } from './app.routes';
 import { AppComponent } from './app.component';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormComponent } from './components/forms/form.component';
@@ -16,7 +16,7 @@ import { FormDireccionDeTesisComponent } from './components/forms/form-direccion
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    RouterModule.forRoot(ROUTES, { useHash: true}),
     HttpClientModule,
     ReactiveFormsModule,
     NgSelectModule,
