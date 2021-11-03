@@ -85,65 +85,68 @@
 </div>
 
 <div class="container is-widescreen">
-  <h3>Formulario Artículos científicos</h3>
+  <h2>Formulario Artículos científicos</h2>
+  <br>
   <form [formGroup]="form">
-    <p>
-      Título de artículo: <br />
+    <div class="field">
+      <label for="" class="label">Título de artículo:</label>
       <input class="input" type="text" formControlName="TITPROYINV"
         [ngClass]="{'is-danger' : campoEsValido('TITPROYINV')}">
-      <span class="tag is-danger is-light" *ngIf="campoEsValido('TITPROYINV')">
+      <p class="help is-danger" *ngIf="campoEsValido('TITPROYINV')">
         Este campo es obligatorio
-      </span>
-    </p>
-    <!-- <span class="tag is-danger is-light">dato invalido</span> -->
-    <p>
-      Revista: <br />
+      </p>
+    </div>
+    
+    <div class="field">
+      <label class="label">Revista:</label>
       <input class="input" type="text" formControlName="FTEPROYINV"
         [ngClass]="{'is-danger' : campoEsValido('FTEPROYINV')}">
-      <span class="tag is-danger is-light" *ngIf="campoEsValido('FTEPROYINV')">
+      <p class="help is-danger" *ngIf="campoEsValido('FTEPROYINV')">
         Este campo es obligatorio
-      </span>
-    </p>
-    <p>
-      Volúmen: <br />
+      </p>
+    </div>
+    <div class="field">
+      <label class="label">Volúmen:</label>
       <input class="input" type="text" formControlName="VOLPROYINV">
-    </p>
-    <p>
-      Año: <br />
-      <input class="input" type="number" formControlName="ANIOPROYINV"
+    </div>
+    <div class="field">
+      <label class="label">Año: </label>
+      <input class="input" type="text" formControlName="ANIOPROYINV"
         [ngClass]="{'is-danger' : campoEsValido('ANIOPROYINV')}">
-      <span class="tag is-danger is-light" *ngIf="campoEsValido('ANIOPROYINV')">
+      <p class="help is-danger" *ngIf="campoEsValido('ANIOPROYINV')">
         Este campo es obligatorio
-      </span>
-    </p>
-    <p>
-      DOI/Enlace: <br />
+      </p>
+    </div>
+    <div class="field">
+      <label class="label"> DOI/Enlace:</label>
       <input class="input" type="email" formControlName="URLPROYINV"
         [ngClass]="{'is-danger' : campoEsValido('URLPROYINV')}">
-      <span class="tag is-danger is-light" *ngIf="campoEsValido('URLPROYINV')">
-        Este campo es obligatorio
-      </span>
-    </p>
-    Autor/es: <br />
-    <div class="field has-addons">
-      <div class="control has-icons-left">
-        <input type="text" class="input" placeholder="Escribe el nombre del autor" [formControl]="autor"
-          (keyup.enter)="addAutor(autor.value)">
-        <span class="icon is-medium is-left">
-          <i class="fa  fa-user"></i>
-        </span>
-      </div>
-      <div class="control" (click)="addAutor(autor.value)">
-        <a class="button is-info">Agregar</a>
-      </div>
+      <p class="help is-danger" *ngIf="campoEsValido('URLPROYINV')">
+        Debe agregar por lo menos un autor
+      </p>
     </div>
-    <div>
-      <span class="tag is-danger is-light" *ngIf="campoEsValido('AUTPROYINV')">
-        Necesita agregar por lo menos un autor
-      </span>
+
+    <div class="field">
+      <label class="label">Autor/es:</label>
+      <div class="field has-addons">
+        <div class="control has-icons-left">
+          <input type="text" class="input" placeholder="Escribe el nombre del autor" [formControl]="autor"
+            (keyup.enter)="addAutor(autor.value, $event)">
+          <span class="icon is-medium is-left">
+            <i class="fa  fa-user"></i>
+          </span>
+        </div>
+        <div class="control" (click)="addAutor(autor.value, $event)">
+          <a class="button is-info">Agregar</a>
+        </div>
+      </div>
+      <p class="help is-danger" *ngIf="campoEsValido('listAutor')">
+        Debe agregar por lo menos un autor
+      </p>
     </div>
-    <label class="col-sm-3 col-form-label">Autor/es</label>
-    <div formArrayName="AUTPROYINV">
+
+    <label class="label" *ngIf="autoresArr.length>0">Lista de Autores</label>
+    <div formArrayName="listAutor">
       <div class="field has-addons" *ngFor="let autor of autoresArr.controls; let i = index">
         <div class="control has-icons-left">
           <input type="text" class="input" [formControlName]="i" readonly="readonly">
@@ -156,23 +159,23 @@
         </div>
       </div>
     </div>
-    <div>
-      Pais: <br />
+
+    <div class="field">
+      <label class="label">País:</label>
       <ng-select class="select is-multiple" [multiple]="true" [formControl]="pais">
         <ng-option *ngFor="let item of lista" [value]="item.cveentnac">{{item.nomentnac}}</ng-option>
       </ng-select>
+      <p class="help is-danger" *ngIf="campoEsValido('CVEPAISPRO')">Este campo es obligatorio</p>
     </div>
-    <span class="tag is-danger is-light" *ngIf="campoEsValido('URLPROYINV')">
-      Este campo es obligatorio
-    </span>
-    <br>
-    <p>
-      Resumen: <br />
-      <textarea class="textarea is-link" cols="30" rows="5" formControlName="RSMPROYINV"></textarea>
-    </p>
-    <div>
-      ALCPROYINV: <br />
-      <div class="select is-link" [ngClass]="{'is-danger' : campoEsValido('ALCPROYINV')}">
+
+    <div class="field">
+      <label class="label">Resumen:</label>
+      <textarea class="textarea" cols="30" rows="5" formControlName="RSMPROYINV"></textarea>
+    </div>
+
+    <div class="field">
+      <label class="label">Alcance</label>
+      <div class="select" [ngClass]="{'is-danger' : campoEsValido('ALCPROYINV')}">
         <select formControlName="ALCPROYINV">
           <option value="Institucional">Institucional</option>
           <option value="Nacional">Nacional</option>
@@ -180,14 +183,54 @@
           <option value="Otras regiones">Otras regiones</option>
         </select>
       </div>
+      <p class="help is-danger" *ngIf="campoEsValido('REAPROYINV')">Este campo es obligatorio</p>
     </div>
-    <span class="tag is-danger is-light" *ngIf="campoEsValido('ALCPROYINV')">
-      Este campo es obligatorio
-    </span>
-    <br>
-    <button type="button" class="button is-success" (click)="guardar()">
-      Guardar
-    </button>
+
+    <div class="field">
+      <label class="label">Realizado</label>
+      <div class="control">
+        <label class="radio">
+          <input type="radio" name="REAPROYINV" formControlName="REAPROYINV" value=1>
+          Si
+        </label>
+        <label class="radio">
+          <input type="radio" name="REAPROYINV" formControlName="REAPROYINV" value=0>
+          No
+        </label>
+      </div>
+      <p class="help is-danger" *ngIf="campoEsValido('REAPROYINV')">Este campo es obligatorio</p>
+    </div>
+
+    <div class="field">
+      <label class="label">Agenda</label>
+      <div class="control">
+        <label class="radio">
+          <input type="radio" name="AGDREDPROY" formControlName="AGDREDPROY" value="Si">
+          Si
+        </label>
+        <label class="radio">
+          <input type="radio" name="AGDREDPROY" formControlName="AGDREDPROY" value="No">
+          No
+        </label>
+      </div>
+      <p class="help is-danger" *ngIf="campoEsValido('AGDREDPROY')">Este campo es obligatorio</p>
+    </div>
+
+    <div class="field">
+      <label class="label">Información adicional: </label>
+      <div class="control">
+        <textarea class="textarea" placeholder="" formControlName="INFADCPROY"></textarea>
+      </div>
+    </div>
+
+    <div class="field is-grouped">
+      <div class="control">
+        <button class="button is-link" (click)="guardar()">Guardar</button>
+      </div>
+      <div class="control">
+        <button class="button is-link is-light">Cancel</button>
+      </div>
+    </div>
   </form>
 </div>
 
@@ -195,4 +238,8 @@
 
 <span>Valid</span>
 <pre>{{ form.valid }}</pre>
+<br>
+
+<span>value</span>
+<pre>{{ form.value | json  }}</pre>
 <br>
