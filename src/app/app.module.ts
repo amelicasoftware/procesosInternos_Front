@@ -14,6 +14,7 @@ import { ArticulosDeDivulgacionComponent } from './components/articulos-de-divul
 import { LibrosDeDivulgacionComponent } from './components/libros-de-divulgacion/libros-de-divulgacion.component';
 import { ProyectosDeInvestigacionComponent } from './components/proyectos-de-investigacion/proyectos-de-investigacion.component';
 import { RedesComponent } from './components/redes/redes.component';
+import { OtrasActividadesComponent } from './components/otras-actividades/otras-actividades.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { RedesComponent } from './components/redes/redes.component';
     ArticulosDeDivulgacionComponent,
     LibrosDeDivulgacionComponent,
     ProyectosDeInvestigacionComponent,
-    RedesComponent
+    RedesComponent,
+    OtrasActividadesComponent
   ],
   imports: [
     BrowserModule,
