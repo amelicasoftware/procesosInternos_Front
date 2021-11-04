@@ -6,10 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  nombreForm: String = '';
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  form(nombre: String){
+    console.log(this.nombreForm);
+    this.nombreForm = nombre;
   }
 
 }
