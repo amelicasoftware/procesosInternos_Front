@@ -23,7 +23,7 @@ export class FormComponent implements OnInit {
         { id: 3, name: 'Conferencias Especializadas' },
         { id: 4, name: 'Artículos de divulgación' },
         { id: 5, name: 'Libros de divulgación' },
-        { id: 6, name: 'Proyectos de investigación' },
+        { id: 6, name: 'Otras actividades' },
         { id: 7, name: 'Redes de investigación' },
         { id: 8, name: 'Ejemplo' }
     ];
