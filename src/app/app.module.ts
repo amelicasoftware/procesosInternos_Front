@@ -9,13 +9,15 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormDireccionDeTesisComponent } from './components/forms/form-direccion-de-tesis/form-direccion-de-tesis.component';
 import { HomeComponent } from './pages/home/home.component';
 import { RouterModule } from '@angular/router';
+import { ConsultaComponent } from './pages/consulta/consulta.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FormComponent,
     FormDireccionDeTesisComponent,
-    HomeComponent
+    HomeComponent,
+    ConsultaComponent
   ],
   imports: [
     BrowserModule,
