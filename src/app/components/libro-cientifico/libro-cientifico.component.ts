@@ -1,22 +1,14 @@
 import { newArray } from '@angular/compiler/src/util';
 import { Component, OnInit, NgModule } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
 import Swal from 'sweetalert2';
-
 @Component({
-  selector: 'app-conferencias-especializadas',
-  templateUrl: './conferencias-especializadas.component.html',
-  styleUrls: ['./conferencias-especializadas.component.css'],
+  selector: 'app-libro-cientifico',
+  templateUrl: './libro-cientifico.component.html',
+  styleUrls: ['./libro-cientifico.component.css']
 })
-export class ConferenciasEspecializadasComponent implements OnInit {
+export class LibroCientificoComponent implements OnInit {
   typeForm = new FormControl('Selecciona un formulario');
   autor: FormControl = this.fb.control('', Validators.required);
   pais = new FormControl('');
@@ -31,17 +23,18 @@ export class ConferenciasEspecializadasComponent implements OnInit {
   ) {
     this.buildForm();
   }
+
   ngOnInit() {
-    this.typeForm.valueChanges.subscribe((valor) => {
+    this.typeForm.valueChanges.subscribe(valor => {
       console.log(valor);
     });
 
-    this.pais.valueChanges.subscribe((valor) => {
+    this.pais.valueChanges.subscribe(valor => {
       console.log(valor);
       this.paisesArr?.setValue(valor);
     });
 
-    this.servicesForm.getPaises().subscribe((paises) => {
+    this.servicesForm.getPaises().subscribe(paises => {
       console.log(paises);
       this.lista = paises;
     });
@@ -50,12 +43,12 @@ export class ConferenciasEspecializadasComponent implements OnInit {
   private buildForm() {
     this.form = this.fb.group({
       TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
-      TPOPROYINV: new FormControl('Conferencias especializadas'),
+      TPOPROYINV: new FormControl('Libro científico'),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(2021)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
-      URLPROYINV: new FormControl(''),
+      URLPROYINV: new FormControl('', [Validators.required]),
       VOLPROYINV: new FormControl(''),
       FTEPROYINV: new FormControl(''),
       INSPROYINV: new FormControl(''),

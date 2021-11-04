@@ -4,8 +4,8 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ServicePruebaService } from 'src/app/Services/service-prueba.service';
 
 @Component({
-  selector: 'app-form',
-  templateUrl: './form.component.html',
+  selector:'app-form',
+  templateUrl:'./form.component.html',
   styleUrls: ['./form.component.css']
 })
 export class FormComponent implements OnInit {
@@ -18,10 +18,14 @@ export class FormComponent implements OnInit {
   autores: String [] = [];
   lista:any[]=[];
   tiposForms  = [
-        { id: 1, name: 'Artículos científicos' },
+        { id: 1, name: 'Libros científicos' },
         { id: 2, name: 'Capítulos de libro científico'},
         { id: 3, name: 'Conferencias Especializadas' },
-        { id: 4, name: 'Ejemplo' }
+        { id: 4, name: 'Artículos de divulgación' },
+        { id: 5, name: 'Libros de divulgación' },
+        { id: 6, name: 'Proyectos de investigación' },
+        { id: 7, name: 'Redes de investigación' },
+        { id: 8, name: 'Ejemplo' }
     ];
 
     dato: boolean = true;
@@ -49,7 +53,11 @@ export class FormComponent implements OnInit {
       this.lista = paises;
     })
   }
-
+  campoEsValido( campo: string ) {
+    return this.form.controls[campo].errors 
+            && this.form.controls[campo].touched;
+  }
+  
   private buildForm() {
     this.form = new FormGroup({
       titulo: new FormControl('', [Validators.required, Validators.maxLength(200)]),

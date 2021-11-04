@@ -90,8 +90,12 @@
 </div>
 
 <div class="container is-max-desktop" [ngSwitch]="valor">
-  <div *ngSwitchCase="1"></div>
-  <div *ngSwitchCase="2"></div>
+  <div *ngSwitchCase="1"><app-libro-cientifico></app-libro-cientifico></div>
+  <div *ngSwitchCase="2"><app-cap-libro-cientifico></app-cap-libro-cientifico></div>
   <div *ngSwitchCase="3"><app-conferencias-especializadas></app-conferencias-especializadas></div>
-  <div *ngSwitchCase="4"><app-ejemplo></app-ejemplo></div>
+  <div *ngSwitchCase="4"><app-articulos-de-divulgacion></app-articulos-de-divulgacion></div>
+  <div *ngSwitchCase="5"><app-libros-de-divulgacion></app-libros-de-divulgacion></div>
+  <div *ngSwitchCase="6"><app-proyectos-de-investigacion></app-proyectos-de-investigacion></div>
+  <div *ngSwitchCase="7"><app-redes></app-redes></div>
+  <div *ngSwitchCase="8"><app-ejemplo></app-ejemplo></div>
 </div>

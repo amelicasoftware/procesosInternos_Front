@@ -1,24 +1,17 @@
 import { newArray } from '@angular/compiler/src/util';
 import { Component, OnInit, NgModule } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
 import Swal from 'sweetalert2';
-
 @Component({
-  selector: 'app-conferencias-especializadas',
-  templateUrl: './conferencias-especializadas.component.html',
-  styleUrls: ['./conferencias-especializadas.component.css'],
+  selector: 'app-redes',
+  templateUrl: './redes.component.html',
+  styleUrls: ['./redes.component.css']
 })
-export class ConferenciasEspecializadasComponent implements OnInit {
+export class RedesComponent implements OnInit {
   typeForm = new FormControl('Selecciona un formulario');
   autor: FormControl = this.fb.control('', Validators.required);
+  institucion: FormControl = this.fb.control('', Validators.required);
   pais = new FormControl('');
   form!: FormGroup;
   autores: String[] = [];
@@ -31,17 +24,18 @@ export class ConferenciasEspecializadasComponent implements OnInit {
   ) {
     this.buildForm();
   }
+
   ngOnInit() {
-    this.typeForm.valueChanges.subscribe((valor) => {
+    this.typeForm.valueChanges.subscribe(valor => {
       console.log(valor);
     });
 
-    this.pais.valueChanges.subscribe((valor) => {
+    this.pais.valueChanges.subscribe(valor => {
       console.log(valor);
       this.paisesArr?.setValue(valor);
     });
 
-    this.servicesForm.getPaises().subscribe((paises) => {
+    this.servicesForm.getPaises().subscribe(paises => {
       console.log(paises);
       this.lista = paises;
     });
@@ -50,11 +44,12 @@ export class ConferenciasEspecializadasComponent implements OnInit {
   private buildForm() {
     this.form = this.fb.group({
       TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
-      TPOPROYINV: new FormControl('Conferencias especializadas'),
+      TPOPROYINV: new FormControl('Artículos científicos'),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
-      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(2021)]),
+      ANIOPROYINV: new FormControl(''),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
+      listIns: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl(''),
       VOLPROYINV: new FormControl(''),
       FTEPROYINV: new FormControl(''),
@@ -89,6 +84,10 @@ export class ConferenciasEspecializadasComponent implements OnInit {
     return this.form.get('listAutor') as FormArray;
   }
 
+  get instArr() {
+    return this.form.get('listIns') as FormArray;
+  }
+
   get paisesArr() {
     return this.form.get('CVEPAISPRO');
   }
@@ -103,19 +102,32 @@ export class ConferenciasEspecializadasComponent implements OnInit {
 
     }
   }
+  addIns(nombre: String, event: Event) {
+    // event.preventDefault();
+    if (nombre !== '') {
+      this.instArr.push(this.fb.control(this.institucion.value, Validators.required));
+      console.log(this.instArr.length);
+      this.institucion.reset('');
+    } else {
+
+    }
+  }
 
   borrar(i: number) {
     this.autoresArr.removeAt(i);
   }
-
+  borrarInst(i: number) {
+    this.instArr.removeAt(i);
+  }
   guardar() {
 
     console.log(this.autoresArr.value);
     console.log(this.paisesArr?.value);
 
     this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
+    this.form.controls.INSPROYINV.setValue(this.instArr.value.join(','));
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
-
+    delete this.form.value.listIns;
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
