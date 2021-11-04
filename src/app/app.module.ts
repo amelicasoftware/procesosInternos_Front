@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
+import { ROUTES } from './app.routes';
 import { AppComponent } from './app.component';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormComponent } from './components/forms/form.component';
@@ -15,6 +15,9 @@ import { LibrosDeDivulgacionComponent } from './components/libros-de-divulgacion
 import { ProyectosDeInvestigacionComponent } from './components/proyectos-de-investigacion/proyectos-de-investigacion.component';
 import { RedesComponent } from './components/redes/redes.component';
 import { OtrasActividadesComponent } from './components/otras-actividades/otras-actividades.component';
+import { HomeComponent } from './pages/home/home.component';
+import { RouterModule } from '@angular/router';
+import { ConsultaComponent } from './pages/consulta/consulta.component';
 
 @NgModule({
   declarations: [
@@ -28,11 +31,13 @@ import { OtrasActividadesComponent } from './components/otras-actividades/otras-
     LibrosDeDivulgacionComponent,
     ProyectosDeInvestigacionComponent,
     RedesComponent,
-    OtrasActividadesComponent
+    OtrasActividadesComponent,
+    HomeComponent,
+    ConsultaComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    RouterModule.forRoot(ROUTES, { useHash: true}),
     HttpClientModule,
     ReactiveFormsModule,
     NgSelectModule,

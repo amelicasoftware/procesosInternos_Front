@@ -13,4 +13,8 @@ describe('ServicesFormService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> 89df7ed37dd7209b7bc4462c04fc05e053789997

@@ -8,6 +8,8 @@
           width="112"
           height="28"
         />
+        <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox"
+          width="112" height="28">
       </a>
       <div class="navbar-burger" data-target="navbarExampleTransparentExample">
         <span></span>
@@ -50,32 +52,31 @@
             </div> -->
         <select [(ngModel)]="seleccion.id" class="select" (ngModelChange)="onSelect($event)">
           <option *ngFor="let i of tiposForms" value={{i.id}}>{{i.name}}</option>
+        <select class="select is-link" palceholder="Selecciona un formulario" [formControl]="typeForm">
+          <option value="1">Artículos científicos</option>
+          <option value="2">Capítulos de libro científico</option>
+          <option value="3">Libros científicos</option>
         </select>
-      </div>
+      
 
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="field is-grouped">
             <p class="control">
-              <a
-                class="bd-tw-button button"
-                data-social-network="Twitter"
-                data-social-action="tweet"
-                data-social-target="https://bulma.io"
-                target="_blank"
-                href="https://twitter.com/intent/tweet?text=Bulma: a modern CSS framework based on Flexbox&amp;hashtags=bulmaio&amp;url=https://bulma.io&amp;via=jgthms"
-              >
+              <a class="bd-tw-button button" data-social-network="Twitter" data-social-action="tweet"
+                data-social-target="https://bulma.io" target="_blank"
+                href="https://twitter.com/intent/tweet?text=Bulma: a modern CSS framework based on Flexbox&amp;hashtags=bulmaio&amp;url=https://bulma.io&amp;via=jgthms">
                 <span class="icon">
                   <i class="fab fa-twitter"></i>
                 </span>
-                <span> Tweet </span>
+                <span>
+                  Tweet
+                </span>
               </a>
             </p>
             <p class="control">
-              <a
-                class="button is-primary"
-                href="https://github.com/jgthms/bulma/releases/download/0.9.3/bulma-0.9.3.zip"
-              >
+              <a class="button is-primary"
+                href="https://github.com/jgthms/bulma/releases/download/0.9.3/bulma-0.9.3.zip">
                 <span class="icon">
                   <i class="fas fa-download"></i>
                 </span>
@@ -85,9 +86,8 @@
           </div>
         </div>
       </div>
-    </div>
-  </nav>
-</div>
+
+
 
 <div class="container is-max-desktop" [ngSwitch]="valor">
   <div *ngSwitchCase="1"><app-libro-cientifico></app-libro-cientifico></div>

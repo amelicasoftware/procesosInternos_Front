@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { JsonPipe } from '@angular/common';
-//import { urlServices } from '../../environments/environment';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
@@ -10,7 +10,7 @@ import { JsonPipe } from '@angular/common';
 })
 export class ServicePruebaService {
 
-  urlService = 'http://148.215.24.22:9084/boardInvestigacion/service/ds/';
+  urlService = environment.urlServices;
 
   constructor(
     private http: HttpClient
