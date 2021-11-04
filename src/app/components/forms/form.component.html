@@ -1,101 +1,53 @@
-<div>
-  <nav class="navbar is-transparent">
-    <div class="navbar-brand">
-      <a class="navbar-item" href="https://bulma.io">
-        <img
-          src="https://bulma.io/images/bulma-logo.png"
-          alt="Bulma: a modern CSS framework based on Flexbox"
-          width="112"
-          height="28"
-        />
-        <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox"
-          width="112" height="28">
-      </a>
-      <div class="navbar-burger" data-target="navbarExampleTransparentExample">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+<div class="container is-widescreen">
+  <!-- <h2>Formulario Artículos científicos</h2> -->
+  <br>
+  <form [formGroup]="form" class="box">
+    <div class="field">
+      <label for="" class="label">Título de artículo:</label>
+      <input class="input" type="text" formControlName="TITPROYINV"
+        [ngClass]="{'is-danger' : campoEsValido('TITPROYINV')}">
+      <p class="help is-danger" *ngIf="campoEsValido('TITPROYINV')">
+        Este campo es obligatorio
+      </p>
+    </div>
+    
+    <div class="field">
+      <label class="label">Revista:</label>
+      <input class="input" type="text" formControlName="FTEPROYINV"
+        [ngClass]="{'is-danger' : campoEsValido('FTEPROYINV')}">
+      <p class="help is-danger" *ngIf="campoEsValido('FTEPROYINV')">
+        Este campo es obligatorio
+      </p>
+    </div>
+    <div class="field">
+      <label class="label">Volúmen:</label>
+      <input class="input" type="text" formControlName="VOLPROYINV">
+    </div>
+    <div class="field">
+      <label class="label">Año: </label>
+      <input class="input" type="text" formControlName="ANIOPROYINV"
+        [ngClass]="{'is-danger' : campoEsValido('ANIOPROYINV')}">
+      <p class="help is-danger" *ngIf="campoEsValido('ANIOPROYINV')">
+        Este campo es obligatorio
+      </p>
+    </div>
+    <div class="field">
+      <label class="label"> DOI/Enlace:</label>
+      <input class="input" type="email" formControlName="URLPROYINV"
+        [ngClass]="{'is-danger' : campoEsValido('URLPROYINV')}">
+      <p class="help is-danger" *ngIf="campoEsValido('URLPROYINV')">
+        Debe agregar por lo menos un autor
+      </p>
     </div>
 
-    <div id="navbarExampleTransparentExample" class="navbar-menu">
-      <div class="navbar-start">
-        <a class="navbar-item" href="https://bulma.io/"> Home </a>
-        <!-- <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link" href="https://bulma.io/documentation/overview/start/">
-                Docs
-              </a>
-              <div class="navbar-dropdown is-boxed">
-                <a class="navbar-item" href="https://bulma.io/documentation/overview/start/">
-                  Overview
-                </a>
-                <a class="navbar-item" href="https://bulma.io/documentation/overview/modifiers/">
-                  Modifiers
-                </a>
-                <a class="navbar-item" href="https://bulma.io/documentation/columns/basics/">
-                  Columns
-                </a>
-                <a class="navbar-item" href="https://bulma.io/documentation/layout/container/">
-                  Layout
-                </a>
-                <a class="navbar-item" href="https://bulma.io/documentation/form/general/">
-                  Form
-                </a>
-                <hr class="navbar-divider">
-                <a class="navbar-item" href="https://bulma.io/documentation/elements/box/">
-                  Elements
-                </a>
-                <a class="navbar-item is-active" href="https://bulma.io/documentation/components/breadcrumb/">
-                  Components
-                </a>
-              </div>
-            </div> -->
-        <select [(ngModel)]="seleccion.id" class="select" (ngModelChange)="onSelect($event)">
-          <option *ngFor="let i of tiposForms" value={{i.id}}>{{i.name}}</option>
-        <select class="select is-link" palceholder="Selecciona un formulario" [formControl]="typeForm">
-          <option value="1">Artículos científicos</option>
-          <option value="2">Capítulos de libro científico</option>
-          <option value="3">Libros científicos</option>
-        </select>
-      
-
-      <div class="navbar-end">
-        <div class="navbar-item">
-          <div class="field is-grouped">
-            <p class="control">
-              <a class="bd-tw-button button" data-social-network="Twitter" data-social-action="tweet"
-                data-social-target="https://bulma.io" target="_blank"
-                href="https://twitter.com/intent/tweet?text=Bulma: a modern CSS framework based on Flexbox&amp;hashtags=bulmaio&amp;url=https://bulma.io&amp;via=jgthms">
-                <span class="icon">
-                  <i class="fab fa-twitter"></i>
-                </span>
-                <span>
-                  Tweet
-                </span>
-              </a>
-            </p>
-            <p class="control">
-              <a class="button is-primary"
-                href="https://github.com/jgthms/bulma/releases/download/0.9.3/bulma-0.9.3.zip">
-                <span class="icon">
-                  <i class="fas fa-download"></i>
-                </span>
-                <span>Download</span>
-              </a>
-            </p>
-          </div>
-        </div>
-      </div>
 
 
 
-<div class="container is-max-desktop" [ngSwitch]="valor">
-  <div *ngSwitchCase="1"><app-libro-cientifico></app-libro-cientifico></div>
-  <div *ngSwitchCase="2"><app-cap-libro-cientifico></app-cap-libro-cientifico></div>
-  <div *ngSwitchCase="3"><app-conferencias-especializadas></app-conferencias-especializadas></div>
-  <div *ngSwitchCase="4"><app-articulos-de-divulgacion></app-articulos-de-divulgacion></div>
-  <div *ngSwitchCase="5"><app-libros-de-divulgacion></app-libros-de-divulgacion></div>
-  <div *ngSwitchCase="6"><app-otras-actividades></app-otras-actividades></div>
-  <div *ngSwitchCase="7"><app-redes></app-redes></div>
-  <div *ngSwitchCase="8"><app-ejemplo></app-ejemplo></div>
-</div>
+
+<!-- <span>Valid</span>
+<pre>{{ form.valid }}</pre>
+<br>
+
+<span>value</span>
+<pre>{{ form.value | json  }}</pre>
+<br> -->
