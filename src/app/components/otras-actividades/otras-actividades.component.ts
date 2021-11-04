@@ -43,13 +43,14 @@ export class OtrasActividadesComponent implements OnInit {
   private buildForm() {
     this.form = this.fb.group({
       TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
-      TPOPROYINV: new FormControl('Artículos científicos'),
+      TPOPROYINV: new FormControl('Otras Actividades'),
       RSMPROYINV: new FormControl(''),
-      CVEPAISPRO: new FormControl(''),
+      CVEPAISPRO: new FormControl([],),
       ANIOPROYINV: new FormControl(''),
-      URLPROYINV: new FormControl(''),
+      listAutor: this.fb.array([],),
+      URLPROYINV: new FormControl('',),
       VOLPROYINV: new FormControl(''),
-      FTEPROYINV: new FormControl(''),
+      FTEPROYINV: new FormControl('',),
       INSPROYINV: new FormControl(''),
       AUTPADPROY: new FormControl(''),
       PARPROYINV: new FormControl(''),
