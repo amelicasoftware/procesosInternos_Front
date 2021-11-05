@@ -9,7 +9,6 @@
             </div>
 
         </div>
-    </div>
 </nav>
 <!-- END NAV -->
 <div class="container">
@@ -68,6 +67,7 @@
             </section>
             <section class="info-tiles">
                 <app-form *ngIf="nombreForm == 'Artículos científicos'"></app-form>
+                <app-form-direccion-de-tesis  *ngIf="nombreForm == 'Dirección de tesis'"></app-form-direccion-de-tesis>
             </section>
 
         </div>

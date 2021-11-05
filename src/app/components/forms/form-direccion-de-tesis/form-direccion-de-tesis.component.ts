@@ -3,7 +3,7 @@ import { newArray } from '@angular/compiler/src/util';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
 import Swal from 'sweetalert2';
-
+import * as moment from 'moment';
 @Component({
   selector: 'app-form-direccion-de-tesis',
   templateUrl: './form-direccion-de-tesis.component.html',
@@ -43,26 +43,10 @@ export class FormDireccionDeTesisComponent implements OnInit {
     });
   }
 
-  fechaActual(): String{
-    let fecha = new Date;
-    let dia = fecha.getDate();
-    let mes = fecha.getMonth();
-    let anio = fecha.getFullYear();
-    let fc;
-    if(mes<10)
-    {
-      fc= anio+"-0"+mes+"-"+dia;
-    }else{
-      fc = anio+"-"+mes+"-"+dia;
-    }
-
-    return fc;
-
-  }
 
   private buildForm() {
     this.form = this.fb.group({
-      TITPROYINV: new FormControl(''),
+      TITPROYINV: new FormControl('', [Validators.required]),
       TPOPROYINV: new FormControl(''),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl(['']),
@@ -78,7 +62,7 @@ export class FormDireccionDeTesisComponent implements OnInit {
       ALCPROYINV: new FormControl('', [Validators.required]),
       PRDPROYINV: new FormControl(''),
       MESPROYINV: new FormControl(''),
-      FECCAPPROY: new FormControl(this.fechaActual()),
+      FECCAPPROY: new FormControl(moment().format('DD-MM-YY')),
       REAPROYINV: new FormControl('', [Validators.required]),
       AGDREDPROY: new FormControl('', [Validators.required]),
       TPOACTPROY: new FormControl(''),
