@@ -1,7 +1,5 @@
 <div class="container is-widescreen">
-  <h2>Formulario Artículos científicos</h2>
-  <br />
-  <form [formGroup]="form">
+  <form [formGroup]="form" class="box">
     <div class="field">
       <label for="" class="label">Nombre de la red/grupo:</label>
       <input
@@ -29,7 +27,15 @@
     </div>
     <div class="field">
       <label class="label">Periodo:</label>
-      <input class="input" type="text" formControlName="PRDPROYINV" />
+      <input class="input" type="text" formControlName="PRDPROYINV"
+      [ngClass]="{ 'is-danger': campoEsValido('PRDPROYINV') }"
+        />
+        <span
+          class="tag is-danger is-light"
+          *ngIf="campoEsValido('PRDPROYINV')"
+        >
+          Este campo es obligatorio
+        </span>
     </div>
 
     <div class="field">
@@ -52,7 +58,7 @@
         </div>
       </div>
       <p class="help is-danger" *ngIf="campoEsValido('listAutor')">
-        Debe agregar por lo menos un autor
+        Debe agregar por lo menos un coordinador
       </p>
     </div>
 
@@ -101,7 +107,7 @@
         </div>
       </div>
       <p class="help is-danger" *ngIf="campoEsValido('listIns')">
-        Debe agregar por lo menos un autor
+        Debe agregar por lo menos una institución
       </p>
     </div>
 
@@ -264,10 +270,10 @@
   </form>
 </div>
 
-<span>Valid</span>
-<pre>{{ form.valid }}</pre>
-<br />
-
-<span>value</span>
-<pre>{{ form.value | json }}</pre>
-<br />
+<!--<span>Valid</span>
+  <pre>{{ form.valid }}</pre>
+  <br>
+  
+  <span>value</span>
+  <pre>{{ form.value | json  }}</pre>
+  <br>-->

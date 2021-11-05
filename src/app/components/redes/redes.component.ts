@@ -58,7 +58,7 @@ export class RedesComponent implements OnInit {
       PARPROYINV: new FormControl(''),
       integrantes: new FormControl(''),
       ALCPROYINV: new FormControl('', [Validators.required]),
-      PRDPROYINV: new FormControl(''),
+      PRDPROYINV: new FormControl('',[Validators.pattern("[A-Z]*[a-z]+[ ]?-[ ]?[A-Z]*[a-z]+")]),
       MESPROYINV: new FormControl(''),
       FECCAPPROY: new FormControl(''),
       REAPROYINV: new FormControl('', [Validators.required]),
