@@ -6,7 +6,19 @@ import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common
 import { FormComponent } from './components/forms/form.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+<<<<<<< HEAD
 import { FormDireccionDeTesisComponent } from './components/forms/form-direccion-de-tesis/form-direccion-de-tesis.component';
+=======
+import { EjemploComponent } from './components/ejemplo/ejemplo.component';
+import { ConferenciasEspecializadasComponent } from './components/conferencias-especializadas/conferencias-especializadas.component';
+import { CapLibroCientificoComponent } from './components/cap-libro-cientifico/cap-libro-cientifico.component';
+import { LibroCientificoComponent } from './components/libro-cientifico/libro-cientifico.component';
+import { ArticulosDeDivulgacionComponent } from './components/articulos-de-divulgacion/articulos-de-divulgacion.component';
+import { LibrosDeDivulgacionComponent } from './components/libros-de-divulgacion/libros-de-divulgacion.component';
+import { ProyectosDeInvestigacionComponent } from './components/proyectos-de-investigacion/proyectos-de-investigacion.component';
+import { RedesComponent } from './components/redes/redes.component';
+import { OtrasActividadesComponent } from './components/otras-actividades/otras-actividades.component';
+>>>>>>> 89c93c220f4710bf3e7eabdfd8eee7c37bd0079d
 import { HomeComponent } from './pages/home/home.component';
 import { RouterModule } from '@angular/router';
 import { ConsultaComponent } from './pages/consulta/consulta.component';
@@ -16,7 +28,19 @@ import { ProyectosDeInvestigacionComponent } from './components/forms/proyectos-
   declarations: [
     AppComponent,
     FormComponent,
+<<<<<<< HEAD
     FormDireccionDeTesisComponent,
+=======
+    EjemploComponent,
+    ConferenciasEspecializadasComponent,
+    CapLibroCientificoComponent,
+    LibroCientificoComponent,
+    ArticulosDeDivulgacionComponent,
+    LibrosDeDivulgacionComponent,
+    ProyectosDeInvestigacionComponent,
+    RedesComponent,
+    OtrasActividadesComponent,
+>>>>>>> 89c93c220f4710bf3e7eabdfd8eee7c37bd0079d
     HomeComponent,
     ConsultaComponent,
     ProyectosDeInvestigacionComponent

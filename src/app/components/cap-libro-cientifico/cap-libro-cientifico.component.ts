@@ -3,44 +3,28 @@ import { Component, OnInit, NgModule } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
 import Swal from 'sweetalert2';
-
 @Component({
-  selector:'app-form',
-  templateUrl:'./form.component.html',
-  styleUrls: ['./form.component.css']
+  selector: 'app-cap-libro-cientifico',
+  templateUrl: './cap-libro-cientifico.component.html',
+  styleUrls: ['./cap-libro-cientifico.component.css']
 })
-export class FormComponent implements OnInit {
-  valor: number = 0;
-  seleccion:any = {id:0,name:''};
+export class CapLibroCientificoComponent implements OnInit {
   typeForm = new FormControl('Selecciona un formulario');
   autor: FormControl = this.fb.control('', Validators.required);
+  autorLib: FormControl = this.fb.control('', Validators.required);
   pais = new FormControl('');
   form!: FormGroup;
-  autores: String [] = [];
-  lista:any[]=[];
-  tiposForms  = [
-        { id: 1, name: 'Libros científicos' },
-        { id: 2, name: 'Capítulos de libro científico'},
-        { id: 3, name: 'Conferencias Especializadas' },
-        { id: 4, name: 'Artículos de divulgación' },
-        { id: 5, name: 'Libros de divulgación' },
-        { id: 6, name: 'Otras actividades' },
-        { id: 7, name: 'Redes de investigación' },
-        { id: 8, name: 'Ejemplo' }
-    ];
-
-    dato: boolean = true;
-
+  autores: String[] = [];
+  lista: any[] = [];
+  dato: boolean = true;
+  
   constructor(
     private servicesForm: ServicesFormService,
     private fb: FormBuilder
   ) {
     this.buildForm();
   }
-  onSelect(id:any){
-    this.valor = id;
-    console.log(this.valor);
-  }
+
   ngOnInit() {
     this.typeForm.valueChanges.subscribe(valor => {
       console.log(valor);
@@ -56,19 +40,16 @@ export class FormComponent implements OnInit {
       this.lista = paises;
     });
   }
-  campoEsValido( campo: string ) {
-    return this.form.controls[campo].errors 
-            && this.form.controls[campo].touched;
-  }
-  
+
   private buildForm() {
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('prueba', [Validators.required, Validators.maxLength(100)]),
-      TPOPROYINV: new FormControl('Artículos científicos'),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      TPOPROYINV: new FormControl('Capítulos de libro científico'),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(2021)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
+      listAutorLib: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl('', [Validators.required]),
       VOLPROYINV: new FormControl(''),
       FTEPROYINV: new FormControl('', [Validators.required]),
@@ -94,10 +75,17 @@ export class FormComponent implements OnInit {
     //   });
   }
 
+  campoEsValido(campo: string) {
+    return this.form.controls[campo].errors
+      && this.form.controls[campo].touched;
+  }
+
   get autoresArr() {
     return this.form.get('listAutor') as FormArray;
   }
-
+  get autoresLibArr() {
+    return this.form.get('listAutorLib') as FormArray;
+  }
   get paisesArr() {
     return this.form.get('CVEPAISPRO');
   }
@@ -113,8 +101,22 @@ export class FormComponent implements OnInit {
     }
   }
 
+  addAutorLib(nombre: String, event: Event) {
+    // event.preventDefault();
+    if (nombre !== '') {
+      this.autoresLibArr.push(this.fb.control(this.autorLib.value, Validators.required));
+      console.log(this.autoresLibArr.length);
+      this.autorLib.reset('');
+    } else {
+
+    }
+  }
+
   borrar(i: number) {
     this.autoresArr.removeAt(i);
+  }
+  borrarLib(i: number) {
+    this.autoresLibArr.removeAt(i);
   }
 
   guardar() {
@@ -123,8 +125,9 @@ export class FormComponent implements OnInit {
     console.log(this.paisesArr?.value);
 
     this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
+    this.form.controls.AUTPADPROY.setValue(this.autoresLibArr.value.join(','));
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
-
+    delete this.form.value.listAutorLib;
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -158,4 +161,8 @@ export class FormComponent implements OnInit {
       footer: '<a href>Why do I have this issue?</a>'  
     })  
   }  
+  limpiar(){
+    this.autoresArr.clear();
+    this.form.reset();
+  }
 }

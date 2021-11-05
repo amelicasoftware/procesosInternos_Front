@@ -1,0 +1,259 @@
+<div class="container is-max-desktop">
+  <form action="https://google.com" [formGroup]="form" class="box">
+    <div class="field">
+      <label class="label">Titulo de la conferencia</label>
+      <div class="control">
+        <input
+          type="text"
+          class="input"
+          placeholder=""
+          formControlName="TITPROYINV"
+          [ngClass]="{ 'is-danger': campoEsValido('TITPROYINV') }"
+        />
+        <span
+          class="tag is-danger is-light"
+          *ngIf="campoEsValido('TITPROYINV')"
+        >
+          Este campo es obligatorio
+        </span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Evento</label>
+      <div class="control">
+        <input
+          type="text"
+          class="input"
+          placeholder=""
+          formControlName="TPOACTPROY"
+          [ngClass]="{ 'is-danger': campoEsValido('TPOACTPROY') }"
+        />
+        <span
+          class="tag is-danger is-light"
+          *ngIf="campoEsValido('TPOACTPROY')"
+        >
+          Este campo es obligatorio
+        </span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Institución organizadora</label>
+      <div class="control">
+        <input
+          type="text"
+          class="input"
+          placeholder=""
+          formControlName="INSPROYINV"
+          [ngClass]="{ 'is-danger': campoEsValido('INSPROYINV') }"
+        />
+        <span
+          class="tag is-danger is-light"
+          *ngIf="campoEsValido('INSPROYINV')"
+        >
+          Este campo es obligatorio
+        </span>
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">Ponente/Conferencista (s):</label>
+      <div class="field has-addons">
+        <div class="control has-icons-left">
+          <input
+            type="text"
+            class="input"
+            placeholder="Escribe el nombre del autor"
+            [formControl]="autor"
+            (keyup.enter)="addAutor(autor.value, $event)"
+          />
+          <span class="icon is-medium is-left">
+            <i class="fa fa-user"></i>
+          </span>
+        </div>
+        <div class="control" (click)="addAutor(autor.value, $event)">
+          <a class="button is-info">Agregar</a>
+        </div>
+      </div>
+      <p class="help is-danger" *ngIf="campoEsValido('listAutor')">
+        Debe agregar por lo menos un autor
+      </p>
+    </div>
+
+    <label class="label" *ngIf="autoresArr.length > 0">Lista</label>
+    <div formArrayName="listAutor">
+      <div
+        class="field has-addons"
+        *ngFor="let autor of autoresArr.controls; let i = index"
+      >
+        <div class="control has-icons-left">
+          <input
+            type="text"
+            class="input"
+            [formControlName]="i"
+            readonly="readonly"
+          />
+          <span class="icon is-medium is-left">
+            <i class="fa fa-user"></i>
+          </span>
+        </div>
+        <div class="control" (click)="borrar(i)">
+          <a class="button is-danger">Eliminar</a>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">País:</label>
+      <ng-select
+        class="select is-multiple"
+        [multiple]="true"
+        [formControl]="pais"
+      >
+        <ng-option *ngFor="let item of lista" [value]="item.cveentnac">{{
+          item.nomentnac
+        }}</ng-option>
+      </ng-select>
+      <p class="help is-danger" *ngIf="campoEsValido('CVEPAISPRO')">
+        Este campo es obligatorio
+      </p>
+    </div>
+
+    <div class="field">
+      <label class="label">Año: </label>
+      <input class="input" type="number" formControlName="ANIOPROYINV"
+        [ngClass]="{'is-danger' : campoEsValido('ANIOPROYINV')}">
+      <p class="help is-danger" *ngIf="campoEsValido('ANIOPROYINV')">
+        Este campo solo acepta caracteres numericos entre 1980 y 2021
+      </p>
+    </div>
+
+    <div class="field">
+      <label class="label">Alcance</label>
+      <div class="select">
+        <select
+          formControlName="ALCPROYINV"
+          [ngClass]="{ 'is-danger': campoEsValido('ALCPROYINV') }"
+        >
+          <option value="1">Institucional</option>
+          <option value="2">Nacional</option>
+          <option value="3">Lationamérica</option>
+          <option value="3">Otras regiones</option>
+        </select>
+        <span
+          class="tag is-danger is-light"
+          *ngIf="campoEsValido('ALCPROYINV')"
+        >
+          Este campo es obligatorio
+        </span>
+      </div>
+    </div>
+    <br />
+    <div class="field">
+      <label class="label">Fecha de captura</label>
+      <div class="control">
+        <input
+          type="date"
+          class="input"
+          placeholder=""
+          formControlName="FECCAPPROY"
+          [ngClass]="{ 'is-danger': campoEsValido('FECCAPPROY') }"
+        />
+        <span
+          class="tag is-danger is-light"
+          *ngIf="campoEsValido('FECCAPPROY')"
+        >
+          Este campo es obligatorio
+        </span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Realizado</label>
+      <div class="control">
+        <label class="radio">
+          <input
+            type="radio"
+            name="REAPROYINV"
+            formControlName="REAPROYINV"
+            value="1"
+          />
+          Si
+        </label>
+        <label class="radio">
+          <input
+            type="radio"
+            name="REAPROYINV"
+            formControlName="REAPROYINV"
+            value="0"
+          />
+          No
+        </label>
+      </div>
+      <p class="help is-danger" *ngIf="campoEsValido('REAPROYINV')">
+        Este campo es obligatorio
+      </p>
+    </div>
+
+    <div class="field">
+      <label class="label">Agenda</label>
+      <div class="control">
+        <label class="radio">
+          <input
+            type="radio"
+            name="AGDREDPROY"
+            formControlName="AGDREDPROY"
+            value="Si"
+          />
+          Si
+        </label>
+        <label class="radio">
+          <input
+            type="radio"
+            name="AGDREDPROY"
+            formControlName="AGDREDPROY"
+            value="No"
+          />
+          No
+        </label>
+      </div>
+      <p class="help is-danger" *ngIf="campoEsValido('AGDREDPROY')">
+        Este campo es obligatorio
+      </p>
+    </div>
+
+    <div class="field">
+      <label class="label">Información Adicional</label>
+      <div class="control">
+        <input
+          type="text"
+          class="input"
+          placeholder=""
+          formControlName="RSMPROYINV"
+          [ngClass]="{ 'is-danger': campoEsValido('RSMPROYINV') }"
+        />
+        <span
+          class="tag is-danger is-light"
+          *ngIf="campoEsValido('RSMPROYINV')"
+        >
+          Este campo es obligatorio
+        </span>
+      </div>
+    </div>
+    <div class="field is-grouped">
+      <div class="control">
+        <button class="button is-link" (click)="guardar()">Guardar</button>
+      </div>
+      <div class="control">
+        <button class="button is-link is-light" (click)="limpiar()">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>
+  
+  <!--<span>Valid</span>
+  <pre>{{ form.valid }}</pre>
+  <br>
+  
+  <span>value</span>
+  <pre>{{ form.value | json  }}</pre>
+  <br>-->

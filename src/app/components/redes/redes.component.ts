@@ -3,33 +3,22 @@ import { Component, OnInit, NgModule } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
 import Swal from 'sweetalert2';
-
+import * as moment from 'moment';
 @Component({
-  selector:'app-form',
-  templateUrl:'./form.component.html',
-  styleUrls: ['./form.component.css']
+  selector: 'app-redes',
+  templateUrl: './redes.component.html',
+  styleUrls: ['./redes.component.css']
 })
-export class FormComponent implements OnInit {
-  valor: number = 0;
-  seleccion:any = {id:0,name:''};
+export class RedesComponent implements OnInit {
   typeForm = new FormControl('Selecciona un formulario');
   autor: FormControl = this.fb.control('', Validators.required);
+  institucion: FormControl = this.fb.control('', Validators.required);
   pais = new FormControl('');
   form!: FormGroup;
-  autores: String [] = [];
-  lista:any[]=[];
-  tiposForms  = [
-        { id: 1, name: 'Libros científicos' },
-        { id: 2, name: 'Capítulos de libro científico'},
-        { id: 3, name: 'Conferencias Especializadas' },
-        { id: 4, name: 'Artículos de divulgación' },
-        { id: 5, name: 'Libros de divulgación' },
-        { id: 6, name: 'Otras actividades' },
-        { id: 7, name: 'Redes de investigación' },
-        { id: 8, name: 'Ejemplo' }
-    ];
-
-    dato: boolean = true;
+  autores: String[] = [];
+  lista: any[] = [];
+  dato: boolean = true;
+  fecha: string = '';
 
   constructor(
     private servicesForm: ServicesFormService,
@@ -37,11 +26,9 @@ export class FormComponent implements OnInit {
   ) {
     this.buildForm();
   }
-  onSelect(id:any){
-    this.valor = id;
-    console.log(this.valor);
-  }
+
   ngOnInit() {
+
     this.typeForm.valueChanges.subscribe(valor => {
       console.log(valor);
     });
@@ -56,28 +43,25 @@ export class FormComponent implements OnInit {
       this.lista = paises;
     });
   }
-  campoEsValido( campo: string ) {
-    return this.form.controls[campo].errors 
-            && this.form.controls[campo].touched;
-  }
-  
+
   private buildForm() {
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('prueba', [Validators.required, Validators.maxLength(100)]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
       TPOPROYINV: new FormControl('Artículos científicos'),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
-      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(2021)]),
+      ANIOPROYINV: new FormControl(''),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
-      URLPROYINV: new FormControl('', [Validators.required]),
+      listIns: this.fb.array([], [Validators.required, Validators.min(1)]),
+      URLPROYINV: new FormControl(''),
       VOLPROYINV: new FormControl(''),
-      FTEPROYINV: new FormControl('', [Validators.required]),
+      FTEPROYINV: new FormControl(''),
       INSPROYINV: new FormControl(''),
       AUTPADPROY: new FormControl(''),
       PARPROYINV: new FormControl(''),
       integrantes: new FormControl(''),
       ALCPROYINV: new FormControl('', [Validators.required]),
-      PRDPROYINV: new FormControl(''),
+      PRDPROYINV: new FormControl('',[Validators.pattern("[A-Z]*[a-z]+[ ]?-[ ]?[A-Z]*[a-z]+")]),
       MESPROYINV: new FormControl(''),
       FECCAPPROY: new FormControl(''),
       REAPROYINV: new FormControl('', [Validators.required]),
@@ -85,7 +69,7 @@ export class FormComponent implements OnInit {
       TPOACTPROY: new FormControl(''),
       INFADCPROY: new FormControl(''),
       AUTPROYINV: new FormControl(''),
-      CTDINTPROY: new FormControl('1'),
+      CTDINTPROY: new FormControl('1',[Validators.pattern("[0-9]+")]),
     });
 
     // this.form.valueChanges
@@ -94,8 +78,17 @@ export class FormComponent implements OnInit {
     //   });
   }
 
+  campoEsValido(campo: string) {
+    return this.form.controls[campo].errors
+      && this.form.controls[campo].touched;
+  }
+
   get autoresArr() {
     return this.form.get('listAutor') as FormArray;
+  }
+
+  get instArr() {
+    return this.form.get('listIns') as FormArray;
   }
 
   get paisesArr() {
@@ -103,7 +96,7 @@ export class FormComponent implements OnInit {
   }
 
   addAutor(nombre: String, event: Event) {
-    // event.preventDefault();
+    console.log(moment(this.fecha).format('DD-MM-YY'));
     if (nombre !== '') {
       this.autoresArr.push(this.fb.control(this.autor.value, Validators.required));
       console.log(this.autoresArr.length);
@@ -112,19 +105,34 @@ export class FormComponent implements OnInit {
 
     }
   }
+  addIns(nombre: String, event: Event) {
+    // event.preventDefault();
+    if (nombre !== '') {
+      this.instArr.push(this.fb.control(this.institucion.value, Validators.required));
+      console.log(this.instArr.length);
+      this.institucion.reset('');
+    } else {
+
+    }
+  }
 
   borrar(i: number) {
     this.autoresArr.removeAt(i);
   }
-
+  borrarInst(i: number) {
+    this.instArr.removeAt(i);
+  }
   guardar() {
-
     console.log(this.autoresArr.value);
     console.log(this.paisesArr?.value);
-
+    this.form.controls.FECCAPPROY.setValue(moment(this.fecha).format('DD-MM-YY'));
     this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
+
+    this.form.controls.INSPROYINV.setValue(this.instArr.value.join(','));
+
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
 
+    delete this.form.value.listIns;
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -134,6 +142,7 @@ export class FormComponent implements OnInit {
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
       console.log(mensaje);
       if(mensaje.respuesta){
+        this.limpiar();
         this.alertWithSuccess();
       }else{
         this.erroalert();
@@ -158,4 +167,9 @@ export class FormComponent implements OnInit {
       footer: '<a href>Why do I have this issue?</a>'  
     })  
   }  
+  limpiar(){
+    this.autoresArr.clear();
+    this.instArr.clear();
+    this.form.reset();
+  }
 }
