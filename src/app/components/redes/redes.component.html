@@ -22,19 +22,20 @@
         [ngClass]="{ 'is-danger': campoEsValido('CTDINTPROY') }"
       />
       <p class="help is-danger" *ngIf="campoEsValido('CTDINTPROY')">
-        Este campo es obligatorio
+        Este campo solo acepta caracteres numericos
       </p>
     </div>
     <div class="field">
       <label class="label">Periodo:</label>
       <input class="input" type="text" formControlName="PRDPROYINV"
+      placeholder="Junio - Agosto"
       [ngClass]="{ 'is-danger': campoEsValido('PRDPROYINV') }"
         />
         <span
           class="tag is-danger is-light"
           *ngIf="campoEsValido('PRDPROYINV')"
         >
-          Este campo es obligatorio
+          Este campo debe colocarse més de inicio y més de finalización
         </span>
     </div>
 
@@ -45,7 +46,7 @@
           <input
             type="text"
             class="input"
-            placeholder="Escribe el nombre del autor"
+            placeholder="Escribe el nombre del coordinador"
             [formControl]="autor"
             (keyup.enter)="addAutor(autor.value, $event)"
           />
@@ -166,9 +167,9 @@
         <input
           type="date"
           class="input"
-          placeholder=""
           formControlName="FECCAPPROY"
           [ngClass]="{ 'is-danger': campoEsValido('FECCAPPROY') }"
+          [(ngModel)]= "fecha"
         />
         <span
           class="tag is-danger is-light"
@@ -264,16 +265,16 @@
         <button class="button is-link" (click)="guardar()">Guardar</button>
       </div>
       <div class="control">
-        <button class="button is-link is-light">Cancel</button>
+        <button  class="button is-link is-light" (click)="limpiar()">Cancel</button>
       </div>
     </div>
   </form>
 </div>
 
-<!--<span>Valid</span>
+  <span>Valid</span>
   <pre>{{ form.valid }}</pre>
   <br>
   
   <span>value</span>
   <pre>{{ form.value | json  }}</pre>
-  <br>-->
+  <br>

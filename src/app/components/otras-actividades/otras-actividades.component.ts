@@ -118,8 +118,10 @@ export class OtrasActividadesComponent implements OnInit {
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
       console.log(mensaje);
       if(mensaje.respuesta){
+        this.limpiar();
         this.alertWithSuccess();
       }else{
+        this.limpiar();
         this.erroalert();
       }
     });
@@ -141,5 +143,9 @@ export class OtrasActividadesComponent implements OnInit {
       text: 'Something went wrong!',  
       footer: '<a href>Why do I have this issue?</a>'  
     })  
-  }  
+  } 
+  limpiar(){
+    this.autoresArr.clear();
+    this.form.reset();
+  }
 }

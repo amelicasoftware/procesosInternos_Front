@@ -3,6 +3,7 @@ import { Component, OnInit, NgModule } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
 import Swal from 'sweetalert2';
+import * as moment from 'moment';
 @Component({
   selector: 'app-redes',
   templateUrl: './redes.component.html',
@@ -17,6 +18,7 @@ export class RedesComponent implements OnInit {
   autores: String[] = [];
   lista: any[] = [];
   dato: boolean = true;
+  fecha: string = '';
 
   constructor(
     private servicesForm: ServicesFormService,
@@ -26,6 +28,7 @@ export class RedesComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.typeForm.valueChanges.subscribe(valor => {
       console.log(valor);
     });
@@ -66,7 +69,7 @@ export class RedesComponent implements OnInit {
       TPOACTPROY: new FormControl(''),
       INFADCPROY: new FormControl(''),
       AUTPROYINV: new FormControl(''),
-      CTDINTPROY: new FormControl('1'),
+      CTDINTPROY: new FormControl('1',[Validators.pattern("[0-9]+")]),
     });
 
     // this.form.valueChanges
@@ -93,7 +96,7 @@ export class RedesComponent implements OnInit {
   }
 
   addAutor(nombre: String, event: Event) {
-    // event.preventDefault();
+    console.log(moment(this.fecha).format('DD-MM-YY'));
     if (nombre !== '') {
       this.autoresArr.push(this.fb.control(this.autor.value, Validators.required));
       console.log(this.autoresArr.length);
@@ -120,13 +123,15 @@ export class RedesComponent implements OnInit {
     this.instArr.removeAt(i);
   }
   guardar() {
-
     console.log(this.autoresArr.value);
     console.log(this.paisesArr?.value);
-
+    this.form.controls.FECCAPPROY.setValue(moment(this.fecha).format('DD-MM-YY'));
     this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
+
     this.form.controls.INSPROYINV.setValue(this.instArr.value.join(','));
+
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
+
     delete this.form.value.listIns;
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -137,6 +142,7 @@ export class RedesComponent implements OnInit {
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
       console.log(mensaje);
       if(mensaje.respuesta){
+        this.limpiar();
         this.alertWithSuccess();
       }else{
         this.erroalert();
@@ -161,4 +167,9 @@ export class RedesComponent implements OnInit {
       footer: '<a href>Why do I have this issue?</a>'  
     })  
   }  
+  limpiar(){
+    this.autoresArr.clear();
+    this.instArr.clear();
+    this.form.reset();
+  }
 }

@@ -149,4 +149,8 @@ export class ConferenciasEspecializadasComponent implements OnInit {
       footer: '<a href>Why do I have this issue?</a>'  
     })  
   }  
+  limpiar(){
+    this.autoresArr.clear();
+    this.form.reset();
+  }
 }

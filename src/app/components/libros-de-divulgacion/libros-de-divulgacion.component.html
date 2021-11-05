@@ -22,7 +22,7 @@
         <input class="input" type="email" formControlName="URLPROYINV"
           [ngClass]="{'is-danger' : campoEsValido('URLPROYINV')}">
         <p class="help is-danger" *ngIf="campoEsValido('URLPROYINV')">
-          Debe agregar por lo menos un autor
+          Este campo es oblogatorio
         </p>
       </div>
   
@@ -60,23 +60,12 @@
         </div>
       </div>
       <div class="field">
-        <label class="label">Año</label>
-        <div class="control">
-          <input
-            type="number"
-            class="input"
-            placeholder=""
-            formControlName="ANIOPROYINV"
-            [ngClass]="{ 'is-danger': campoEsValido('ANIOPROYINV') }"
-          />
-          <span
-            class="tag is-danger is-light"
-            *ngIf="campoEsValido('ANIOPROYINV')"
-          >
-            Este campo es obligatorio
-            <br />
-          </span>
-        </div>
+        <label class="label">Año: </label>
+        <input class="input" type="number" formControlName="ANIOPROYINV"
+          [ngClass]="{'is-danger' : campoEsValido('ANIOPROYINV')}">
+        <p class="help is-danger" *ngIf="campoEsValido('ANIOPROYINV')">
+          Este campo solo acepta caracteres numericos entre 1980 y 2021
+        </p>
       </div>
       <div class="field">
         <label class="label">País:</label>
@@ -161,7 +150,7 @@
           <button class="button is-link" (click)="guardar()">Guardar</button>
         </div>
         <div class="control">
-          <button class="button is-link is-light">Cancel</button>
+          <button class="button is-link is-light" (click)="limpiar()">Cancel</button>
         </div>
       </div>
     </form>
