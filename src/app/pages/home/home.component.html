@@ -1,30 +1,4 @@
-<!-- START NAV -->
-<nav class="navbar is-white">
-    <div class="container">
-        <div class="navbar-brand">
-            <a class="navbar-item brand-text" [routerLink]="['/home']">
-                Admin
-            </a>
-            <div class="navbar-burger burger" data-target="navMenu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-        <div id="navMenu" class="navbar-menu">
-            <div class="navbar-start">
-                <a class="navbar-item is-active" [routerLink]="['/home']">
-                    Formularios
-                </a>
-                <a class="navbar-item" [routerLink]="['/busquedas']">
-                    Consultas
-                </a>
-            </div>
-
-        </div>
-    </div>
-</nav>
-<!-- END NAV -->
+<app-header></app-header>
 <div class="container">
     <div class="columns">
         <div class="column is-3 ">
@@ -40,12 +14,14 @@
                 </p>
                 <ul class="menu-list">
                     <li><a class="is-active" (click)="form('Artículos científicos')">Artículos científicos </a></li>
-                    <li><a class="" (click)="form('Capítulos de libro científico')">Capítulos de libro científico</a></li>
+                    <li><a class="" (click)="form('Capítulos de libro científico')">Capítulos de libro científico</a>
+                    </li>
                     <li><a class="" (click)="form('Libros científicos')">Libros científicos</a></li>
                     <li><a class="" (click)="form('Conferencias especializadas')">Conferencias especializadas</a></li>
                     <li><a class="" (click)="form('Artículos de divulgación')">Artículos de divulgación</a></li>
                     <li><a class="" (click)="form('Libros de divulgación')">Libros de divulgación</a></li>
-                    <li><a class="" (click)="form('Otras actividades de divulgación')">Otras actividades de divulgación</a></li>
+                    <li><a class="" (click)="form('Otras actividades de divulgación')">Otras actividades de
+                            divulgación</a></li>
                     <li><a class="" (click)="form('Dirección de tesis')">Dirección de tesis</a></li>
                     <li><a class="" (click)="form('Proyectos de investigación')">Proyectos de investigación</a></li>
                     <li><a class="" (click)="form('Redes de investigación')">Redes de investigación</a></li>

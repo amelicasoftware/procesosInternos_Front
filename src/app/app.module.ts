@@ -9,13 +9,17 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { HomeComponent } from './pages/home/home.component';
 import { RouterModule } from '@angular/router';
 import { ConsultaComponent } from './pages/consulta/consulta.component';
+import { ValidacionComponent } from './pages/validacion/validacion.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FormComponent,
     HomeComponent,
-    ConsultaComponent
+    ConsultaComponent,
+    ValidacionComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
