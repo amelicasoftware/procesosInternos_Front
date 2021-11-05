@@ -3,6 +3,7 @@ import { Component, OnInit, NgModule } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
 import Swal from 'sweetalert2';
+import * as moment from 'moment';
 @Component({
   selector: 'app-otras-actividades',
   templateUrl: './otras-actividades.component.html',
@@ -16,7 +17,7 @@ export class OtrasActividadesComponent implements OnInit {
   autores: String[] = [];
   lista: any[] = [];
   dato: boolean = true;
-
+  selectedCountry:any=[];
   constructor(
     private servicesForm: ServicesFormService,
     private fb: FormBuilder
@@ -58,7 +59,7 @@ export class OtrasActividadesComponent implements OnInit {
       ALCPROYINV: new FormControl(''),
       PRDPROYINV: new FormControl(''),
       MESPROYINV: new FormControl(''),
-      FECCAPPROY: new FormControl(''),
+      FECCAPPROY: new FormControl(this.fechaActual()),
       REAPROYINV: new FormControl('0'),
       AGDREDPROY: new FormControl(''),
       TPOACTPROY: new FormControl(''),
@@ -147,5 +148,10 @@ export class OtrasActividadesComponent implements OnInit {
   limpiar(){
     this.autoresArr.clear();
     this.form.reset();
+    this.selectedCountry = [];
+  }
+  fechaActual(): String{
+    let fecha = new Date;
+    return moment(fecha).format('DD-MM-YY');
   }
 }

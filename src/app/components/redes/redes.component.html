@@ -142,6 +142,7 @@
         class="select is-multiple"
         [multiple]="true"
         [formControl]="pais"
+        [ngModel]="selectedCountry"
       >
         <ng-option *ngFor="let item of lista" [value]="item.cveentnac">{{
           item.nomentnac
@@ -160,24 +161,6 @@
         rows="5"
         formControlName="RSMPROYINV"
       ></textarea>
-    </div>
-    <div class="field">
-      <label class="label">Fecha de captura</label>
-      <div class="control">
-        <input
-          type="date"
-          class="input"
-          formControlName="FECCAPPROY"
-          [ngClass]="{ 'is-danger': campoEsValido('FECCAPPROY') }"
-          [(ngModel)]= "fecha"
-        />
-        <span
-          class="tag is-danger is-light"
-          *ngIf="campoEsValido('FECCAPPROY')"
-        >
-          Este campo es obligatorio
-        </span>
-      </div>
     </div>
     <div class="field">
       <label class="label">Alcance</label>
