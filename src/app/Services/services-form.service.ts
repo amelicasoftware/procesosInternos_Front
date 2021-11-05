@@ -18,7 +18,7 @@ export class ServicesFormService {
 
 
   getPaises(): Observable<any> {
-    return this.http.get(`http://148.215.24.22:9084/boardInvestigacion/service/ds/getDataPais`);
+    return this.http.get(`${this.urlService}getDataPais`);
   }
 
   postDatos(form: any): Observable<any>{
@@ -27,5 +27,15 @@ export class ServicesFormService {
     return this.http.post(`${this.urlService}sendRegisterOfProy/${JSON.stringify(form.value)}`, (mensaje: String) =>{
       console.log(mensaje);
     });
+  }
+
+  getAllProjects(){
+    console.log(`${this.urlService}getAllData`)
+    return this.http.get(`${this.urlService}getAllData`);
+  }
+
+  getProjectId(id: number): Observable<any>{
+    console.log(`${this.urlService}getDataProyById/${id}`)
+    return this.http.get(`${this.urlService}getDataProyById/${id}`);
   }
 }
