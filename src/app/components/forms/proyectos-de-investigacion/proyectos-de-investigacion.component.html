@@ -33,30 +33,10 @@
   </div>
   
   <div class="container is-widescreen">
-    <h2>Formulario Dirección de tesis</h2>
+    <h2>Formulario Proyectos de investigación</h2>
     <br>
 
     <!-- ok -->
-    <div class="field">
-        <label class="label">Autor:</label>
-        <div class="field has-addons">
-          <div class="control has-icons-left">
-            <input type="text" class="input" placeholder="Escribe el nombre del autor" [formControl]="autor"
-              (keyup.enter)="addAutor(autor.value, $event)">
-            <span class="icon is-medium is-left">
-              <i class="fa  fa-user"></i>
-            </span>
-          </div>
-          <div class="control" (click)="addAutor(autor.value, $event)">
-            <a class="button is-info">Agregar</a>
-          </div>
-        </div>
-        <p class="help is-danger" *ngIf="campoEsValido('listAutor')">
-          Debe agregar por lo menos un autor
-        </p>
-      </div>
-
- <!-- ok -->
     <form [formGroup]="form" class="box">
       <div class="field">
         <label for="" class="label">Título del proyecto:</label>
@@ -66,19 +46,10 @@
           Este campo es obligatorio
         </p>
       </div>
-      <!-- ok -->
-      <div class="field">
-        <label class="label">Carrera/Programa:</label>
-        <input class="input" type="text" formControlName="FTEPROYINV"
-          [ngClass]="{'is-danger' : campoEsValido('FTEPROYINV')}">
-        <p class="help is-danger" *ngIf="campoEsValido('FTEPROYINV')">
-          Este campo es obligatorio
-        </p>
-      </div>
 
       <!-- ok -->
       <div class="field">
-        <label class="label">Institución:</label>
+        <label class="label">Instituciones participantes:</label>
         <input class="input" type="text" formControlName="INSPROYINV"
           [ngClass]="{'is-danger' : campoEsValido('INSPROYINV')}">
         <p class="help is-danger" *ngIf="campoEsValido('INSPROYINV')">
@@ -86,15 +57,35 @@
         </p>
       </div>
 
-      <!-- ok -->
+      <!-- Revisar-->
       <div class="field">
-        <label class="label">Año: </label>
-        <input class="input" type="text" formControlName="ANIOPROYINV"
-          [ngClass]="{'is-danger' : campoEsValido('ANIOPROYINV')}">
-        <p class="help is-danger" *ngIf="campoEsValido('ANIOPROYINV')">
+        <label class="label">País de instituciones participantes:</label>
+        <ng-select class="select is-multiple" [multiple]="true" [formControl]="pais">
+          <ng-option *ngFor="let item of lista" [value]="item.cveentnac">{{item.nomentnac}}</ng-option>
+        </ng-select>
+        <p class="help is-danger" *ngIf="campoEsValido('CVEPAISPRO')">Este campo es obligatorio</p>
+      </div>
+
+      <!-- Revisar -->
+      <div class="field">
+        <label class="label">Periodo:</label>
+        <input class="input" type="text" formControlName="PRDPROYINV"
+          [ngClass]="{'is-danger' : campoEsValido('PRDPROYINV')}">
+        <p class="help is-danger" *ngIf="campoEsValido('PRDPROYINV')">
           Este campo es obligatorio
         </p>
       </div>
+
+      <!-- Revisar -->
+      <div class="field">
+        <label class="label">Síntesis:</label>
+        <input class="input" type="text" formControlName="RSMPROYINV"
+          [ngClass]="{'is-danger' : campoEsValido('RSMPROYINV')}">
+        <p class="help is-danger" *ngIf="campoEsValido('RSMPROYINV')">
+          Este campo es obligatorio
+        </p>
+      </div>
+      
       <!-- ok -->
       <div class="field">
         <label class="label">Alcance</label>

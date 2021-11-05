@@ -10,6 +10,7 @@ import { FormDireccionDeTesisComponent } from './components/forms/form-direccion
 import { HomeComponent } from './pages/home/home.component';
 import { RouterModule } from '@angular/router';
 import { ConsultaComponent } from './pages/consulta/consulta.component';
+import { ProyectosDeInvestigacionComponent } from './components/forms/proyectos-de-investigacion/proyectos-de-investigacion.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ConsultaComponent } from './pages/consulta/consulta.component';
     FormComponent,
     FormDireccionDeTesisComponent,
     HomeComponent,
-    ConsultaComponent
+    ConsultaComponent,
+    ProyectosDeInvestigacionComponent
   ],
   imports: [
     BrowserModule,
