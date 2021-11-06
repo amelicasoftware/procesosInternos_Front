@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { newArray } from '@angular/compiler/src/util';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
 import Swal from 'sweetalert2';
 import * as moment from 'moment';
+
 @Component({
   selector: 'app-proyectos-de-investigacion',
   templateUrl: './proyectos-de-investigacion.component.html',
   styleUrls: ['./proyectos-de-investigacion.component.css']
 })
 export class ProyectosDeInvestigacionComponent implements OnInit {
+
   typeForm = new FormControl('Selecciona un formulario');
   autor: FormControl = this.fb.control('', Validators.required);
   pais = new FormControl('');
@@ -16,6 +19,7 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
   autores: String[] = [];
   lista: any[] = [];
   dato: boolean = true;
+
 
   constructor(
     private servicesForm: ServicesFormService,
