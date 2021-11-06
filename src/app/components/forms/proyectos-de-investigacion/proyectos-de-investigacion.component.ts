@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { newArray } from '@angular/compiler/src/util';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
 import Swal from 'sweetalert2';
@@ -17,7 +16,6 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
   autores: String[] = [];
   lista: any[] = [];
   dato: boolean = true;
-
 
   constructor(
     private servicesForm: ServicesFormService,
@@ -47,8 +45,8 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
     this.form = this.fb.group({
       TITPROYINV: new FormControl('', [Validators.required]),
       TPOPROYINV: new FormControl(''),
-      RSMPROYINV: new FormControl('', [Validators.required]),
-      CVEPAISPRO: new FormControl([''],  [Validators.required, Validators.min(1)]),
+      RSMPROYINV: new FormControl(''),
+      CVEPAISPRO: new FormControl(['']),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(2021)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl(''),
@@ -59,7 +57,7 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
       PARPROYINV: new FormControl(''),
       integrantes: new FormControl(''),
       ALCPROYINV: new FormControl('', [Validators.required]),
-      PRDPROYINV: new FormControl('', [Validators.required]),
+      PRDPROYINV: new FormControl(''),
       MESPROYINV: new FormControl(''),
       FECCAPPROY: new FormControl(moment().format('DD-MM-YY')),
       REAPROYINV: new FormControl('', [Validators.required]),
@@ -146,4 +144,3 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
     })  
   }  
 }
-
