@@ -1,60 +1,4 @@
-<div>
-    <nav class="navbar is-transparent">
-      <div id="navbarExampleTransparentExample" class="navbar-menu">
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="field is-grouped">
-              <p class="control">
-                <a class="bd-tw-button button" data-social-network="Twitter" data-social-action="tweet"
-                  data-social-target="https://bulma.io" target="_blank"
-                  href="https://twitter.com/intent/tweet?text=Bulma: a modern CSS framework based on Flexbox&amp;hashtags=bulmaio&amp;url=https://bulma.io&amp;via=jgthms">
-                  <span class="icon">
-                    <i class="fab fa-twitter"></i>
-                  </span>
-                  <span>
-                    Tweet
-                  </span>
-                </a>
-              </p>
-              <p class="control">
-                <a class="button is-primary"
-                  href="https://github.com/jgthms/bulma/releases/download/0.9.3/bulma-0.9.3.zip">
-                  <span class="icon">
-                    <i class="fas fa-download"></i>
-                  </span>
-                  <span>Download</span>
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
-  </div>
-  
-  <div class="container is-widescreen">
-    <h2>Formulario Dirección de tesis</h2>
-    <br>
-
-    <!-- ok -->
-    <div class="field">
-        <label class="label">Autor:</label>
-        <div class="field has-addons">
-          <div class="control has-icons-left">
-            <input type="text" class="input" placeholder="Escribe el nombre del autor" [formControl]="autor"
-              (keyup.enter)="addAutor(autor.value, $event)">
-            <span class="icon is-medium is-left">
-              <i class="fa  fa-user"></i>
-            </span>
-          </div>
-          <div class="control" (click)="addAutor(autor.value, $event)">
-            <a class="button is-info">Agregar</a>
-          </div>
-        </div>
-        <p class="help is-danger" *ngIf="campoEsValido('listAutor')">
-          Debe agregar por lo menos un autor
-        </p>
-      </div>
+<div class="container is-widescreen">
 
  <!-- ok -->
     <form [formGroup]="form" class="box">
@@ -66,6 +10,7 @@
           Este campo es obligatorio
         </p>
       </div>
+
       <!-- ok -->
       <div class="field">
         <label class="label">Carrera/Programa:</label>
@@ -95,6 +40,27 @@
           Este campo es obligatorio
         </p>
       </div>
+
+        <!-- ok -->
+    <div class="field">
+      <label class="label">Autor:</label>
+      <div class="field has-addons">
+        <div class="control has-icons-left">
+          <input type="text" class="input" placeholder="Escribe el nombre del autor" [formControl]="autor"
+            (keyup.enter)="addAutor(autor.value, $event)">
+          <span class="icon is-medium is-left">
+            <i class="fa  fa-user"></i>
+          </span>
+        </div>
+        <div class="control" (click)="addAutor(autor.value, $event)">
+          <a class="button is-info">Agregar</a>
+        </div>
+      </div>
+      <p class="help is-danger" *ngIf="campoEsValido('listAutor')">
+        Debe agregar por lo menos un autor
+      </p>
+    </div>
+
       <!-- ok -->
       <div class="field">
         <label class="label">Alcance</label>
@@ -161,6 +127,7 @@
   </div>
   
   
+<!--  
   
   <span>Valid</span>
   <pre>{{ form.valid }}</pre>
@@ -169,3 +136,4 @@
   <span>value</span>
   <pre>{{ form.value | json  }}</pre>
   <br>
+-->
