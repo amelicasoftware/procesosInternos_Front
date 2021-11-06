@@ -6,7 +6,7 @@ import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common
 import { FormComponent } from './components/forms/form.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { FormDireccionDeTesisComponent } from './components/forms/form-direccion-de-tesis/form-direccion-de-tesis.component';
+import { FormDireccionDeTesisComponent } from './components/form-direccion-de-tesis/form-direccion-de-tesis.component';
 import { EjemploComponent } from './components/ejemplo/ejemplo.component';
 import { ConferenciasEspecializadasComponent } from './components/conferencias-especializadas/conferencias-especializadas.component';
 import { CapLibroCientificoComponent } from './components/cap-libro-cientifico/cap-libro-cientifico.component';

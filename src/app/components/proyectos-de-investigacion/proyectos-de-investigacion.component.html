@@ -1,1 +1,149 @@
-<p>proyectos-de-investigacion works!</p>
+<div class="container is-widescreen">
+
+    <!-- ok -->
+       <form [formGroup]="form" class="box">
+         <div class="field">
+           <label for="" class="label">Título del proyecto:</label>
+           <input class="input" type="text" formControlName="TITPROYINV"
+             [ngClass]="{'is-danger' : campoEsValido('TITPROYINV')}">
+           <p class="help is-danger" *ngIf="campoEsValido('TITPROYINV')">
+             Este campo es obligatorio
+           </p>
+         </div>
+
+         <div class="field">
+            <label class="label">Instituciones participantes</label>
+            <div class="field has-addons">
+              <div class="control has-icons-left">
+                <input
+                  type="text"
+                  class="input"
+                  placeholder="Escribe el nombre de la institución"
+                  [formControl]="institucion"
+                  (keyup.enter)="addIns(institucion.value, $event)"
+                />
+                <span class="icon is-medium is-left">
+                  <i class="fa fa-user"></i>
+                </span>
+              </div>
+              <div class="control" (click)="addIns(institucion.value, $event)">
+                <a class="button is-info">Agregar</a>
+              </div>
+            </div>
+            <p class="help is-danger" *ngIf="campoEsValido('listIns')">
+              Debe agregar por lo menos una institución
+            </p>
+          </div>
+
+         <!-- Revisar -->  
+         <div class="field">
+            <label class="label">País de instituciones participantes:</label>
+            <ng-select class="select is-multiple" [multiple]="true" [formControl]="pais">
+              <ng-option *ngFor="let item of lista" [value]="item.cveentnac">{{item.nomentnac}}</ng-option>
+            </ng-select>
+            <p class="help is-danger" *ngIf="campoEsValido('CVEPAISPRO')">Este campo es obligatorio</p>
+          </div>
+
+          <!-- ok -->
+          <div class="field">
+            <label class="label">Periodo:</label>
+            <input class="input" type="text" formControlName="PRDPROYINV"
+            placeholder="Junio - Agosto"
+            [ngClass]="{ 'is-danger': campoEsValido('PRDPROYINV') }"
+              />
+              <span
+                class="tag is-danger is-light"
+                *ngIf="campoEsValido('PRDPROYINV')"
+              >
+                Este campo debe colocarse més de inicio y més de finalización
+              </span>
+          </div>
+
+            <!-- ok -->
+          <div class="field">
+            <label class="label">Síntesis:</label>
+            <textarea
+              class="textarea"
+              cols="30"
+              rows="5"
+              formControlName="RSMPROYINV"
+            ></textarea>
+          </div>
+
+           <!-- ok -->
+      <div class="field">
+        <label class="label">Alcance</label>
+        <div class="select" [ngClass]="{'is-danger' : campoEsValido('ALCPROYINV')}">
+          <select formControlName="ALCPROYINV">
+            <option value="Institucional">Institucional</option>
+            <option value="Nacional">Nacional</option>
+            <option value="Lationamérica">Lationamérica</option>
+            <option value="Otras regiones">Otras regiones</option>
+          </select>
+        </div>
+        <p class="help is-danger" *ngIf="campoEsValido('REAPROYINV')">Este campo es obligatorio</p>
+      </div>
+   
+         <!-- ok -->
+         <div class="field">
+           <label class="label">Realizado</label>
+           <div class="control">
+             <label class="radio">
+               <input type="radio" name="REAPROYINV" formControlName="REAPROYINV" value=1>
+               Si
+             </label>
+             <label class="radio">
+               <input type="radio" name="REAPROYINV" formControlName="REAPROYINV" value=0>
+               No
+             </label>
+           </div>
+           <p class="help is-danger" *ngIf="campoEsValido('REAPROYINV')">Este campo es obligatorio</p>
+         </div>
+         
+         <!-- ok -->
+         <div class="field">
+           <label class="label">Agenda</label>
+           <div class="control">
+             <label class="radio">
+               <input type="radio" name="AGDREDPROY" formControlName="AGDREDPROY" value="Si">
+               Si
+             </label>
+             <label class="radio">
+               <input type="radio" name="AGDREDPROY" formControlName="AGDREDPROY" value="No">
+               No
+             </label>
+           </div>
+           <p class="help is-danger" *ngIf="campoEsValido('AGDREDPROY')">Este campo es obligatorio</p>
+         </div>
+     
+       <!-- ok -->
+         <div class="field">
+           <label class="label">Información adicional: </label>
+           <div class="control">
+             <textarea class="textarea" placeholder="" formControlName="INFADCPROY"></textarea>
+           </div>
+         </div>
+     
+         <div class="field is-grouped">
+           <div class="control">
+             <button class="button is-link" (click)="guardar()">Guardar</button>
+           </div>
+           <div class="control">
+             <button class="button is-link is-light">Cancel</button>
+           </div>
+         </div>
+       </form>
+     </div>
+     
+     
+   
+     
+     <span>Valid</span>
+     <pre>{{ form.valid }}</pre>
+     <br>
+     
+     <span>value</span>
+     <pre>{{ form.value | json  }}</pre>
+     <br>
+   
+   
