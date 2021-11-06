@@ -19,7 +19,7 @@ export class RedesComponent implements OnInit {
   lista: any[] = [];
   dato: boolean = true;
   fecha: string = '';
-
+  selectedCountry:any=[];
   constructor(
     private servicesForm: ServicesFormService,
     private fb: FormBuilder
@@ -63,7 +63,7 @@ export class RedesComponent implements OnInit {
       ALCPROYINV: new FormControl('', [Validators.required]),
       PRDPROYINV: new FormControl('',[Validators.pattern("[A-Z]*[a-z]+[ ]?-[ ]?[A-Z]*[a-z]+")]),
       MESPROYINV: new FormControl(''),
-      FECCAPPROY: new FormControl(''),
+      FECCAPPROY: new FormControl(this.fechaActual()),
       REAPROYINV: new FormControl('', [Validators.required]),
       AGDREDPROY: new FormControl('', [Validators.required]),
       TPOACTPROY: new FormControl(''),
@@ -96,7 +96,6 @@ export class RedesComponent implements OnInit {
   }
 
   addAutor(nombre: String, event: Event) {
-    console.log(moment(this.fecha).format('DD-MM-YY'));
     if (nombre !== '') {
       this.autoresArr.push(this.fb.control(this.autor.value, Validators.required));
       console.log(this.autoresArr.length);
@@ -125,7 +124,6 @@ export class RedesComponent implements OnInit {
   guardar() {
     console.log(this.autoresArr.value);
     console.log(this.paisesArr?.value);
-    this.form.controls.FECCAPPROY.setValue(moment(this.fecha).format('DD-MM-YY'));
     this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
 
     this.form.controls.INSPROYINV.setValue(this.instArr.value.join(','));
@@ -171,5 +169,11 @@ export class RedesComponent implements OnInit {
     this.autoresArr.clear();
     this.instArr.clear();
     this.form.reset();
+    this.selectedCountry = [];
   }
+  fechaActual(): String{
+    let fecha = new Date;
+    return moment(fecha).format('DD-MM-YY');
+  }
+ 
 }

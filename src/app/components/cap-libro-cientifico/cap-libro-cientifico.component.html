@@ -112,7 +112,7 @@
       </div>
       <div class="field">
         <label class="label">País:</label>
-        <ng-select class="select is-multiple" [multiple]="true" [formControl]="pais">
+        <ng-select class="select is-multiple" [multiple]="true" [formControl]="pais" [ngModel]="selectedCountry">
           <ng-option *ngFor="let item of lista" [value]="item.cveentnac">{{item.nomentnac}}</ng-option>
         </ng-select>
         <p class="help is-danger" *ngIf="campoEsValido('CVEPAISPRO')">Este campo es obligatorio</p>
@@ -135,26 +135,6 @@
         </div>
         <p class="help is-danger" *ngIf="campoEsValido('REAPROYINV')">Este campo es obligatorio</p>
       </div>
-      <div class="field">
-        <label class="label">Fecha de captura</label>
-        <div class="control">
-          <input
-            type="date"
-            class="input"
-            placeholder=""
-            formControlName="FECCAPPROY"
-            [ngClass]="{ 'is-danger': campoEsValido('FECCAPPROY') }"
-          />
-          <span
-            class="tag is-danger is-light"
-            *ngIf="campoEsValido('FECCAPPROY')"
-          >
-            Este campo es obligatorio
-          </span>
-        </div>
-      </div>
-  
-
       <div class="field">
         <label class="label">Realizado</label>
         <div class="control">

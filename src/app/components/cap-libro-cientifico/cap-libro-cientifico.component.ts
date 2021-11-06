@@ -3,6 +3,7 @@ import { Component, OnInit, NgModule } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
 import Swal from 'sweetalert2';
+import * as moment from 'moment';
 @Component({
   selector: 'app-cap-libro-cientifico',
   templateUrl: './cap-libro-cientifico.component.html',
@@ -17,7 +18,7 @@ export class CapLibroCientificoComponent implements OnInit {
   autores: String[] = [];
   lista: any[] = [];
   dato: boolean = true;
-  
+  selectedCountry:any=[];
   constructor(
     private servicesForm: ServicesFormService,
     private fb: FormBuilder
@@ -60,7 +61,7 @@ export class CapLibroCientificoComponent implements OnInit {
       ALCPROYINV: new FormControl('', [Validators.required]),
       PRDPROYINV: new FormControl(''),
       MESPROYINV: new FormControl(''),
-      FECCAPPROY: new FormControl(''),
+      FECCAPPROY: new FormControl(this.fechaActual()),
       REAPROYINV: new FormControl('', [Validators.required]),
       AGDREDPROY: new FormControl('', [Validators.required]),
       TPOACTPROY: new FormControl(''),
@@ -137,6 +138,7 @@ export class CapLibroCientificoComponent implements OnInit {
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
       console.log(mensaje);
       if(mensaje.respuesta){
+        this.limpiar();
         this.alertWithSuccess();
       }else{
         this.erroalert();
@@ -163,6 +165,12 @@ export class CapLibroCientificoComponent implements OnInit {
   }  
   limpiar(){
     this.autoresArr.clear();
+    this.autoresLibArr.clear();
     this.form.reset();
+    this.selectedCountry = [];
+  }
+  fechaActual(): String{
+    let fecha = new Date;
+    return moment(fecha).format('DD-MM-YY');
   }
 }
