@@ -19,7 +19,7 @@
       </div>
       <div class="field">
         <label class="label"> DOI/Enlace:</label>
-        <input class="input" type="email" formControlName="URLPROYINV"
+        <input class="input" type="email" placeholder="https://www.redalyc.org/articulo.oa?id=10411213" formControlName="URLPROYINV"
           [ngClass]="{'is-danger' : campoEsValido('URLPROYINV')}">
         <p class="help is-danger" *ngIf="campoEsValido('URLPROYINV')">
           Este campo es oblogatorio

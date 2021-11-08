@@ -38,7 +38,26 @@
           Este campo debe colocarse més de inicio y més de finalización
         </span>
     </div>
-
+    <div class="field">
+      <label class="label">Año</label>
+      <div class="control">
+        <input
+          type="number"
+          class="input"
+          placeholder=""
+          formControlName="ANIOPROYINV"
+          ngModel name="anioActual"
+          [ngClass]="{ 'is-danger': campoEsValido('ANIOPROYINV') }"
+        />
+        <span
+          class="tag is-danger is-light"
+          *ngIf="campoEsValido('ANIOPROYINV')"
+        >
+        Este campo solo acepta caracteres numericos entre 1980 y {{anioAct}}
+          <br />
+        </span>
+      </div>
+    </div>
     <div class="field">
       <label class="label">Coordinadores</label>
       <div class="field has-addons">

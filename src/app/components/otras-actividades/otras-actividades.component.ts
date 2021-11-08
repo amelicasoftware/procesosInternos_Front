@@ -48,7 +48,7 @@ export class OtrasActividadesComponent implements OnInit {
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([]),
       ANIOPROYINV: new FormControl('0'),
-      listAutor: this.fb.array([0],),
+      listAutor: this.fb.array([],),
       URLPROYINV: new FormControl('',),
       VOLPROYINV: new FormControl(''),
       FTEPROYINV: new FormControl('',),

@@ -50,7 +50,7 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioActual())]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
-      URLPROYINV: new FormControl('', [Validators.required]),
+      URLPROYINV: new FormControl('', [Validators.required, Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
       VOLPROYINV: new FormControl(''),
       FTEPROYINV: new FormControl('', [Validators.required]),
       INSPROYINV: new FormControl(''),
@@ -94,6 +94,7 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
       this.autoresArr.push(this.fb.control(this.autor.value, Validators.required));
       console.log(this.autoresArr.length);
       this.autor.reset('');
+      
     } else {
 
     }
@@ -107,7 +108,7 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
 
     console.log(this.autoresArr.value);
     console.log(this.paisesArr?.value);
-
+    this.form.controls.URLPROYINV.setValue(this.cambioUrl(this.form.controls.URLPROYINV.value));
     this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
 
@@ -159,5 +160,9 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
     this.anioAct = String(fecha.getFullYear());
     console.log(fecha.getFullYear());
     return Number(fecha.getFullYear());
+  }
+  cambioUrl(str:String): String{
+    var splitted = str.split("/");
+    return splitted.join("s-s");
   }
 }

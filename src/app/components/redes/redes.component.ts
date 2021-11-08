@@ -20,6 +20,7 @@ export class RedesComponent implements OnInit {
   dato: boolean = true;
   fecha: string = '';
   selectedCountry:any=[];
+  anioAct:String = "2021";
   constructor(
     private servicesForm: ServicesFormService,
     private fb: FormBuilder
@@ -50,7 +51,7 @@ export class RedesComponent implements OnInit {
       TPOPROYINV: new FormControl('Artículos científicos'),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
-      ANIOPROYINV: new FormControl(''),
+      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioActual())]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
       listIns: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl(''),
@@ -175,5 +176,9 @@ export class RedesComponent implements OnInit {
     let fecha = new Date;
     return moment(fecha).format('DD-MM-YY');
   }
- 
+  anioActual(): number{
+    let fecha = new Date;
+    this.anioAct = String(fecha.getFullYear());
+    return Number(fecha.getFullYear());
+  }
 }

@@ -142,23 +142,20 @@
 
     <div class="field">
       <label class="label">Alcance</label>
-      <div class="select">
-        <select
-          formControlName="ALCPROYINV"
-          [ngClass]="{ 'is-danger': campoEsValido('ALCPROYINV') }"
-        >
-          <option value="1">Institucional</option>
-          <option value="2">Nacional</option>
-          <option value="3">Lationamérica</option>
-          <option value="3">Otras regiones</option>
+      <div
+        class="select"
+        [ngClass]="{ 'is-danger': campoEsValido('ALCPROYINV') }"
+      >
+        <select formControlName="ALCPROYINV">
+          <option value="Institucional">Institucional</option>
+          <option value="Nacional">Nacional</option>
+          <option value="Lationamérica">Lationamérica</option>
+          <option value="Otras regiones">Otras regiones</option>
         </select>
-        <span
-          class="tag is-danger is-light"
-          *ngIf="campoEsValido('ALCPROYINV')"
-        >
-          Este campo es obligatorio
-        </span>
       </div>
+      <p class="help is-danger" *ngIf="campoEsValido('REAPROYINV')">
+        Este campo es obligatorio
+      </p>
     </div>
     <br />
     <div class="field">
