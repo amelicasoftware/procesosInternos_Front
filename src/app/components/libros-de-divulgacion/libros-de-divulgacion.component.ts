@@ -3,44 +3,28 @@ import { Component, OnInit, NgModule } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
 import Swal from 'sweetalert2';
-
+import * as moment from 'moment';
 @Component({
-  selector:'app-form',
-  templateUrl:'./form.component.html',
-  styleUrls: ['./form.component.css']
+  selector: 'app-libros-de-divulgacion',
+  templateUrl: './libros-de-divulgacion.component.html',
+  styleUrls: ['./libros-de-divulgacion.component.css']
 })
-export class FormComponent implements OnInit {
-  valor: number = 0;
-  seleccion:any = {id:0,name:''};
+export class LibrosDeDivulgacionComponent implements OnInit {
   typeForm = new FormControl('Selecciona un formulario');
   autor: FormControl = this.fb.control('', Validators.required);
   pais = new FormControl('');
   form!: FormGroup;
-  autores: String [] = [];
-  lista:any[]=[];
-  tiposForms  = [
-        { id: 1, name: 'Libros científicos' },
-        { id: 2, name: 'Capítulos de libro científico'},
-        { id: 3, name: 'Conferencias Especializadas' },
-        { id: 4, name: 'Artículos de divulgación' },
-        { id: 5, name: 'Libros de divulgación' },
-        { id: 6, name: 'Otras actividades' },
-        { id: 7, name: 'Redes de investigación' },
-        { id: 8, name: 'Ejemplo' }
-    ];
-
-    dato: boolean = true;
-
+  autores: String[] = [];
+  lista: any[] = [];
+  dato: boolean = true;
+  selectedCountry:any=[];
   constructor(
     private servicesForm: ServicesFormService,
     private fb: FormBuilder
   ) {
     this.buildForm();
   }
-  onSelect(id:any){
-    this.valor = id;
-    console.log(this.valor);
-  }
+
   ngOnInit() {
     this.typeForm.valueChanges.subscribe(valor => {
       console.log(valor);
@@ -56,22 +40,18 @@ export class FormComponent implements OnInit {
       this.lista = paises;
     });
   }
-  campoEsValido( campo: string ) {
-    return this.form.controls[campo].errors 
-            && this.form.controls[campo].touched;
-  }
-  
+
   private buildForm() {
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('prueba', [Validators.required, Validators.maxLength(100)]),
-      TPOPROYINV: new FormControl('Artículos científicos'),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      TPOPROYINV: new FormControl('Libros de divulgación'),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(2021)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl('', [Validators.required]),
       VOLPROYINV: new FormControl(''),
-      FTEPROYINV: new FormControl('', [Validators.required]),
+      FTEPROYINV: new FormControl(''),
       INSPROYINV: new FormControl(''),
       AUTPADPROY: new FormControl(''),
       PARPROYINV: new FormControl(''),
@@ -79,7 +59,7 @@ export class FormComponent implements OnInit {
       ALCPROYINV: new FormControl('', [Validators.required]),
       PRDPROYINV: new FormControl(''),
       MESPROYINV: new FormControl(''),
-      FECCAPPROY: new FormControl(''),
+      FECCAPPROY: new FormControl(this.fechaActual()),
       REAPROYINV: new FormControl('', [Validators.required]),
       AGDREDPROY: new FormControl('', [Validators.required]),
       TPOACTPROY: new FormControl(''),
@@ -92,6 +72,11 @@ export class FormComponent implements OnInit {
     //   .subscribe(value => {
     //     console.log(value);
     //   });
+  }
+
+  campoEsValido(campo: string) {
+    return this.form.controls[campo].errors
+      && this.form.controls[campo].touched;
   }
 
   get autoresArr() {
@@ -134,6 +119,7 @@ export class FormComponent implements OnInit {
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
       console.log(mensaje);
       if(mensaje.respuesta){
+        this.limpiar();
         this.alertWithSuccess();
       }else{
         this.erroalert();
@@ -158,4 +144,13 @@ export class FormComponent implements OnInit {
       footer: '<a href>Why do I have this issue?</a>'  
     })  
   }  
+  limpiar(){
+    this.autoresArr.clear();
+    this.form.reset();
+    this.selectedCountry = [];
+  }
+  fechaActual(): String{
+    let fecha = new Date;
+    return moment(fecha).format('DD-MM-YY');
+  }
 }

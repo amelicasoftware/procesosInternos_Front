@@ -1,0 +1,84 @@
+body {
+  position: relative;
+}
+.title-page {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.container-box-filter {
+  width: 100%;
+  text-align: center;
+}
+.box {
+  width: 50%;
+  margin: 0;
+  display: inline-block;
+  margin-right: 5px;
+}
+.select-periodo span {
+  display: inline-block;
+  vertical-align: -webkit-baseline-middle;
+}
+.select-periodo select {
+  display: inline-block;
+  margin: 3px 0;
+}
+.container-options {
+  text-align: center;
+}
+.container-options .select {
+  margin-left: 10px;
+}
+.container-options .select:nth-child(1) {
+  margin-left: 0;
+}
+.container-cards-proy {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+.container-cards-proy .card {
+  width: 370px;
+  display: inline-block;
+  margin-bottom: 50px;
+}
+.container-cards-proy .card .card-content {
+  height: 230px;
+}
+.sidebarFilters {
+  background-color: white;
+  width: 300px;
+  height: 900px;
+  color: black;
+  position: absolute;
+  top: 0;
+}
+.headFilters{
+  background-color: #485fc7;
+}
+.button-sidebar {
+  width: 10px;
+  display: inline-block;
+  position: relative;
+  left: 38%;
+  font-size: 25px;
+}
+.containerFiltros{
+  color: black;
+}
+.containerFiltros .filtro{
+  padding: 0 10%;
+}
+.containerFiltros .tit-filter{
+  text-align: center;
+}
+.elemento-filtro-hidden{
+	display: none;
+}
+
+.ver-mas-menos{
+	color: #263238;
+    font-size: 14px;
+    cursor: pointer;
+}
