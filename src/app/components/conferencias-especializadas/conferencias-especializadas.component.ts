@@ -68,7 +68,7 @@ export class ConferenciasEspecializadasComponent implements OnInit {
       FECCAPPROY: new FormControl(this.fechaActual()),
       REAPROYINV: new FormControl('', [Validators.required]),
       AGDREDPROY: new FormControl('', [Validators.required]),
-      TPOACTPROY: new FormControl(''),
+      TPOACTPROY: new FormControl('',[Validators.required]),
       INFADCPROY: new FormControl(''),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),

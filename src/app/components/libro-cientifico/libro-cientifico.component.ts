@@ -52,7 +52,7 @@ export class LibroCientificoComponent implements OnInit {
       URLPROYINV: new FormControl('', [Validators.required]),
       VOLPROYINV: new FormControl(''),
       FTEPROYINV: new FormControl(''),
-      INSPROYINV: new FormControl(''),
+      INSPROYINV: new FormControl('',[Validators.required]),
       AUTPADPROY: new FormControl(''),
       PARPROYINV: new FormControl(''),
       integrantes: new FormControl(''),

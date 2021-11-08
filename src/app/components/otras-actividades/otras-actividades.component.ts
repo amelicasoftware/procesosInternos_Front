@@ -62,7 +62,7 @@ export class OtrasActividadesComponent implements OnInit {
       FECCAPPROY: new FormControl(this.fechaActual()),
       REAPROYINV: new FormControl('0'),
       AGDREDPROY: new FormControl(''),
-      TPOACTPROY: new FormControl(''),
+      TPOACTPROY: new FormControl('',[Validators.required]),
       INFADCPROY: new FormControl(''),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),

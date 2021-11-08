@@ -47,7 +47,7 @@ export class FormDireccionDeTesisComponent implements OnInit {
   private buildForm() {
     this.form = this.fb.group({
       TITPROYINV: new FormControl('', [Validators.required]),
-      TPOPROYINV: new FormControl(''),
+      TPOPROYINV: new FormControl('Dirección de tesis'),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl(['']),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(2021)]),

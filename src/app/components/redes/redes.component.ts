@@ -46,7 +46,7 @@ export class RedesComponent implements OnInit {
 
   private buildForm() {
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
       TPOPROYINV: new FormControl('Artículos científicos'),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
@@ -69,7 +69,7 @@ export class RedesComponent implements OnInit {
       TPOACTPROY: new FormControl(''),
       INFADCPROY: new FormControl(''),
       AUTPROYINV: new FormControl(''),
-      CTDINTPROY: new FormControl('1',[Validators.pattern("[0-9]+")]),
+      CTDINTPROY: new FormControl('1',[Validators.pattern("[1-9]+[0-9]*"),Validators.min(1),Validators.max(10000)]),
     });
 
     // this.form.valueChanges

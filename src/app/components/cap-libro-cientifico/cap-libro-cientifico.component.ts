@@ -54,7 +54,7 @@ export class CapLibroCientificoComponent implements OnInit {
       URLPROYINV: new FormControl('', [Validators.required]),
       VOLPROYINV: new FormControl(''),
       FTEPROYINV: new FormControl('', [Validators.required]),
-      INSPROYINV: new FormControl(''),
+      INSPROYINV: new FormControl('',[Validators.required]),
       AUTPADPROY: new FormControl(''),
       PARPROYINV: new FormControl(''),
       integrantes: new FormControl(''),

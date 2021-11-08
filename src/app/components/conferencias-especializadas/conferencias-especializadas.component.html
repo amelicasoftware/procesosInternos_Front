@@ -204,21 +204,13 @@
     </div>
 
     <div class="field">
-      <label class="label">Información Adicional</label>
+      <label class="label">Información adicional: </label>
       <div class="control">
-        <input
-          type="text"
-          class="input"
+        <textarea
+          class="textarea"
           placeholder=""
-          formControlName="RSMPROYINV"
-          [ngClass]="{ 'is-danger': campoEsValido('RSMPROYINV') }"
-        />
-        <span
-          class="tag is-danger is-light"
-          *ngIf="campoEsValido('RSMPROYINV')"
-        >
-          Este campo es obligatorio
-        </span>
+          formControlName="INFADCPROY"
+        ></textarea>
       </div>
     </div>
     <div class="field is-grouped">
