@@ -25,6 +25,7 @@ export class ConferenciasEspecializadasComponent implements OnInit {
   lista: any[] = [];
   dato: boolean = true;
   selectedCountry:any=[];
+  anioAct:String = "2021";
   constructor(
     private servicesForm: ServicesFormService,
     private fb: FormBuilder
@@ -53,7 +54,7 @@ export class ConferenciasEspecializadasComponent implements OnInit {
       TPOPROYINV: new FormControl('Conferencias especializadas'),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
-      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(2021)]),
+      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioActual())]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl(''),
       VOLPROYINV: new FormControl(''),
@@ -158,5 +159,10 @@ export class ConferenciasEspecializadasComponent implements OnInit {
   fechaActual(): String{
     let fecha = new Date;
     return moment(fecha).format('DD-MM-YY');
+  }
+  anioActual(): number{
+    let fecha = new Date;
+    this.anioAct = String(fecha.getFullYear());
+    return Number(fecha.getFullYear());
   }
 }
