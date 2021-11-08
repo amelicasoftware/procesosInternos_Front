@@ -18,7 +18,7 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
   lista: any[] = [];
   dato: boolean = true;
   institucion: FormControl = this.fb.control('', Validators.required);
-
+  selectedCountry:any=[];
 
   constructor(
     private servicesForm: ServicesFormService,
@@ -56,13 +56,13 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
         listIns: this.fb.array([], [Validators.required, Validators.min(1)]),
         URLPROYINV: new FormControl(''),
         VOLPROYINV: new FormControl(''),
-        FTEPROYINV: new FormControl('' , [Validators.required]),
+        FTEPROYINV: new FormControl(''),
         INSPROYINV: new FormControl(''),
         AUTPADPROY: new FormControl(''),
         PARPROYINV: new FormControl(''),
         integrantes: new FormControl(''),
         ALCPROYINV: new FormControl('', [Validators.required]),
-        PRDPROYINV: new FormControl('',[Validators.pattern("[A-Z]*[a-z]+[ ]?-[ ]?[A-Z]*[a-z]+")]),
+        PRDPROYINV: new FormControl('',[Validators.required, Validators.pattern("[A-Z]*[a-z]+[ ]?-[ ]?[A-Z]*[a-z]+")]),
         MESPROYINV: new FormControl(''),
         FECCAPPROY: new FormControl(moment().format('DD-MM-YY')),
         REAPROYINV: new FormControl('', [Validators.required]),
@@ -70,7 +70,7 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
         TPOACTPROY: new FormControl(''),
         INFADCPROY: new FormControl(''),
         AUTPROYINV: new FormControl(''),
-        CTDINTPROY: new FormControl(''),
+        CTDINTPROY: new FormControl('0'),
       });
 
       
@@ -122,15 +122,20 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
     borrar(i: number) {
       this.autoresArr.removeAt(i);
     }
+    borrarInst(i: number) {
+      this.instArr.removeAt(i);
+    }
   
     guardar() {
-  
       console.log(this.autoresArr.value);
       console.log(this.paisesArr?.value);
-  
       this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
+  
+      this.form.controls.INSPROYINV.setValue(this.instArr.value.join(','));
+  
       this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
   
+      delete this.form.value.listIns;
       if (this.form.invalid) {
         this.form.markAllAsTouched();
         return;
@@ -138,8 +143,11 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
   
       // imprimir el valor del formulario, sólo si es válido
       this.servicesForm.postDatos(this.form).subscribe(mensaje => {
+        
         console.log(mensaje);
+        
         if(mensaje.respuesta){
+          this.limpiar();
           this.alertWithSuccess();
         }else{
           this.erroalert();
@@ -164,6 +172,17 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
         footer: '<a href>Why do I have this issue?</a>'  
       })  
     }  
+    limpiar(){
+      this.autoresArr.clear();
+      this.instArr.clear();
+      this.form.reset();
+      this.selectedCountry = [];
+    }
+    fechaActual(): String{
+      let fecha = new Date;
+      return moment(fecha).format('DD-MM-YY');
+    }
+   
   }
   
   
