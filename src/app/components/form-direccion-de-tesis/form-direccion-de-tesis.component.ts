@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { newArray } from '@angular/compiler/src/util';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
 import Swal from 'sweetalert2';
@@ -68,7 +67,7 @@ export class FormDireccionDeTesisComponent implements OnInit {
       TPOACTPROY: new FormControl(''),
       INFADCPROY: new FormControl(''),
       AUTPROYINV: new FormControl(''),
-      CTDINTPROY: new FormControl(''),
+      CTDINTPROY: new FormControl('0'),
     });
 
     // this.form.valueChanges
@@ -110,9 +109,11 @@ export class FormDireccionDeTesisComponent implements OnInit {
     console.log(this.autoresArr.value);
     console.log(this.paisesArr?.value);
     this.form.controls.URLPROYINV.setValue(this.cambioUrl(this.form.controls.URLPROYINV.value));
-    this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
-    this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
 
+
+    this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
+
+    this.form.controls.CVEPAISPRO.setValue('');
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -122,6 +123,7 @@ export class FormDireccionDeTesisComponent implements OnInit {
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
       console.log(mensaje);
       if(mensaje.respuesta){
+        this.limpiar();
         this.alertWithSuccess();
       }else{
         this.erroalert();
@@ -136,7 +138,10 @@ export class FormDireccionDeTesisComponent implements OnInit {
   alertWithSuccess(){  
     Swal.fire('', 'guardado correctamente!', 'success')  
   }
-
+  limpiar(){
+    this.autoresArr.clear();
+    this.form.reset();
+      }
   erroalert()  
   {  
     Swal.fire({  

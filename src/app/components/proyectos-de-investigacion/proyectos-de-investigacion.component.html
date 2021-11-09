@@ -12,36 +12,69 @@
          </div>
 
          <div class="field">
-            <label class="label">Instituciones participantes</label>
-            <div class="field has-addons">
-              <div class="control has-icons-left">
-                <input
-                  type="text"
-                  class="input"
-                  placeholder="Escribe el nombre de la institución"
-                  [formControl]="institucion"
-                  (keyup.enter)="addIns(institucion.value, $event)"
-                />
-                <span class="icon is-medium is-left">
-                  <i class="fa fa-user"></i>
-                </span>
-              </div>
-              <div class="control" (click)="addIns(institucion.value, $event)">
-                <a class="button is-info">Agregar</a>
-              </div>
+          <label class="label">Instituciones participantes</label>
+          <div class="field has-addons">
+            <div class="control has-icons-left">
+              <input
+                type="text"
+                class="input"
+                placeholder="Escribe el nombre de la institución"
+                [formControl]="institucion"
+                (keyup.enter)="addIns(institucion.value, $event)"
+              />
+              <span class="icon is-medium is-left">
+                <i class="fa fa-user"></i>
+              </span>
             </div>
-            <p class="help is-danger" *ngIf="campoEsValido('listIns')">
-              Debe agregar por lo menos una institución
-            </p>
+            <div class="control" (click)="addIns(institucion.value, $event)">
+              <a class="button is-info">Agregar</a>
+            </div>
           </div>
-
-         <!-- Revisar -->  
-         <div class="field">
+          <p class="help is-danger" *ngIf="campoEsValido('listIns')">
+            Debe agregar por lo menos una institución
+          </p>
+        </div>
+    
+        <label class="label" *ngIf="instArr.length > 0"
+          >Lista de Instituciones</label
+        >
+        <div formArrayName="listIns">
+          <div
+            class="field has-addons"
+            *ngFor="let institucion of instArr.controls; let i = index"
+          >
+            <div class="control has-icons-left">
+              <input
+                type="text"
+                class="input"
+                [formControlName]="i"
+                readonly="readonly"
+              />
+              <span class="icon is-medium is-left">
+                <i class="fa fa-user"></i>
+              </span>
+            </div>
+            <div class="control" (click)="borrarInst(i)">
+              <a class="button is-danger">Eliminar</a>
+            </div>
+          </div>
+        </div>
+         <!-- ok -->  
+          <div class="field">
             <label class="label">País de instituciones participantes:</label>
-            <ng-select class="select is-multiple" [multiple]="true" [formControl]="pais">
-              <ng-option *ngFor="let item of lista" [value]="item.cveentnac">{{item.nomentnac}}</ng-option>
+            <ng-select
+              class="select is-multiple"
+              [multiple]="true"
+              [formControl]="pais"
+              [ngModel]="selectedCountry"
+            >
+              <ng-option *ngFor="let item of lista" [value]="item.cveentnac">{{
+                item.nomentnac
+              }}</ng-option>
             </ng-select>
-            <p class="help is-danger" *ngIf="campoEsValido('CVEPAISPRO')">Este campo es obligatorio</p>
+            <p class="help is-danger" *ngIf="campoEsValido('CVEPAISPRO')">
+              Este campo es obligatorio
+            </p>
           </div>
 
           <!-- ok -->
@@ -137,13 +170,15 @@
      
      
    
-     
-     <span>Valid</span>
-     <pre>{{ form.valid }}</pre>
-     <br>
-     
-     <span>value</span>
-     <pre>{{ form.value | json  }}</pre>
-     <br>
+      <!--
+  <span>Valid</span>
+  <pre>{{ form.valid }}</pre>
+  <br>
+  
+  <span>value</span>
+  <pre>{{ form.value | json  }}</pre>
+  <br>
+
+-->
    
    
