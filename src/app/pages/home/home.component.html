@@ -25,16 +25,16 @@
                     Formularios
                 </p>
                 <ul class="menu-list">
-                    <li><a class="is-active" (click)="form('Artículos científicos')">Artículos científicos </a></li>
-                    <li><a class="" (click)="form('Capítulos de libro científico')">Capítulos de libro científico</a></li>
-                    <li><a class="" (click)="form('Libros científicos')">Libros científicos</a></li>
-                    <li><a class="" (click)="form('Conferencias especializadas')">Conferencias especializadas</a></li>
-                    <li><a class="" (click)="form('Artículos de divulgación')">Artículos de divulgación</a></li>
-                    <li><a class="" (click)="form('Libros de divulgación')">Libros de divulgación</a></li>
-                    <li><a class="" (click)="form('Otras actividades de divulgación')">Otras actividades de divulgación</a></li>
-                    <li><a class="" (click)="form('Dirección de tesis')">Dirección de tesis</a></li>
-                    <li><a class="" (click)="form('Proyectos de investigación')">Proyectos de investigación</a></li>
-                    <li><a class="" (click)="form('Redes de investigación')">Redes de investigación</a></li>
+                    <li><a [ngClass]="{'is-active' : nombreForm == 'Artículos científicos'}" (click)="form('Artículos científicos')">Artículos científicos </a></li>
+                    <li><a [ngClass]="{'is-active' : nombreForm == 'Capítulos de libro científico'}" (click)="form('Capítulos de libro científico')">Capítulos de libro científico</a></li>
+                    <li><a [ngClass]="{'is-active' : nombreForm == 'Libros científicos'}" (click)="form('Libros científicos')">Libros científicos</a></li>
+                    <li><a [ngClass]="{'is-active' : nombreForm == 'Conferencias especializadas'}" (click)="form('Conferencias especializadas')">Conferencias especializadas</a></li>
+                    <li><a [ngClass]="{'is-active' : nombreForm == 'Artículos de divulgación'}" (click)="form('Artículos de divulgación')">Artículos de divulgación</a></li>
+                    <li><a [ngClass]="{'is-active' : nombreForm == 'Libros de divulgación'}" (click)="form('Libros de divulgación')">Libros de divulgación</a></li>
+                    <li><a [ngClass]="{'is-active' : nombreForm == 'Otras actividades de divulgación'}" (click)="form('Otras actividades de divulgación')">Otras actividades de divulgación</a></li>
+                    <li><a [ngClass]="{'is-active' : nombreForm == 'Dirección de tesis'}" (click)="form('Dirección de tesis')">Dirección de tesis</a></li>
+                    <li><a [ngClass]="{'is-active' : nombreForm == 'Proyectos de investigación'}" (click)="form('Proyectos de investigación')">Proyectos de investigación</a></li>
+                    <li><a [ngClass]="{'is-active' : nombreForm == 'Redes de investigación'}" (click)="form('Redes de investigación')">Redes de investigación</a></li>
                     <!-- <li>
                         <a>Manage Your Team</a>
                         <ul>
