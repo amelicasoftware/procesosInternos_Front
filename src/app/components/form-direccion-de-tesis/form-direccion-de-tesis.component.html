@@ -34,32 +34,47 @@
       <!-- ok -->
       <div class="field">
         <label class="label">Año: </label>
-        <input class="input" type="text" formControlName="ANIOPROYINV"
+        <input class="input" type="number" formControlName="ANIOPROYINV"
           [ngClass]="{'is-danger' : campoEsValido('ANIOPROYINV')}">
         <p class="help is-danger" *ngIf="campoEsValido('ANIOPROYINV')">
-          Este campo es obligatorio
+          Este campo solo acepta caracteres numericos entre 1980 y 2021
         </p>
       </div>
 
         <!-- ok -->
-    <div class="field">
-      <label class="label">Autor:</label>
-      <div class="field has-addons">
-        <div class="control has-icons-left">
-          <input type="text" class="input" placeholder="Escribe el nombre del autor" [formControl]="autor"
-            (keyup.enter)="addAutor(autor.value, $event)">
-          <span class="icon is-medium is-left">
-            <i class="fa  fa-user"></i>
-          </span>
+        <div class="field">
+          <label class="label">Autor:</label>
+          <div class="field has-addons">
+            <div class="control has-icons-left">
+              <input type="text" class="input" placeholder="Escribe el nombre del autor" [formControl]="autor"
+                (keyup.enter)="addAutor(autor.value, $event)">
+              <span class="icon is-medium is-left">
+                <i class="fa  fa-user"></i>
+              </span>
+            </div>
+            <div class="control" (click)="addAutor(autor.value, $event)">
+              <a class="button is-info">Agregar</a>
+            </div>
+          </div>
+          <p class="help is-danger" *ngIf="campoEsValido('listAutor')">
+            Debe agregar un autor
+          </p>
         </div>
-        <div class="control" (click)="addAutor(autor.value, $event)">
-          <a class="button is-info">Agregar</a>
+        <label class="label" *ngIf="autoresArr.length>0 && 1>autoresArr.length">Autor</label>
+        <div formArrayName="listAutor">
+          <div class="field has-addons" *ngFor="let autor of autoresArr.controls; let i = index">
+            <div class="control has-icons-left">
+              <input type="text" class="input" [formControlName]="i" readonly="readonly">
+              <span class="icon is-medium is-left">
+                <i class="fa  fa-user"></i>
+              </span>
+            </div>
+            <div class="control" (click)="borrar(i)">
+              <a class="button is-danger">Eliminar</a>
+            </div>
+          </div>
         </div>
-      </div>
-      <p class="help is-danger" *ngIf="campoEsValido('listAutor')">
-        Debe agregar por lo menos un autor
-      </p>
-    </div>
+
 
       <!-- ok -->
       <div class="field">
