@@ -18,7 +18,7 @@ export class LibrosDeDivulgacionComponent implements OnInit {
   lista: any[] = [];
   dato: boolean = true;
   selectedCountry:any=[];
-  anioAct:String = "2021";
+  anioAct:number=2021;
   constructor(
     private servicesForm: ServicesFormService,
     private fb: FormBuilder
@@ -48,7 +48,7 @@ export class LibrosDeDivulgacionComponent implements OnInit {
       TPOPROYINV: new FormControl('Libros de divulgación'),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
-      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioActual())]),
+      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl('', [Validators.required,Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
       VOLPROYINV: new FormControl(''),
@@ -119,7 +119,7 @@ export class LibrosDeDivulgacionComponent implements OnInit {
     // imprimir el valor del formulario, sólo si es válido
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
       console.log(mensaje);
-      if(mensaje.respuesta){
+      if(mensaje.respuesta === 'true'){
         this.limpiar();
         this.alertWithSuccess();
       }else{
@@ -152,12 +152,8 @@ export class LibrosDeDivulgacionComponent implements OnInit {
   }
   fechaActual(): String{
     let fecha = new Date;
+    this.anioAct = fecha.getFullYear();
     return moment(fecha).format('DD-MM-YY');
-  }
-  anioActual(): number{
-    let fecha = new Date;
-    this.anioAct = String(fecha.getFullYear());
-    return Number(fecha.getFullYear());
   }
   
   cambioUrl(str:String): String{

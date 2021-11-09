@@ -122,7 +122,7 @@ export class FormDireccionDeTesisComponent implements OnInit {
     // imprimir el valor del formulario, sólo si es válido
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
       console.log(mensaje);
-      if(mensaje.respuesta){
+      if(mensaje.respuesta === 'true'){
         this.limpiar();
         this.alertWithSuccess();
       }else{
