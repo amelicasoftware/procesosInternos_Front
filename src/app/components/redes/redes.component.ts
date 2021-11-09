@@ -171,7 +171,32 @@ export class RedesComponent implements OnInit {
   limpiar(){
     this.autoresArr.clear();
     this.instArr.clear();
-    this.form.reset();
+    this.form = this.fb.group({
+      TITPROYINV: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
+      TPOPROYINV: new FormControl('Artículos científicos'),
+      RSMPROYINV: new FormControl(''),
+      CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
+      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
+      listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
+      listIns: this.fb.array([], [Validators.required, Validators.min(1)]),
+      URLPROYINV: new FormControl(''),
+      VOLPROYINV: new FormControl(''),
+      FTEPROYINV: new FormControl(''),
+      INSPROYINV: new FormControl(''),
+      AUTPADPROY: new FormControl(''),
+      PARPROYINV: new FormControl(''),
+      integrantes: new FormControl(''),
+      ALCPROYINV: new FormControl('', [Validators.required]),
+      PRDPROYINV: new FormControl('',[Validators.pattern(""+this.expreg)]),
+      MESPROYINV: new FormControl(''),
+      FECCAPPROY: new FormControl(this.fechaActual()),
+      REAPROYINV: new FormControl('', [Validators.required]),
+      AGDREDPROY: new FormControl('', [Validators.required]),
+      TPOACTPROY: new FormControl(''),
+      INFADCPROY: new FormControl(''),
+      AUTPROYINV: new FormControl(''),
+      CTDINTPROY: new FormControl('1',[Validators.pattern("[1-9]+[0-9]*"),Validators.min(1),Validators.max(10000)]),
+    });
     this.selectedCountry = [];
   }
   fechaActual(): String{

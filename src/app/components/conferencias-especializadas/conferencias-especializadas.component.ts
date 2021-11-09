@@ -153,7 +153,31 @@ export class ConferenciasEspecializadasComponent implements OnInit {
   }  
   limpiar(){
     this.autoresArr.clear();
-    this.form.reset();
+    this.form = this.fb.group({
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      TPOPROYINV: new FormControl('Conferencias especializadas'),
+      RSMPROYINV: new FormControl(''),
+      CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
+      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
+      listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
+      URLPROYINV: new FormControl(''),
+      VOLPROYINV: new FormControl(''),
+      FTEPROYINV: new FormControl(''),
+      INSPROYINV: new FormControl(''),
+      AUTPADPROY: new FormControl(''),
+      PARPROYINV: new FormControl(''),
+      integrantes: new FormControl(''),
+      ALCPROYINV: new FormControl('', [Validators.required]),
+      PRDPROYINV: new FormControl(''),
+      MESPROYINV: new FormControl(''),
+      FECCAPPROY: new FormControl(this.fechaActual()),
+      REAPROYINV: new FormControl('', [Validators.required]),
+      AGDREDPROY: new FormControl('', [Validators.required]),
+      TPOACTPROY: new FormControl('',[Validators.required]),
+      INFADCPROY: new FormControl(''),
+      AUTPROYINV: new FormControl(''),
+      CTDINTPROY: new FormControl('1'),
+    });
     this.selectedCountry = [];
   }
   fechaActual(): String{
