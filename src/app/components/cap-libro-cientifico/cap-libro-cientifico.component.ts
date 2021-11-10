@@ -121,19 +121,22 @@ export class CapLibroCientificoComponent implements OnInit {
     this.autoresLibArr.removeAt(i);
   }
 
-  guardar() {
+  guardar(): number {
 
+    
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return 0;
+    }
     console.log(this.autoresArr.value);
     console.log(this.paisesArr?.value);
+    this.form.controls.TITPROYINV.setValue(this.cambioUrl(this.form.controls.TITPROYINV.value));
+    this.form.controls.FTEPROYINV.setValue(this.cambioUrl(this.form.controls.FTEPROYINV.value));
     this.form.controls.URLPROYINV.setValue(this.cambioUrl(this.form.controls.URLPROYINV.value));
     this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
     this.form.controls.AUTPADPROY.setValue(this.autoresLibArr.value.join(','));
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
     delete this.form.value.listAutorLib;
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
 
     // imprimir el valor del formulario, sólo si es válido
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
@@ -149,6 +152,7 @@ export class CapLibroCientificoComponent implements OnInit {
     // console.log(mensaje);
     // this.alertWithSuccess();
     // this.erroalert();
+    return 0;
   }
 
   alertWithSuccess(){  

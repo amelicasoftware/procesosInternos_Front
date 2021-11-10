@@ -109,18 +109,16 @@ export class ConferenciasEspecializadasComponent implements OnInit {
     this.autoresArr.removeAt(i);
   }
 
-  guardar() {
-
-    console.log(this.autoresArr.value);
-    console.log(this.paisesArr?.value);
-
-    this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
-    this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
-
+  guardar():number {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      return;
+      return 0;
     }
+    console.log(this.autoresArr.value);
+    console.log(this.paisesArr?.value);
+    this.form.controls.TITPROYINV.setValue(this.cambioUrl(this.form.controls.TITPROYINV.value));
+    this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
+    this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
 
     // imprimir el valor del formulario, sólo si es válido
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
@@ -136,6 +134,7 @@ export class ConferenciasEspecializadasComponent implements OnInit {
     // console.log(mensaje);
     // this.alertWithSuccess();
     // this.erroalert();
+    return 0;
   }
 
   alertWithSuccess(){  
@@ -184,5 +183,9 @@ export class ConferenciasEspecializadasComponent implements OnInit {
     let fecha = new Date;
     this.anioAct = fecha.getFullYear();
     return moment(fecha).format('DD-MM-YY');
+  }
+  cambioUrl(str:String): String{
+    var splitted = str.split("/");
+    return splitted.join("s-s");
   }
 }
