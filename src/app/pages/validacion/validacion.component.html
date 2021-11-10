@@ -40,7 +40,9 @@
             <td>
               <div style="display: flex;
               justify-content: space-evenly;">
-                <span class="info"><i class="fa  fa-edit fa-1x" style="color: #276cda"></i></span>
+                <span class="info"><i class="fa  fa-edit fa-1x" 
+                  style="color: #276cda; cursor: pointer;" 
+                  [routerLink]="['/proyecto',item.cveproyinv]"></i></span>
               <span><i class="fa fa-times-circle fa-1x" style="color: red"></i></span>
               </div>              
             </td>

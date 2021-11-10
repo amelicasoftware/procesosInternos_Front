@@ -1,0 +1,16 @@
+<div class="container is-widescreen">
+    <!-- <h2>Formulario Artículos científicos</h2> -->
+    <br>
+    <form [formGroup]="form" class="box">
+        <div class="field">
+            <label for="" class="label">Título de artículo:</label>
+            <input class="input" type="text" formControlName="TITPROYINV"
+                [ngClass]="{'is-danger' : campoEsValido('TITPROYINV')}">
+            <p class="help is-danger" *ngIf="campoEsValido('TITPROYINV')">
+                Este campo es obligatorio
+            </p>
+        </div>
+    </form>
+</div>
+<pre>{{proyecto | json}}</pre>
+<pre>{{form.value | json}}</pre>

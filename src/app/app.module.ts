@@ -21,6 +21,7 @@ import { RouterModule } from '@angular/router';
 import { ConsultaComponent } from './pages/consulta/consulta.component';
 import { ValidacionComponent } from './pages/validacion/validacion.component';
 import { HeaderComponent } from './components/header/header.component';
+import { DatosProyectoComponent } from './pages/datos-proyecto/datos-proyecto.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { HeaderComponent } from './components/header/header.component';
     HomeComponent,
     ConsultaComponent,
     ValidacionComponent,
-    HeaderComponent
+    HeaderComponent,
+    DatosProyectoComponent
   ],
   imports: [
     BrowserModule,
