@@ -124,9 +124,14 @@ export class RedesComponent implements OnInit {
   borrarInst(i: number) {
     this.instArr.removeAt(i);
   }
-  guardar() {
+  guardar():number {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return 0;
+    }
     console.log(this.autoresArr.value);
     console.log(this.paisesArr?.value);
+    this.form.controls.TITPROYINV.setValue(this.cambioUrl(this.form.controls.TITPROYINV.value));
     this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
 
     this.form.controls.INSPROYINV.setValue(this.instArr.value.join(','));
@@ -134,10 +139,7 @@ export class RedesComponent implements OnInit {
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
 
     delete this.form.value.listIns;
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
+ 
 
     // imprimir el valor del formulario, sólo si es válido
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
@@ -153,6 +155,7 @@ export class RedesComponent implements OnInit {
     // console.log(mensaje);
     // this.alertWithSuccess();
     // this.erroalert();
+    return 0;
   }
 
   alertWithSuccess(){  
@@ -203,5 +206,9 @@ export class RedesComponent implements OnInit {
     let fecha = new Date;
     this.anioAct = fecha.getFullYear();
     return moment(fecha).format('DD-MM-YY');
+  }
+  cambioUrl(str:String): String{
+    var splitted = str.split("/");
+    return splitted.join("s-s");
   }
 }
