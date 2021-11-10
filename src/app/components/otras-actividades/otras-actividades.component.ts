@@ -118,11 +118,10 @@ export class OtrasActividadesComponent implements OnInit {
     // imprimir el valor del formulario, sólo si es válido
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
       console.log(mensaje);
-      if(mensaje.respuesta){
+      if(mensaje.respuesta === 'true'){
         this.limpiar();
         this.alertWithSuccess();
       }else{
-        this.limpiar();
         this.erroalert();
       }
     });
@@ -147,7 +146,31 @@ export class OtrasActividadesComponent implements OnInit {
   } 
   limpiar(){
     this.autoresArr.clear();
-    this.form.reset();
+    this.form = this.fb.group({
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      TPOPROYINV: new FormControl('Otras Actividades'),
+      RSMPROYINV: new FormControl(''),
+      CVEPAISPRO: new FormControl([]),
+      ANIOPROYINV: new FormControl('0'),
+      listAutor: this.fb.array([],),
+      URLPROYINV: new FormControl('',),
+      VOLPROYINV: new FormControl(''),
+      FTEPROYINV: new FormControl('',),
+      INSPROYINV: new FormControl(''),
+      AUTPADPROY: new FormControl(''),
+      PARPROYINV: new FormControl(''),
+      integrantes: new FormControl(''),
+      ALCPROYINV: new FormControl(''),
+      PRDPROYINV: new FormControl(''),
+      MESPROYINV: new FormControl(''),
+      FECCAPPROY: new FormControl(this.fechaActual()),
+      REAPROYINV: new FormControl('0'),
+      AGDREDPROY: new FormControl(''),
+      TPOACTPROY: new FormControl('',[Validators.required]),
+      INFADCPROY: new FormControl(''),
+      AUTPROYINV: new FormControl(''),
+      CTDINTPROY: new FormControl('1'),
+    });
     this.selectedCountry = [];
   }
   fechaActual(): String{

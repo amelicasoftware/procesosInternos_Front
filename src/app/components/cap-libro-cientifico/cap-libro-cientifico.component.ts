@@ -19,7 +19,7 @@ export class CapLibroCientificoComponent implements OnInit {
   lista: any[] = [];
   dato: boolean = true;
   selectedCountry:any=[];
-  anioAct:String = "2021";
+  anioAct:number=2021;
   constructor(
     private servicesForm: ServicesFormService,
     private fb: FormBuilder
@@ -49,7 +49,7 @@ export class CapLibroCientificoComponent implements OnInit {
       TPOPROYINV: new FormControl('Capítulos de libro científico'),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
-      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioActual())]),
+      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
       listAutorLib: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl('', [Validators.required,Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
@@ -138,7 +138,7 @@ export class CapLibroCientificoComponent implements OnInit {
     // imprimir el valor del formulario, sólo si es válido
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
       console.log(mensaje);
-      if(mensaje.respuesta){
+      if(mensaje.respuesta === 'true'){
         this.limpiar();
         this.alertWithSuccess();
       }else{
@@ -167,17 +167,38 @@ export class CapLibroCientificoComponent implements OnInit {
   limpiar(){
     this.autoresArr.clear();
     this.autoresLibArr.clear();
-    this.form.reset();
+    this.form = this.fb.group({
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      TPOPROYINV: new FormControl('Capítulos de libro científico'),
+      RSMPROYINV: new FormControl(''),
+      CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
+      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
+      listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
+      listAutorLib: this.fb.array([], [Validators.required, Validators.min(1)]),
+      URLPROYINV: new FormControl('', [Validators.required,Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
+      VOLPROYINV: new FormControl(''),
+      FTEPROYINV: new FormControl('', [Validators.required]),
+      INSPROYINV: new FormControl('',[Validators.required]),
+      AUTPADPROY: new FormControl(''),
+      PARPROYINV: new FormControl(''),
+      integrantes: new FormControl(''),
+      ALCPROYINV: new FormControl('', [Validators.required]),
+      PRDPROYINV: new FormControl(''),
+      MESPROYINV: new FormControl(''),
+      FECCAPPROY: new FormControl(this.fechaActual()),
+      REAPROYINV: new FormControl('', [Validators.required]),
+      AGDREDPROY: new FormControl('', [Validators.required]),
+      TPOACTPROY: new FormControl(''),
+      INFADCPROY: new FormControl(''),
+      AUTPROYINV: new FormControl(''),
+      CTDINTPROY: new FormControl('1'),
+    });
     this.selectedCountry = [];
   }
   fechaActual(): String{
     let fecha = new Date;
+    this.anioAct = fecha.getFullYear();
     return moment(fecha).format('DD-MM-YY');
-  }
-  anioActual(): number{
-    let fecha = new Date;
-    this.anioAct = String(fecha.getFullYear());
-    return Number(fecha.getFullYear());
   }
   
   cambioUrl(str:String): String{
