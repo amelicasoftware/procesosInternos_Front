@@ -19,7 +19,7 @@
       </div>
       <div class="field">
         <label class="label"> DOI/Enlace:</label>
-        <input class="input" type="email" formControlName="URLPROYINV"
+        <input class="input" type="email" placeholder="https://www.redalyc.org/articulo.oa?id=10411213" formControlName="URLPROYINV"
           [ngClass]="{'is-danger' : campoEsValido('URLPROYINV')}">
         <p class="help is-danger" *ngIf="campoEsValido('URLPROYINV')">
           Este campo es oblogatorio
@@ -67,13 +67,14 @@
             class="input"
             placeholder=""
             formControlName="ANIOPROYINV"
+            ngModel name="anioActual"
             [ngClass]="{ 'is-danger': campoEsValido('ANIOPROYINV') }"
           />
           <span
             class="tag is-danger is-light"
             *ngIf="campoEsValido('ANIOPROYINV')"
           >
-            Este campo es obligatorio
+          Este campo solo acepta caracteres numericos entre 1980 y {{anioAct}}
             <br />
           </span>
         </div>

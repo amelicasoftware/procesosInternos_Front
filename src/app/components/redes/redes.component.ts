@@ -20,6 +20,7 @@ export class RedesComponent implements OnInit {
   dato: boolean = true;
   fecha: string = '';
   selectedCountry:any=[];
+  anioAct:String = "2021";
   constructor(
     private servicesForm: ServicesFormService,
     private fb: FormBuilder
@@ -46,11 +47,11 @@ export class RedesComponent implements OnInit {
 
   private buildForm() {
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
       TPOPROYINV: new FormControl('Artículos científicos'),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
-      ANIOPROYINV: new FormControl(''),
+      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioActual())]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
       listIns: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl(''),
@@ -69,7 +70,7 @@ export class RedesComponent implements OnInit {
       TPOACTPROY: new FormControl(''),
       INFADCPROY: new FormControl(''),
       AUTPROYINV: new FormControl(''),
-      CTDINTPROY: new FormControl('1',[Validators.pattern("[0-9]+")]),
+      CTDINTPROY: new FormControl('1',[Validators.pattern("[1-9]+[0-9]*"),Validators.min(1),Validators.max(10000)]),
     });
 
     // this.form.valueChanges
@@ -175,5 +176,9 @@ export class RedesComponent implements OnInit {
     let fecha = new Date;
     return moment(fecha).format('DD-MM-YY');
   }
- 
+  anioActual(): number{
+    let fecha = new Date;
+    this.anioAct = String(fecha.getFullYear());
+    return Number(fecha.getFullYear());
+  }
 }

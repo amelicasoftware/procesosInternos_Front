@@ -18,6 +18,7 @@ export class LibroCientificoComponent implements OnInit {
   lista: any[] = [];
   dato: boolean = true;
   selectedCountry:any=[];
+  anioAct:String = "2021";
   constructor(
     private servicesForm: ServicesFormService,
     private fb: FormBuilder
@@ -47,12 +48,12 @@ export class LibroCientificoComponent implements OnInit {
       TPOPROYINV: new FormControl('Libro científico'),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
-      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(2021)]),
+      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioActual())]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
-      URLPROYINV: new FormControl('', [Validators.required]),
+      URLPROYINV: new FormControl('', [Validators.required, Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
       VOLPROYINV: new FormControl(''),
       FTEPROYINV: new FormControl(''),
-      INSPROYINV: new FormControl(''),
+      INSPROYINV: new FormControl('',[Validators.required]),
       AUTPADPROY: new FormControl(''),
       PARPROYINV: new FormControl(''),
       integrantes: new FormControl(''),
@@ -106,7 +107,7 @@ export class LibroCientificoComponent implements OnInit {
 
     console.log(this.autoresArr.value);
     console.log(this.paisesArr?.value);
-
+    this.form.controls.URLPROYINV.setValue(this.cambioUrl(this.form.controls.URLPROYINV.value));
     this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
 
@@ -152,5 +153,15 @@ export class LibroCientificoComponent implements OnInit {
   fechaActual(): String{
     let fecha = new Date;
     return moment(fecha).format('DD-MM-YY');
+  }
+  anioActual(): number{
+    let fecha = new Date;
+    this.anioAct = String(fecha.getFullYear());
+    return Number(fecha.getFullYear());
+  }
+  
+  cambioUrl(str:String): String{
+    var splitted = str.split("/");
+    return splitted.join("s-s");
   }
 }
