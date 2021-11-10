@@ -48,7 +48,7 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
     private buildForm() {
       this.form = this.fb.group({
         TITPROYINV: new FormControl('', [Validators.required]),
-        TPOPROYINV: new FormControl(''),
+        TPOPROYINV: new FormControl('Proyectos de Investigación'),
         RSMPROYINV: new FormControl(''),
         CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
         ANIOPROYINV: new FormControl(''),

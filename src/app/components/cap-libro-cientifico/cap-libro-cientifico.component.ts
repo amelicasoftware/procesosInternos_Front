@@ -19,6 +19,7 @@ export class CapLibroCientificoComponent implements OnInit {
   lista: any[] = [];
   dato: boolean = true;
   selectedCountry:any=[];
+  anioAct:String = "2021";
   constructor(
     private servicesForm: ServicesFormService,
     private fb: FormBuilder
@@ -48,13 +49,13 @@ export class CapLibroCientificoComponent implements OnInit {
       TPOPROYINV: new FormControl('Capítulos de libro científico'),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
-      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(2021)]),
+      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioActual())]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
       listAutorLib: this.fb.array([], [Validators.required, Validators.min(1)]),
-      URLPROYINV: new FormControl('', [Validators.required]),
+      URLPROYINV: new FormControl('', [Validators.required,Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
       VOLPROYINV: new FormControl(''),
       FTEPROYINV: new FormControl('', [Validators.required]),
-      INSPROYINV: new FormControl(''),
+      INSPROYINV: new FormControl('',[Validators.required]),
       AUTPADPROY: new FormControl(''),
       PARPROYINV: new FormControl(''),
       integrantes: new FormControl(''),
@@ -124,7 +125,7 @@ export class CapLibroCientificoComponent implements OnInit {
 
     console.log(this.autoresArr.value);
     console.log(this.paisesArr?.value);
-
+    this.form.controls.URLPROYINV.setValue(this.cambioUrl(this.form.controls.URLPROYINV.value));
     this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
     this.form.controls.AUTPADPROY.setValue(this.autoresLibArr.value.join(','));
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
@@ -172,5 +173,15 @@ export class CapLibroCientificoComponent implements OnInit {
   fechaActual(): String{
     let fecha = new Date;
     return moment(fecha).format('DD-MM-YY');
+  }
+  anioActual(): number{
+    let fecha = new Date;
+    this.anioAct = String(fecha.getFullYear());
+    return Number(fecha.getFullYear());
+  }
+  
+  cambioUrl(str:String): String{
+    var splitted = str.split("/");
+    return splitted.join("s-s");
   }
 }
