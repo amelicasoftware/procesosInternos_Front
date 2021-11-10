@@ -78,6 +78,16 @@
           </div>
 
           <!-- ok -->
+      <div class="field">
+        <label class="label">Año: </label>
+        <input class="input" type="number" formControlName="ANIOPROYINV"
+          [ngClass]="{'is-danger' : campoEsValido('ANIOPROYINV')}">
+        <p class="help is-danger" *ngIf="campoEsValido('ANIOPROYINV')">
+          Este campo solo acepta caracteres numericos entre 1980 y 2021
+        </p>
+      </div>
+
+          <!-- ok -->
           <div class="field">
             <label class="label">Periodo:</label>
             <input class="input" type="text" formControlName="PRDPROYINV"
@@ -170,8 +180,8 @@
      
      
 
- 
-   <!-- 
+ <!--
+    
   <span>Valid</span>
   <pre>{{ form.valid }}</pre>
   <br>
@@ -180,7 +190,7 @@
   <pre>{{ form.value | json  }}</pre>
   <br>
 
--->
+    -->
 
 
    

@@ -51,7 +51,7 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
         TPOPROYINV: new FormControl('Proyectos de investigación'),
         RSMPROYINV: new FormControl(''),
         CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
-        ANIOPROYINV: new FormControl(''),
+        ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(2021)]),
         listAutor: this.fb.array([]),
         listIns: this.fb.array([], [Validators.required, Validators.min(1)]),
         URLPROYINV: new FormControl(''),
@@ -135,6 +135,8 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
   
       this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
   
+      this.form.controls.TITPROYINV.setValue(this.formatoTitulo(this.form.controls.TITPROYINV.value));
+
       delete this.form.value.listIns;
       if (this.form.invalid) {
         this.form.markAllAsTouched();
@@ -145,7 +147,7 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
       this.servicesForm.postDatos(this.form).subscribe(mensaje => {
         
         console.log(mensaje);
-        
+        console.log(this.form.controls.TITPROYINV.value);
         if(mensaje.respuesta == "true"){
           this.limpiar();
           this.alertWithSuccess();
@@ -178,6 +180,10 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
       //this.form.reset();
       this.buildForm();
       this.selectedCountry = [];
+    }
+    formatoTitulo(str:String): String{
+      var splitted = str.split("/");
+      return splitted.join("s-s");
     }
   }
   

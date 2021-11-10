@@ -107,8 +107,7 @@ export class FormDireccionDeTesisComponent implements OnInit {
   guardar() {
 
     console.log(this.autoresArr.value);
-    console.log(this.paisesArr?.value);
-    this.form.controls.URLPROYINV.setValue(this.cambioUrl(this.form.controls.URLPROYINV.value));
+    this.form.controls.TITPROYINV.setValue(this.formatoTitulo(this.form.controls.TITPROYINV.value));
 
 
     this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
@@ -153,7 +152,7 @@ export class FormDireccionDeTesisComponent implements OnInit {
     })  
   }  
   
-  cambioUrl(str:String): String{
+  formatoTitulo(str:String): String{
     var splitted = str.split("/");
     return splitted.join("s-s");
   }
