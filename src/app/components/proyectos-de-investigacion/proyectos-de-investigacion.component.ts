@@ -48,11 +48,11 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
     private buildForm() {
       this.form = this.fb.group({
         TITPROYINV: new FormControl('', [Validators.required]),
-        TPOPROYINV: new FormControl(''),
+        TPOPROYINV: new FormControl('Proyectos de investigación'),
         RSMPROYINV: new FormControl(''),
         CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
         ANIOPROYINV: new FormControl(''),
-        listAutor: this.fb.array([], []),
+        listAutor: this.fb.array([]),
         listIns: this.fb.array([], [Validators.required, Validators.min(1)]),
         URLPROYINV: new FormControl(''),
         VOLPROYINV: new FormControl(''),
@@ -129,7 +129,7 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
     guardar() {
       console.log(this.autoresArr.value);
       console.log(this.paisesArr?.value);
-      this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
+      this.form.controls.AUTPROYINV.setValue('');
   
       this.form.controls.INSPROYINV.setValue(this.instArr.value.join(','));
   
@@ -146,7 +146,7 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
         
         console.log(mensaje);
         
-        if(mensaje.respuesta){
+        if(mensaje.respuesta == "true"){
           this.limpiar();
           this.alertWithSuccess();
         }else{
@@ -173,16 +173,12 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
       })  
     }  
     limpiar(){
-      this.autoresArr.clear();
+      
       this.instArr.clear();
-      this.form.reset();
+      //this.form.reset();
+      this.buildForm();
       this.selectedCountry = [];
     }
-    fechaActual(): String{
-      let fecha = new Date;
-      return moment(fecha).format('DD-MM-YY');
-    }
-   
   }
   
   
