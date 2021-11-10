@@ -20,7 +20,9 @@ export class RedesComponent implements OnInit {
   dato: boolean = true;
   fecha: string = '';
   selectedCountry:any=[];
-  anioAct:String = "2021";
+  anioAct:number=2021;
+  expreg:String ="(Enero|enero|Febrero|febrero|marzo|Marzo|Abril|abril|mayo|Mayo|junio|Julio|Agosto|agosto|Septiembre|septiembre|octubre|Octubre|Noviembre|noviembre|Diciembre|diciembre)"+
+                 "[ ]?-[ ]?(Enero|enero|Febrero|febrero|marzo|Marzo|Abril|abril|mayo|Mayo|junio|Julio|Agosto|agosto|Septiembre|septiembre|octubre|Octubre|Noviembre|noviembre|Diciembre|diciembre)";
   constructor(
     private servicesForm: ServicesFormService,
     private fb: FormBuilder
@@ -51,7 +53,7 @@ export class RedesComponent implements OnInit {
       TPOPROYINV: new FormControl('Artículos científicos'),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
-      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioActual())]),
+      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
       listIns: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl(''),
@@ -62,7 +64,7 @@ export class RedesComponent implements OnInit {
       PARPROYINV: new FormControl(''),
       integrantes: new FormControl(''),
       ALCPROYINV: new FormControl('', [Validators.required]),
-      PRDPROYINV: new FormControl('',[Validators.pattern("[A-Z]*[a-z]+[ ]?-[ ]?[A-Z]*[a-z]+")]),
+      PRDPROYINV: new FormControl('',[Validators.pattern(""+this.expreg)]),
       MESPROYINV: new FormControl(''),
       FECCAPPROY: new FormControl(this.fechaActual()),
       REAPROYINV: new FormControl('', [Validators.required]),
@@ -140,7 +142,7 @@ export class RedesComponent implements OnInit {
     // imprimir el valor del formulario, sólo si es válido
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
       console.log(mensaje);
-      if(mensaje.respuesta){
+      if(mensaje.respuesta === 'true'){
         this.limpiar();
         this.alertWithSuccess();
       }else{
@@ -169,16 +171,37 @@ export class RedesComponent implements OnInit {
   limpiar(){
     this.autoresArr.clear();
     this.instArr.clear();
-    this.form.reset();
+    this.form = this.fb.group({
+      TITPROYINV: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
+      TPOPROYINV: new FormControl('Artículos científicos'),
+      RSMPROYINV: new FormControl(''),
+      CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
+      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
+      listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
+      listIns: this.fb.array([], [Validators.required, Validators.min(1)]),
+      URLPROYINV: new FormControl(''),
+      VOLPROYINV: new FormControl(''),
+      FTEPROYINV: new FormControl(''),
+      INSPROYINV: new FormControl(''),
+      AUTPADPROY: new FormControl(''),
+      PARPROYINV: new FormControl(''),
+      integrantes: new FormControl(''),
+      ALCPROYINV: new FormControl('', [Validators.required]),
+      PRDPROYINV: new FormControl('',[Validators.pattern(""+this.expreg)]),
+      MESPROYINV: new FormControl(''),
+      FECCAPPROY: new FormControl(this.fechaActual()),
+      REAPROYINV: new FormControl('', [Validators.required]),
+      AGDREDPROY: new FormControl('', [Validators.required]),
+      TPOACTPROY: new FormControl(''),
+      INFADCPROY: new FormControl(''),
+      AUTPROYINV: new FormControl(''),
+      CTDINTPROY: new FormControl('1',[Validators.pattern("[1-9]+[0-9]*"),Validators.min(1),Validators.max(10000)]),
+    });
     this.selectedCountry = [];
   }
   fechaActual(): String{
     let fecha = new Date;
+    this.anioAct = fecha.getFullYear();
     return moment(fecha).format('DD-MM-YY');
-  }
-  anioActual(): number{
-    let fecha = new Date;
-    this.anioAct = String(fecha.getFullYear());
-    return Number(fecha.getFullYear());
   }
 }
