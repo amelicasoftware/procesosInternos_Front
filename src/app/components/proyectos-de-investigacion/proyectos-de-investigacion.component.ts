@@ -148,12 +148,18 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
         
         console.log(mensaje);
         console.log(this.form.controls.TITPROYINV.value);
-        if(mensaje.respuesta == "true"){
+        if(mensaje !== null){
+        if(mensaje.respuesta === 'true'){
           this.limpiar();
           this.alertWithSuccess();
         }else{
+          this.selectedCountry = [];
           this.erroalert();
         }
+      }else{
+        this.selectedCountry = [];
+        this.erroalert();
+      }
       });
       console.log(this.form.value);
       // console.log(mensaje);

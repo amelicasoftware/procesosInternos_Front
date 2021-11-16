@@ -45,17 +45,17 @@ export class CapLibroCientificoComponent implements OnInit {
 
   private buildForm() {
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern("[^#/\"?]+")]),
       TPOPROYINV: new FormControl('Capítulos de libro científico'),
-      RSMPROYINV: new FormControl(''),
+      RSMPROYINV: new FormControl('',[Validators.pattern("[^#/\"?]+")]),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
       listAutorLib: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl('', [Validators.required,Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
       VOLPROYINV: new FormControl(''),
-      FTEPROYINV: new FormControl('', [Validators.required]),
-      INSPROYINV: new FormControl('',[Validators.required]),
+      FTEPROYINV: new FormControl('', [Validators.required,Validators.pattern("[^#/\"?]+")]),
+      INSPROYINV: new FormControl('',[Validators.required,Validators.pattern("[^#/\"?]+")]),
       AUTPADPROY: new FormControl(''),
       PARPROYINV: new FormControl(''),
       integrantes: new FormControl(''),
@@ -66,7 +66,7 @@ export class CapLibroCientificoComponent implements OnInit {
       REAPROYINV: new FormControl('', [Validators.required]),
       AGDREDPROY: new FormControl('', [Validators.required]),
       TPOACTPROY: new FormControl(''),
-      INFADCPROY: new FormControl(''),
+      INFADCPROY: new FormControl('',[Validators.pattern("[^#/\"?]+")]),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),
     });
@@ -141,10 +141,16 @@ export class CapLibroCientificoComponent implements OnInit {
     // imprimir el valor del formulario, sólo si es válido
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
       console.log(mensaje);
-      if(mensaje.respuesta === 'true'){
-        this.limpiar();
-        this.alertWithSuccess();
+      if(mensaje !== null){
+        if(mensaje.respuesta === 'true'){
+          this.limpiar();
+          this.alertWithSuccess();
+        }else{
+          this.selectedCountry = [];
+          this.erroalert();
+        }
       }else{
+        this.selectedCountry = [];
         this.erroalert();
       }
     });
@@ -172,17 +178,17 @@ export class CapLibroCientificoComponent implements OnInit {
     this.autoresArr.clear();
     this.autoresLibArr.clear();
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern("[^#/\"?]+")]),
       TPOPROYINV: new FormControl('Capítulos de libro científico'),
-      RSMPROYINV: new FormControl(''),
+      RSMPROYINV: new FormControl('',[Validators.pattern("[^#/\"?]+")]),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
       listAutorLib: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl('', [Validators.required,Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
       VOLPROYINV: new FormControl(''),
-      FTEPROYINV: new FormControl('', [Validators.required]),
-      INSPROYINV: new FormControl('',[Validators.required]),
+      FTEPROYINV: new FormControl('', [Validators.required,Validators.pattern("[^#/\"?]+")]),
+      INSPROYINV: new FormControl('',[Validators.required,Validators.pattern("[^#/\"?]+")]),
       AUTPADPROY: new FormControl(''),
       PARPROYINV: new FormControl(''),
       integrantes: new FormControl(''),
@@ -193,7 +199,7 @@ export class CapLibroCientificoComponent implements OnInit {
       REAPROYINV: new FormControl('', [Validators.required]),
       AGDREDPROY: new FormControl('', [Validators.required]),
       TPOACTPROY: new FormControl(''),
-      INFADCPROY: new FormControl(''),
+      INFADCPROY: new FormControl('',[Validators.pattern("[^#/\"?]+")]),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),
     });

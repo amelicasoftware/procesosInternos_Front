@@ -44,7 +44,7 @@ export class LibrosDeDivulgacionComponent implements OnInit {
 
   private buildForm() {
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern("[^#/\"?]+")]),
       TPOPROYINV: new FormControl('Libros de divulgación'),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
@@ -53,7 +53,7 @@ export class LibrosDeDivulgacionComponent implements OnInit {
       URLPROYINV: new FormControl('', [Validators.required,Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
       VOLPROYINV: new FormControl(''),
       FTEPROYINV: new FormControl(''),
-      INSPROYINV: new FormControl('',[Validators.required]),
+      INSPROYINV: new FormControl('',[Validators.required,Validators.pattern("[^#/\"?]+")]),
       AUTPADPROY: new FormControl(''),
       PARPROYINV: new FormControl(''),
       integrantes: new FormControl(''),
@@ -64,7 +64,7 @@ export class LibrosDeDivulgacionComponent implements OnInit {
       REAPROYINV: new FormControl('', [Validators.required]),
       AGDREDPROY: new FormControl('', [Validators.required]),
       TPOACTPROY: new FormControl(''),
-      INFADCPROY: new FormControl(''),
+      INFADCPROY: new FormControl('',[Validators.pattern("[^#/\"?]+")]),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),
     });
@@ -120,10 +120,16 @@ export class LibrosDeDivulgacionComponent implements OnInit {
     // imprimir el valor del formulario, sólo si es válido
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
       console.log(mensaje);
-      if(mensaje.respuesta === 'true'){
-        this.limpiar();
-        this.alertWithSuccess();
+      if(mensaje !== null){
+        if(mensaje.respuesta === 'true'){
+          this.limpiar();
+          this.alertWithSuccess();
+        }else{
+          this.selectedCountry = [];
+          this.erroalert();
+        }
       }else{
+        this.selectedCountry = [];
         this.erroalert();
       }
     });
@@ -152,7 +158,7 @@ export class LibrosDeDivulgacionComponent implements OnInit {
    
     this.selectedCountry = [];
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern("[^#/\"?]+")]),
       TPOPROYINV: new FormControl('Libros de divulgación'),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
@@ -161,7 +167,7 @@ export class LibrosDeDivulgacionComponent implements OnInit {
       URLPROYINV: new FormControl('', [Validators.required,Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
       VOLPROYINV: new FormControl(''),
       FTEPROYINV: new FormControl(''),
-      INSPROYINV: new FormControl('',[Validators.required]),
+      INSPROYINV: new FormControl('',[Validators.required,Validators.pattern("[^#/\"?]+")]),
       AUTPADPROY: new FormControl(''),
       PARPROYINV: new FormControl(''),
       integrantes: new FormControl(''),
@@ -172,7 +178,7 @@ export class LibrosDeDivulgacionComponent implements OnInit {
       REAPROYINV: new FormControl('', [Validators.required]),
       AGDREDPROY: new FormControl('', [Validators.required]),
       TPOACTPROY: new FormControl(''),
-      INFADCPROY: new FormControl(''),
+      INFADCPROY: new FormControl('',[Validators.pattern("[^#/\"?]+")]),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),
     });

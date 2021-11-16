@@ -21,8 +21,8 @@ export class RedesComponent implements OnInit {
   fecha: string = '';
   selectedCountry:any=[];
   anioAct:number=2021;
-  expreg:String ="(Enero|enero|Febrero|febrero|marzo|Marzo|Abril|abril|mayo|Mayo|junio|Julio|Agosto|agosto|Septiembre|septiembre|octubre|Octubre|Noviembre|noviembre|Diciembre|diciembre)"+
-                 "[ ]?-[ ]?(Enero|enero|Febrero|febrero|marzo|Marzo|Abril|abril|mayo|Mayo|junio|Julio|Agosto|agosto|Septiembre|septiembre|octubre|Octubre|Noviembre|noviembre|Diciembre|diciembre)";
+  expreg:String ="(Enero|enero|Febrero|febrero|marzo|Marzo|Abril|abril|mayo|Mayo|junio|Junio|julio|Julio|Agosto|agosto|Septiembre|septiembre|octubre|Octubre|Noviembre|noviembre|Diciembre|diciembre)"+
+                 "[ ]?-[ ]?(Enero|enero|Febrero|febrero|marzo|Marzo|Abril|abril|mayo|Mayo|junio|Junio|julio|Julio|Agosto|agosto|Septiembre|septiembre|octubre|Octubre|Noviembre|noviembre|Diciembre|diciembre)";
   constructor(
     private servicesForm: ServicesFormService,
     private fb: FormBuilder
@@ -49,9 +49,9 @@ export class RedesComponent implements OnInit {
 
   private buildForm() {
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100),Validators.pattern("[^#/\"?]+")]),
       TPOPROYINV: new FormControl('Artículos científicos'),
-      RSMPROYINV: new FormControl(''),
+      RSMPROYINV: new FormControl('',[Validators.pattern("[^#/\"?]+")]),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
@@ -70,7 +70,7 @@ export class RedesComponent implements OnInit {
       REAPROYINV: new FormControl('', [Validators.required]),
       AGDREDPROY: new FormControl('', [Validators.required]),
       TPOACTPROY: new FormControl(''),
-      INFADCPROY: new FormControl(''),
+      INFADCPROY: new FormControl('',[Validators.pattern("[^#/\"?]+")]),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1',[Validators.pattern("[1-9]+[0-9]*"),Validators.min(1),Validators.max(10000)]),
     });
@@ -144,10 +144,16 @@ export class RedesComponent implements OnInit {
     // imprimir el valor del formulario, sólo si es válido
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
       console.log(mensaje);
-      if(mensaje.respuesta === 'true'){
-        this.limpiar();
-        this.alertWithSuccess();
+      if(mensaje !== null){
+        if(mensaje.respuesta === 'true'){
+          this.limpiar();
+          this.alertWithSuccess();
+        }else{
+          this.selectedCountry = [];
+          this.erroalert();
+        }
       }else{
+        this.selectedCountry = [];
         this.erroalert();
       }
     });

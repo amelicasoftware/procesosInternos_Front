@@ -14,7 +14,8 @@
           class="tag is-danger is-light"
           *ngIf="campoEsValido('TITPROYINV')"
         >
-          Este campo es obligatorio
+        Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /
+
         </span>
       </div>
     </div>
@@ -33,7 +34,8 @@
           class="tag is-danger is-light"
           *ngIf="campoEsValido('TPOACTPROY')"
         >
-          Este campo es obligatorio
+        Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /
+
         </span>
       </div>
     </div>
@@ -52,7 +54,8 @@
           class="tag is-danger is-light"
           *ngIf="campoEsValido('INSPROYINV')"
         >
-          Este campo es obligatorio
+        Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /
+
         </span>
       </div>
     </div>
@@ -215,13 +218,11 @@
     <div class="field">
       <label class="label">Información adicional: </label>
       <div class="control">
-        <textarea
-          class="textarea"
-          placeholder=""
-          formControlName="INFADCPROY"
-        ></textarea>
+        <textarea class="textarea" placeholder="" formControlName="INFADCPROY" [ngClass]="{ 'is-danger': campoEsValido('INFADCPROY') }"></textarea>
       </div>
+      <p class="help is-danger" *ngIf="campoEsValido('INFADCPROY')">Este campo no admite los caracteres: ?, ", #, /</p>
     </div>
+
     <div class="field is-grouped">
       <div class="control">
         <button class="button is-link" (click)="guardar()">Guardar</button>

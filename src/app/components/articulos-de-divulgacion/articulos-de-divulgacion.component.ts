@@ -45,7 +45,7 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
 
   private buildForm() {
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern("[^#/\"?]+")]),
       TPOPROYINV: new FormControl('Artículos de divulgación'),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
@@ -53,7 +53,7 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl('', [Validators.required, Validators.maxLength(200),Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
       VOLPROYINV: new FormControl(''),
-      FTEPROYINV: new FormControl('', [Validators.required,Validators.maxLength(100)]),
+      FTEPROYINV: new FormControl('', [Validators.required,Validators.maxLength(100),Validators.pattern("[^#/\"?]+")]),
       INSPROYINV: new FormControl(''),
       AUTPADPROY: new FormControl(''),
       PARPROYINV: new FormControl(''),
@@ -65,7 +65,7 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
       REAPROYINV: new FormControl('', [Validators.required]),
       AGDREDPROY: new FormControl('', [Validators.required]),
       TPOACTPROY: new FormControl(''),
-      INFADCPROY: new FormControl(''),
+      INFADCPROY: new FormControl('',[Validators.pattern("[^#/\"?]+")]),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),
     });
@@ -120,10 +120,16 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
     // imprimir el valor del formulario, sólo si es válido
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
       console.log(mensaje);
-      if(mensaje.respuesta === 'true'){
-        this.limpiar();
-        this.alertWithSuccess();
+      if(mensaje !== null){
+        if(mensaje.respuesta === 'true'){
+          this.limpiar();
+          this.alertWithSuccess();
+        }else{
+          this.selectedCountry = [];
+          this.erroalert();
+        }
       }else{
+        this.selectedCountry = [];
         this.erroalert();
       }
     });
@@ -150,15 +156,15 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
   limpiar(){
     this.autoresArr.clear();
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern("[^#/\"?]+")]),
       TPOPROYINV: new FormControl('Artículos de divulgación'),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
-      URLPROYINV: new FormControl('', [Validators.required, Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
+      URLPROYINV: new FormControl('', [Validators.required, Validators.maxLength(200),Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
       VOLPROYINV: new FormControl(''),
-      FTEPROYINV: new FormControl('', [Validators.required]),
+      FTEPROYINV: new FormControl('', [Validators.required,Validators.maxLength(100),Validators.pattern("[^#/\"?]+")]),
       INSPROYINV: new FormControl(''),
       AUTPADPROY: new FormControl(''),
       PARPROYINV: new FormControl(''),
@@ -170,7 +176,7 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
       REAPROYINV: new FormControl('', [Validators.required]),
       AGDREDPROY: new FormControl('', [Validators.required]),
       TPOACTPROY: new FormControl(''),
-      INFADCPROY: new FormControl(''),
+      INFADCPROY: new FormControl('',[Validators.pattern("[^#/\"?]+")]),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),
     });

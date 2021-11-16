@@ -43,12 +43,11 @@ export class OtrasActividadesComponent implements OnInit {
 
   private buildForm() {
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern("[^#/\"?]+")]),
       TPOPROYINV: new FormControl('Otras Actividades'),
       RSMPROYINV: new FormControl(''),
-      CVEPAISPRO: new FormControl([]),
+      CVEPAISPRO: new FormControl(''),
       ANIOPROYINV: new FormControl('0'),
-      listAutor: this.fb.array([],),
       URLPROYINV: new FormControl('',),
       VOLPROYINV: new FormControl(''),
       FTEPROYINV: new FormControl('',),
@@ -62,7 +61,7 @@ export class OtrasActividadesComponent implements OnInit {
       FECCAPPROY: new FormControl(this.fechaActual()),
       REAPROYINV: new FormControl('0'),
       AGDREDPROY: new FormControl(''),
-      TPOACTPROY: new FormControl('',[Validators.required]),
+      TPOACTPROY: new FormControl('',[Validators.required,Validators.pattern("[^#/\"?]+")]),
       INFADCPROY: new FormControl(''),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),
@@ -107,21 +106,24 @@ export class OtrasActividadesComponent implements OnInit {
       this.form.markAllAsTouched();
       return 0;
     }
-    console.log(this.autoresArr.value);
     console.log(this.paisesArr?.value);
     this.form.controls.TITPROYINV.setValue(this.cambioUrl(this.form.controls.TITPROYINV.value));
-    this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
-    this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
 
     
 
     // imprimir el valor del formulario, sólo si es válido
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
       console.log(mensaje);
-      if(mensaje.respuesta === 'true'){
-        this.limpiar();
-        this.alertWithSuccess();
+      if(mensaje !== null){
+        if(mensaje.respuesta === 'true'){
+          this.limpiar();
+          this.alertWithSuccess();
+        }else{
+          this.selectedCountry = [];
+          this.erroalert();
+        }
       }else{
+        this.selectedCountry = [];
         this.erroalert();
       }
     });
@@ -146,14 +148,12 @@ export class OtrasActividadesComponent implements OnInit {
     })  
   } 
   limpiar(){
-    this.autoresArr.clear();
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern("[^#/\"?]+")]),
       TPOPROYINV: new FormControl('Otras Actividades'),
       RSMPROYINV: new FormControl(''),
-      CVEPAISPRO: new FormControl([]),
+      CVEPAISPRO: new FormControl(''),
       ANIOPROYINV: new FormControl('0'),
-      listAutor: this.fb.array([],),
       URLPROYINV: new FormControl('',),
       VOLPROYINV: new FormControl(''),
       FTEPROYINV: new FormControl('',),
@@ -167,7 +167,7 @@ export class OtrasActividadesComponent implements OnInit {
       FECCAPPROY: new FormControl(this.fechaActual()),
       REAPROYINV: new FormControl('0'),
       AGDREDPROY: new FormControl(''),
-      TPOACTPROY: new FormControl('',[Validators.required]),
+      TPOACTPROY: new FormControl('',[Validators.required,Validators.pattern("[^#/\"?]+")]),
       INFADCPROY: new FormControl(''),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),

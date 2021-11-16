@@ -5,7 +5,7 @@
         <input class="input" type="text" formControlName="TITPROYINV"
           [ngClass]="{'is-danger' : campoEsValido('TITPROYINV')}">
         <p class="help is-danger" *ngIf="campoEsValido('TITPROYINV')">
-          Este campo es obligatorio
+          Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /
         </p>
       </div>
       
@@ -14,7 +14,7 @@
         <input class="input" type="text" formControlName="FTEPROYINV"
           [ngClass]="{'is-danger' : campoEsValido('FTEPROYINV')}">
         <p class="help is-danger" *ngIf="campoEsValido('FTEPROYINV')">
-          Este campo es obligatorio
+          Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /
         </p>
       </div>
       <div class="field">
@@ -134,6 +134,7 @@
         <div class="control">
           <textarea class="textarea" placeholder="" formControlName="INFADCPROY"></textarea>
         </div>
+        <p class="help is-danger" *ngIf="campoEsValido('INFADCPROY')">Este campo no admite los caracteres: ?, ", #, /</p>
       </div>
   
       <div class="field is-grouped">
