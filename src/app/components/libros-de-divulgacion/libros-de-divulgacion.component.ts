@@ -11,7 +11,8 @@ import * as moment from 'moment';
 })
 export class LibrosDeDivulgacionComponent implements OnInit {
   typeForm = new FormControl('Selecciona un formulario');
-  autor: FormControl = this.fb.control('', Validators.required);
+  charNoAc:string = "[^#/\"?%]+";
+  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern(this.charNoAc)]);
   pais = new FormControl('');
   form!: FormGroup;
   autores: String[] = [];
@@ -44,7 +45,7 @@ export class LibrosDeDivulgacionComponent implements OnInit {
 
   private buildForm() {
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern("[^#/\"?]+")]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
       TPOPROYINV: new FormControl('Libros de divulgación'),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
@@ -53,7 +54,7 @@ export class LibrosDeDivulgacionComponent implements OnInit {
       URLPROYINV: new FormControl('', [Validators.required,Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
       VOLPROYINV: new FormControl(''),
       FTEPROYINV: new FormControl(''),
-      INSPROYINV: new FormControl('',[Validators.required,Validators.pattern("[^#/\"?]+")]),
+      INSPROYINV: new FormControl('',[Validators.required,Validators.pattern(this.charNoAc)]),
       AUTPADPROY: new FormControl(''),
       PARPROYINV: new FormControl(''),
       integrantes: new FormControl(''),
@@ -64,7 +65,7 @@ export class LibrosDeDivulgacionComponent implements OnInit {
       REAPROYINV: new FormControl('', [Validators.required]),
       AGDREDPROY: new FormControl('', [Validators.required]),
       TPOACTPROY: new FormControl(''),
-      INFADCPROY: new FormControl('',[Validators.pattern("[^#/\"?]+")]),
+      INFADCPROY: new FormControl('',[Validators.pattern(this.charNoAc)]),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),
     });
@@ -110,7 +111,6 @@ export class LibrosDeDivulgacionComponent implements OnInit {
     }
     console.log(this.autoresArr.value);
     console.log(this.paisesArr?.value);
-    this.form.controls.TITPROYINV.setValue(this.cambioUrl(this.form.controls.TITPROYINV.value));
     this.form.controls.URLPROYINV.setValue(this.cambioUrl(this.form.controls.URLPROYINV.value));
     this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
@@ -158,7 +158,7 @@ export class LibrosDeDivulgacionComponent implements OnInit {
    
     this.selectedCountry = [];
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern("[^#/\"?]+")]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
       TPOPROYINV: new FormControl('Libros de divulgación'),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
@@ -167,7 +167,7 @@ export class LibrosDeDivulgacionComponent implements OnInit {
       URLPROYINV: new FormControl('', [Validators.required,Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
       VOLPROYINV: new FormControl(''),
       FTEPROYINV: new FormControl(''),
-      INSPROYINV: new FormControl('',[Validators.required,Validators.pattern("[^#/\"?]+")]),
+      INSPROYINV: new FormControl('',[Validators.required,Validators.pattern(this.charNoAc)]),
       AUTPADPROY: new FormControl(''),
       PARPROYINV: new FormControl(''),
       integrantes: new FormControl(''),
@@ -178,7 +178,7 @@ export class LibrosDeDivulgacionComponent implements OnInit {
       REAPROYINV: new FormControl('', [Validators.required]),
       AGDREDPROY: new FormControl('', [Validators.required]),
       TPOACTPROY: new FormControl(''),
-      INFADCPROY: new FormControl('',[Validators.pattern("[^#/\"?]+")]),
+      INFADCPROY: new FormControl('',[Validators.pattern(this.charNoAc)]),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),
     });
@@ -189,8 +189,10 @@ export class LibrosDeDivulgacionComponent implements OnInit {
     return moment(fecha).format('DD-MM-YY');
   }
   
-  cambioUrl(str:String): String{
+  cambioUrl(str:String): string{
     var splitted = str.split("/");
-    return splitted.join("s-s");
+    var splitted2 = splitted.join("s-s").split("?");
+    var splitted3 = splitted2.join("d-d").split("%");
+    return splitted3.join("p-p");
   }
 }

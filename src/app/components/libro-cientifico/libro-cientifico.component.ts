@@ -11,7 +11,8 @@ import * as moment from 'moment';
 })
 export class LibroCientificoComponent implements OnInit {
   typeForm = new FormControl('Selecciona un formulario');
-  autor: FormControl = this.fb.control('', Validators.required);
+  charNoAc:string = "[^#/\"?%]+";
+  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern(this.charNoAc)]);
   pais = new FormControl('');
   form!: FormGroup;
   autores: String[] = [];
@@ -19,6 +20,7 @@ export class LibroCientificoComponent implements OnInit {
   dato: boolean = true;
   selectedCountry:any=[];
   anioAct:number=2021;
+  userName = '';
   constructor(
     private servicesForm: ServicesFormService,
     private fb: FormBuilder
@@ -44,16 +46,16 @@ export class LibroCientificoComponent implements OnInit {
 
   private buildForm() {
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern("[^#/\"?]+")]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
       TPOPROYINV: new FormControl('Libro científico'),
-      RSMPROYINV: new FormControl('',[Validators.pattern("[^#/\"?]+")]),
+      RSMPROYINV: new FormControl('',[Validators.pattern(this.charNoAc)]),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl('', [Validators.required, Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
       VOLPROYINV: new FormControl(''),
       FTEPROYINV: new FormControl(''),
-      INSPROYINV: new FormControl('',[Validators.required,Validators.pattern("[^#/\"?]+")]),
+      INSPROYINV: new FormControl('',[Validators.required,Validators.pattern(this.charNoAc)]),
       AUTPADPROY: new FormControl(''),
       PARPROYINV: new FormControl(''),
       integrantes: new FormControl(''),
@@ -64,7 +66,7 @@ export class LibroCientificoComponent implements OnInit {
       REAPROYINV: new FormControl('', [Validators.required]),
       AGDREDPROY: new FormControl('', [Validators.required]),
       TPOACTPROY: new FormControl(''),
-      INFADCPROY: new FormControl('',[Validators.pattern("[^#/\"?]+")]),
+      INFADCPROY: new FormControl('',[Validators.pattern(this.charNoAc)]),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),
     });
@@ -74,7 +76,7 @@ export class LibroCientificoComponent implements OnInit {
     //     console.log(value);
     //   });
   }
-
+  
   campoEsValido(campo: string) {
     return this.form.controls[campo].errors
       && this.form.controls[campo].touched;
@@ -110,8 +112,6 @@ export class LibroCientificoComponent implements OnInit {
     }
     console.log(this.autoresArr.value);
     console.log(this.paisesArr?.value);
-
-    this.form.controls.TITPROYINV.setValue(this.cambioUrl(this.form.controls.TITPROYINV.value));
     this.form.controls.URLPROYINV.setValue(this.cambioUrl(this.form.controls.URLPROYINV.value));
     this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
@@ -155,16 +155,16 @@ export class LibroCientificoComponent implements OnInit {
   limpiar(){
     this.autoresArr.clear();
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern("[^#/\"?]+")]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
       TPOPROYINV: new FormControl('Libro científico'),
-      RSMPROYINV: new FormControl('',[Validators.pattern("[^#/\"?]+")]),
+      RSMPROYINV: new FormControl('',[Validators.pattern(this.charNoAc)]),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl('', [Validators.required, Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
       VOLPROYINV: new FormControl(''),
       FTEPROYINV: new FormControl(''),
-      INSPROYINV: new FormControl('',[Validators.required,Validators.pattern("[^#/\"?]+")]),
+      INSPROYINV: new FormControl('',[Validators.required,Validators.pattern(this.charNoAc)]),
       AUTPADPROY: new FormControl(''),
       PARPROYINV: new FormControl(''),
       integrantes: new FormControl(''),
@@ -175,7 +175,7 @@ export class LibroCientificoComponent implements OnInit {
       REAPROYINV: new FormControl('', [Validators.required]),
       AGDREDPROY: new FormControl('', [Validators.required]),
       TPOACTPROY: new FormControl(''),
-      INFADCPROY: new FormControl('',[Validators.pattern("[^#/\"?]+")]),
+      INFADCPROY: new FormControl('',[Validators.pattern(this.charNoAc)]),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),
     });
@@ -189,6 +189,8 @@ export class LibroCientificoComponent implements OnInit {
   
   cambioUrl(str:String): string{
     var splitted = str.split("/");
-    return splitted.join("s-s");
+    var splitted2 = splitted.join("s-s").split("?");
+    var splitted3 = splitted2.join("d-d").split("%");
+    return splitted3.join("p-p");
   }
 }

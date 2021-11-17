@@ -5,7 +5,7 @@
         <input class="input" type="text" formControlName="TITPROYINV"
           [ngClass]="{'is-danger' : campoEsValido('TITPROYINV')}">
         <p class="help is-danger" *ngIf="campoEsValido('TITPROYINV')">
-          Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /
+          Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %
         </p>
       </div>
       
@@ -14,7 +14,7 @@
         <input class="input" type="text" formControlName="INSPROYINV"
           [ngClass]="{'is-danger' : campoEsValido('INSPROYINV')}">
         <p class="help is-danger" *ngIf="campoEsValido('INSPROYINV')">
-          Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /
+          Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %
         </p>
       </div>
       <div class="field">
@@ -36,12 +36,15 @@
               <i class="fa  fa-user"></i>
             </span>
           </div>
-          <div class="control" (click)="addAutor(autor.value, $event)">
-            <a class="button is-info">Agregar</a>
+          <div class="control"  (click)="addAutor(autor.value, $event)">
+            <button class="button is-info" [disabled]="autor.errors && autor.touched" >Agregar</button>
           </div>
         </div>
         <p class="help is-danger" *ngIf="campoEsValido('listAutor')">
           Debe agregar por lo menos un autor
+        </p>
+        <p class="help is-danger" *ngIf="autor.errors && autor.touched">
+          Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %
         </p>
       </div>
   
@@ -135,7 +138,7 @@
         <div class="control">
           <textarea class="textarea" placeholder="" formControlName="INFADCPROY"></textarea>
         </div>
-        <p class="help is-danger" *ngIf="campoEsValido('INFADCPROY')">Este campo no admite los caracteres: ?, ", #, /</p>
+        <p class="help is-danger" *ngIf="campoEsValido('INFADCPROY')">Este campo no admite los caracteres: ?, ", #, /, %</p>
       </div>
   
       <div class="field is-grouped">

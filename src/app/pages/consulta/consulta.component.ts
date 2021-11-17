@@ -35,8 +35,14 @@ export class ConsultaComponent implements OnInit {
                     ];
   data:any;
   filtersData:any;
-  filterTipes:any;
+  listFillterTipos: Array<String> = [];
+  listFillterAlcances: Array<String> = [];
+  listFillterAnios: Array<String> = [];
+  listFillterMeses: Array<String> = [];
+  listFillterInicios: Array<String> = [];
+  listFillterFines: Array<String> = [];
   stateSidebar="show";
+  totalOfResults= String;
   dataBusqueda= {"TITPROYINV":"",
                   "TPOPROYINV":"",
                   "ANIOPROYINV":"",
@@ -104,7 +110,7 @@ export class ConsultaComponent implements OnInit {
     //this.service.getByTit().then(console.log);
 
     this.prepareSearch();
-    this.getFilters();
+    
   }
   createNewRegister(){
     this.service.sendInfo().then(console.log);
@@ -120,16 +126,28 @@ export class ConsultaComponent implements OnInit {
     });
   }
   prepareSearch(){
-    console.log("cadena 1 a buscar:::"+this.dataBusqueda.TITPROYINV+"::"+this.dataBusqueda.TPOPROYINV);
+    console.log("cadena 1 a buscar:::"+this.dataBusqueda.TITPROYINV+" :: "+this.dataBusqueda.TPOPROYINV);
     this.service.getInfoFilters(this.dataBusqueda).then(res=>{
       var str=JSON.stringify(res);
       this.data=JSON.parse(str);
+      this.totalOfResults=this.data.length;
       console.log(this.data);
+      console.log("total of results::"+this.totalOfResults);
     });
+    this.getFilters();
+  }
+  validatePeriod(){
+    if(this.dataBusqueda.ANIOPROYINV!="" && this.dataBusqueda.PERIIN!="" && this.dataBusqueda.PERIFIN!=""){
+      this.prepareSearch();
+    }else if(this.dataBusqueda.PERIIN==""){
+      console.log("seleccione el inicio");
+    }else if(this.dataBusqueda.PERIFIN!=""){
+      console.log("seleccione el final");
+    }
   }
   getFilters(){
     console.log("llamando filtros:::");
-    this.service.getFilters().then(res=>{
+    this.service.getFilters(this.dataBusqueda).then(res=>{
       var str=JSON.stringify(res);
       this.filtersData=JSON.parse(str);
       console.log(this.filtersData);
@@ -145,60 +163,209 @@ export class ConsultaComponent implements OnInit {
   this.stateSidebar=this.stateSidebar=="show" ? "hidden" : this.stateSidebar=="hidden" ? "show" : this.stateSidebar;
  }
 clickListener(e:string, flag:boolean) {
-  console.log(e);
-  $("#"+e).attr("display","none");
-  var nameSplited = e.split("-");
-  if (nameSplited[0] == "menos") {
-    $("mas-" + nameSplited[1]).attr("display","block");
-  } else {
-      $("menos-" + nameSplited[1]).attr("display","block");
-  }
-  if (flag) {
-      for (var i = 0; i < $("#"+e).parent().children().length; i++) {
-          if ($("#"+e).parent().children(i).className == 'elemento-filtro-hidden') {
-            $("#"+e).parent().children(i).style.display = "block";
-          }
-      }
-  } else {
-      for (var i = 0; i < $("#"+e).parent().children().length; i++) {
-          if ($("#"+e).parent().children(i).className == 'elemento-filtro-hidden') {
-              $("#"+e).parent().children(i).style.display = "none";
-          }
-      }
-  }
+  $(document).ready(function(){
+    $(".containerFiltros").find("#"+e).hide();
+    var nameSplited = e.split("-");
+    
+    if (nameSplited[0] == "menos") {
+      $(".containerFiltros").find("button#mas-" + nameSplited[1]).show();
+    } else {
+      $(".containerFiltros").find("button#menos-" + nameSplited[1]).show();
+    }
+    if (flag==true) {
+      $(".containerFiltros").find("#"+e).parent().children("div.elemento-filtro-hidden").attr("style","display:block;");
+        
+    } else {
+      $(".containerFiltros").find("#"+e).parent().children("div.elemento-filtro-hidden").attr("style","display:none;");
+    }
+  });
 };
 findWithFilters(data:any){
   console.log(data);
-  var nombre=data.nombre;
-  var str=JSON.stringify(this.filterTipes);
-  var jsonTipos=(str!="" && str!=null) ? JSON.parse(str):null;
   var opc = -1;
         if (data.tipo == "Tipos") {
             opc = 0;
-        } else if (data.tipo == "País") {
-            opc = 3;
+        } else if (data.tipo == "Alcances") {
+          opc = 1;
+        }
+        else if (data.tipo == "Años") {
+            opc = 2;
+        }else if (data.tipo == "Meses") {
+          opc = 3;
+        }
+        else if (data.tipo == "Periodo") {
+          opc = 4;
         }
         console.log(opc);
-        var length = jsonTipos!=null ? jsonTipos.length : 0; 
-        console.log(length);
+        var sizeTipos = this.listFillterTipos!=null ? this.listFillterTipos.length : 0; 
+        var sizeAlcances = this.listFillterAlcances!=null ? this.listFillterAlcances.length : 0;
+        var sizeAnios = this.listFillterAnios!=null ? this.listFillterAnios.length : 0;
+        var sizeMeses = this.listFillterMeses!=null ? this.listFillterMeses.length : 0; 
+        console.log("tamaño de filtro tipos::"+sizeTipos);
   switch (opc) {
-    case 0: //Filtro Año
+    case 0: //Filtro Tipos
     var index=-1;
-      if(length>=1){
-         index = this.filterTipes.map(function(nombre:String) {
+      if(sizeTipos>=1){
+         index = this.listFillterTipos.map(function(nombre:String) {
             return nombre;
         }).indexOf(data.nombre);
-        console.log(index);
+        console.log("index de la busqueda en array tipos:: "+index);
       }
-        if (index != -1) { //Si la incluye se quita
-            this.filterTipes.splice(index, 1);
-        } else { //Si no la incluye se agrega
-            this.filterTipes.push({
-                "nombre": ""+data.nombre
-            });
-        }
-        break;
+      if (index != -1) { //Si la incluye se quita
+          this.listFillterTipos.splice(index, 1);
+          console.log("eliminando de array tipos::"+data.nombre);
+      } else { //Si no la incluye se agrega
+          this.listFillterTipos.push(data.nombre);
+          //console.log("array tipos:::");
+         // console.log(this.listFillterTipos)
+      }
+      this.dataBusqueda.TPOPROYINV="";
+      for(let tp in this.listFillterTipos){
+        console.log("tipo en cadena::"+this.listFillterTipos[tp]);
+        this.dataBusqueda.TPOPROYINV+=this.dataBusqueda.TPOPROYINV=="" ? 
+                                      ""+this.listFillterTipos[tp] :
+                                      ","+this.listFillterTipos[tp];
+      }
+    break;
+    case 1: //Filtro Alcances
+    var index=-1;
+      if(sizeAlcances>=1){
+         index = this.listFillterAlcances.map(function(nombre:String) {
+            return nombre;
+        }).indexOf(data.nombre);
+        console.log("index de la busqueda en array alcances:: "+index);
+      }
+      if (index != -1) { //Si la incluye se quita
+          this.listFillterAlcances.splice(index, 1);
+          console.log("eliminando de array alcances::"+data.nombre);
+      } else { //Si no la incluye se agrega
+          this.listFillterAlcances.push(data.nombre);
+          console.log("array alcances:::");
+          //console.log(this.listFillterAlcances)
+      }
+      this.dataBusqueda.ALCPROYINV="";
+      for(let alc in this.listFillterAlcances){
+        console.log("alcance en cadena::"+this.listFillterAlcances[alc]);
+        this.dataBusqueda.ALCPROYINV+=this.dataBusqueda.ALCPROYINV=="" ? 
+                                      ""+this.listFillterAlcances[alc] :
+                                      ","+this.listFillterAlcances[alc];
+      }
+    break;
+    case 2: //Filtro Años
+    var index=-1;
+      if(sizeAnios>=1){
+         index = this.listFillterAnios.map(function(nombre:String) {
+            return nombre;
+        }).indexOf(data.nombre);
+        console.log("index de la busqueda en array años:: "+index);
+      }
+      if (index != -1) { //Si la incluye se quita
+          this.listFillterAnios.splice(index, 1);
+          console.log("eliminando de array años::"+data.nombre);
+      } else { //Si no la incluye se agrega
+          this.listFillterAnios.push(data.nombre);
+          console.log("array años:::");
+          //console.log(this.listFillterAnios)
+      }
+      this.dataBusqueda.ANIOPROYINV="";
+      for(let alc in this.listFillterAnios){
+        console.log("año en cadena::"+this.listFillterAnios[alc]);
+        this.dataBusqueda.ANIOPROYINV+=this.dataBusqueda.ANIOPROYINV=="" ? 
+                                      ""+this.listFillterAnios[alc] :
+                                      ","+this.listFillterAnios[alc];
+      }
+    break;
+    case 3: //Filtro Meses
+    var index=-1;
+      if(sizeMeses>=1){
+         index = this.listFillterMeses.map(function(nombre:String) {
+            return nombre;
+        }).indexOf(data.nombre);
+        console.log("index de la busqueda en array meses:: "+index);
+      }
+      if (index != -1) { //Si la incluye se quita
+          this.listFillterMeses.splice(index, 1);
+          console.log("eliminando de array meses::"+data.nombre);
+      } else { //Si no la incluye se agrega
+          this.listFillterMeses.push(data.nombre);
+          console.log("array meses:::");
+          //console.log(this.listFillterMeses)
+      }
+      this.dataBusqueda.MESPROYINV="";
+      for(let alc in this.listFillterMeses){
+        console.log("mes en cadena::"+this.listFillterMeses[alc]);
+        this.dataBusqueda.MESPROYINV+=this.dataBusqueda.MESPROYINV=="" ? 
+                                      ""+this.listFillterMeses[alc] :
+                                      ","+this.listFillterMeses[alc];
+      }
+    break;
   }
+  
+  this.prepareSearch();
 }
-
+campoFiltrado(data:any) {
+  //console.log(data);
+  var st=false;
+  if (data.tipo == "Tipos") {
+      var sizeTipos = this.listFillterTipos!=null ? this.listFillterTipos.length : 0;
+      var index=-1;
+      if(sizeTipos>=1){
+         index = this.listFillterTipos.map(function(nombre:String) {
+            return nombre;
+        }).indexOf(data.nombre);
+        //console.log("index de la busqueda en array tipos:: "+index);
+      }
+      if (index!=-1) {
+          st= true;
+      } else {
+          st= false;
+      }
+  }
+  if (data.tipo == "Alcances") {
+    var sizeAlcances = this.listFillterAlcances!=null ? this.listFillterAlcances.length : 0;
+    var index=-1;
+    if(sizeAlcances>=1){
+       index = this.listFillterAlcances.map(function(nombre:String) {
+          return nombre;
+      }).indexOf(data.nombre);
+      //console.log("index de la busqueda en array tipos:: "+index);
+    }
+    if (index!=-1) {
+        st= true;
+    } else {
+        st= false;
+    }
+  }
+  if (data.tipo == "Años") {
+    var sizeAnios = this.listFillterAnios!=null ? this.listFillterAnios.length : 0;
+    var index=-1;
+    if(sizeAnios>=1){
+       index = this.listFillterAnios.map(function(nombre:String) {
+          return nombre;
+      }).indexOf(data.nombre);
+      //console.log("index de la busqueda en array tipos:: "+index);
+    }
+    if (index!=-1) {
+        st= true;
+    } else {
+        st= false;
+    }
+  }
+  if (data.tipo == "Meses") {
+    var sizeMeses = this.listFillterMeses!=null ? this.listFillterMeses.length : 0;
+    var index=-1;
+    if(sizeMeses>=1){
+       index = this.listFillterMeses.map(function(nombre:String) {
+          return nombre;
+      }).indexOf(data.nombre);
+      //console.log("index de la busqueda en array tipos:: "+index);
+    }
+    if (index!=-1) {
+        st= true;
+    } else {
+        st= false;
+    }
+  }
+  return st;
+}
 }

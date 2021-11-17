@@ -7,7 +7,7 @@
       <input class="input" type="text" formControlName="TITPROYINV"
         [ngClass]="{'is-danger' : campoEsValido('TITPROYINV')}">
       <p class="help is-danger" *ngIf="campoEsValido('TITPROYINV')">
-        Este campo es obligatorio
+        Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %
       </p>
     </div>
     
@@ -16,12 +16,15 @@
       <input class="input" type="text" formControlName="FTEPROYINV"
         [ngClass]="{'is-danger' : campoEsValido('FTEPROYINV')}">
       <p class="help is-danger" *ngIf="campoEsValido('FTEPROYINV')">
-        Este campo es obligatorio
+        Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %
       </p>
     </div>
     <div class="field">
       <label class="label">Volúmen:</label>
       <input class="input" type="text" formControlName="VOLPROYINV">
+      <p class="help is-danger" *ngIf="campoEsValido('VOLPROYINV')">
+        Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %
+      </p>
     </div>
     <div class="field">
       <label class="label">Año: </label>
@@ -33,15 +36,15 @@
     </div>
     <div class="field">
       <label class="label"> DOI/Enlace:</label>
-      <input class="input" type="email" formControlName="URLPROYINV"
+      <input class="input" type="email" placeholder="https://www.redalyc.org/articulo.oa?id=10411213" formControlName="URLPROYINV"
         [ngClass]="{'is-danger' : campoEsValido('URLPROYINV')}">
       <p class="help is-danger" *ngIf="campoEsValido('URLPROYINV')">
-        Debe agregar por lo menos un autor
+        Este campo es obligatorio y debe ser una direccion del tipo http://ejemplo.com
       </p>
     </div>
 
     <div class="field">
-      <label class="label">Autor/es:</label>
+      <label class="label">Autor/es del libro:</label>
       <div class="field has-addons">
         <div class="control has-icons-left">
           <input type="text" class="input" placeholder="Escribe el nombre del autor" [formControl]="autor"
@@ -50,12 +53,15 @@
             <i class="fa  fa-user"></i>
           </span>
         </div>
-        <div class="control" (click)="addAutor(autor.value, $event)">
-          <a class="button is-info">Agregar</a>
+        <div class="control"  (click)="addAutor(autor.value, $event)">
+          <button class="button is-info" [disabled]="autor.errors && autor.touched" >Agregar</button>
         </div>
       </div>
       <p class="help is-danger" *ngIf="campoEsValido('listAutor')">
         Debe agregar por lo menos un autor
+      </p>
+      <p class="help is-danger" *ngIf="autor.errors && autor.touched">
+        Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %
       </p>
     </div>
 
@@ -85,6 +91,9 @@
     <div class="field">
       <label class="label">Resumen:</label>
       <textarea class="textarea" cols="30" rows="5" formControlName="RSMPROYINV"></textarea>
+      <p class="help is-danger" *ngIf="campoEsValido('RSMPROYINV')">
+        Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %
+      </p>
     </div>
 
     <div class="field">
@@ -135,6 +144,9 @@
       <div class="control">
         <textarea class="textarea" placeholder="" formControlName="INFADCPROY"></textarea>
       </div>
+      <p class="help is-danger" *ngIf="campoEsValido('INFADCPROY')">
+        Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %
+      </p>
     </div>
 
     <div class="field is-grouped">

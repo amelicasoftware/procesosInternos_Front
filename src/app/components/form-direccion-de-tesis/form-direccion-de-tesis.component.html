@@ -7,7 +7,7 @@
         <input class="input" type="text" formControlName="TITPROYINV"
           [ngClass]="{'is-danger' : campoEsValido('TITPROYINV')}">
         <p class="help is-danger" *ngIf="campoEsValido('TITPROYINV')">
-          Este campo es obligatorio
+          Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %
         </p>
       </div>
 
@@ -17,7 +17,7 @@
         <input class="input" type="text" formControlName="FTEPROYINV"
           [ngClass]="{'is-danger' : campoEsValido('FTEPROYINV')}">
         <p class="help is-danger" *ngIf="campoEsValido('FTEPROYINV')">
-          Este campo es obligatorio
+          Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %
         </p>
       </div>
 
@@ -27,7 +27,7 @@
         <input class="input" type="text" formControlName="INSPROYINV"
           [ngClass]="{'is-danger' : campoEsValido('INSPROYINV')}">
         <p class="help is-danger" *ngIf="campoEsValido('INSPROYINV')">
-          Este campo es obligatorio
+          Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %
         </p>
       </div>
 
@@ -43,7 +43,7 @@
 
         <!-- ok -->
         <div class="field">
-          <label class="label">Autor:</label>
+          <label class="label">Autor/es del libro:</label>
           <div class="field has-addons">
             <div class="control has-icons-left">
               <input type="text" class="input" placeholder="Escribe el nombre del autor" [formControl]="autor"
@@ -52,12 +52,15 @@
                 <i class="fa  fa-user"></i>
               </span>
             </div>
-            <div class="control" (click)="addAutor(autor.value, $event)">
-              <a class="button is-info">Agregar</a>
+            <div class="control"  (click)="addAutor(autor.value, $event)">
+              <button class="button is-info" [disabled]="autor.errors && autor.touched" >Agregar</button>
             </div>
           </div>
           <p class="help is-danger" *ngIf="campoEsValido('listAutor')">
-            Debe agregar un autor
+            Debe agregar por lo menos un autor
+          </p>
+          <p class="help is-danger" *ngIf="autor.errors && autor.touched">
+            Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %
           </p>
         </div>
         <label class="label" *ngIf="autoresArr.length>0 && 1>autoresArr.length">Autor</label>
@@ -123,12 +126,13 @@
       </div>
   
     <!-- ok -->
-      <div class="field">
-        <label class="label">Información adicional: </label>
-        <div class="control">
-          <textarea class="textarea" placeholder="" formControlName="INFADCPROY"></textarea>
-        </div>
+    <div class="field">
+      <label class="label">Información adicional: </label>
+      <div class="control">
+        <textarea class="textarea" placeholder="" formControlName="INFADCPROY"></textarea>
       </div>
+      <p class="help is-danger" *ngIf="campoEsValido('INFADCPROY')">Este campo no admite los caracteres: ?, ", #, /, %</p>
+    </div>
   
       <div class="field is-grouped">
         <div class="control">
