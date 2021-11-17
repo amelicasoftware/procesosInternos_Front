@@ -191,8 +191,10 @@ export class ConferenciasEspecializadasComponent implements OnInit {
     this.anioAct = fecha.getFullYear();
     return moment(fecha).format('DD-MM-YY');
   }
-  cambioUrl(str:String): String{
+  cambioUrl(str:String): string{
     var splitted = str.split("/");
-    return splitted.join("s-s");
+    var splitted2 = splitted.join("s-s").split("?");
+    var splitted3 = splitted2.join("d-d").split("%");
+    return splitted3.join("p-p");
   }
 }

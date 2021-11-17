@@ -107,10 +107,6 @@ export class OtrasActividadesComponent implements OnInit {
       return 0;
     }
     console.log(this.paisesArr?.value);
-    this.form.controls.TITPROYINV.setValue(this.cambioUrl(this.form.controls.TITPROYINV.value));
-
-    
-
     // imprimir el valor del formulario, sólo si es válido
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
       console.log(mensaje);
@@ -178,8 +174,10 @@ export class OtrasActividadesComponent implements OnInit {
     let fecha = new Date;
     return moment(fecha).format('DD-MM-YY');
   }
-  cambioUrl(str:String): String{
+  cambioUrl(str:String): string{
     var splitted = str.split("/");
-    return splitted.join("s-s");
+    var splitted2 = splitted.join("s-s").split("?");
+    var splitted3 = splitted2.join("d-d").split("%");
+    return splitted3.join("p-p");
   }
 }

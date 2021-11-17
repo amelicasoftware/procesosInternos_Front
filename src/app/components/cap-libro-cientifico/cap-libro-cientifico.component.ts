@@ -131,8 +131,6 @@ export class CapLibroCientificoComponent implements OnInit {
     }
     console.log(this.autoresArr.value);
     console.log(this.paisesArr?.value);
-    this.form.controls.TITPROYINV.setValue(this.cambioUrl(this.form.controls.TITPROYINV.value));
-    this.form.controls.FTEPROYINV.setValue(this.cambioUrl(this.form.controls.FTEPROYINV.value));
     this.form.controls.URLPROYINV.setValue(this.cambioUrl(this.form.controls.URLPROYINV.value));
     this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
     this.form.controls.AUTPADPROY.setValue(this.autoresLibArr.value.join(','));
@@ -212,8 +210,10 @@ export class CapLibroCientificoComponent implements OnInit {
     return moment(fecha).format('DD-MM-YY');
   }
   
-  cambioUrl(str:String): String{
+  cambioUrl(str:String): string{
     var splitted = str.split("/");
-    return splitted.join("s-s");
+    var splitted2 = splitted.join("s-s").split("?");
+    var splitted3 = splitted2.join("d-d").split("%");
+    return splitted3.join("p-p");
   }
 }

@@ -192,6 +192,12 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
       var splitted = str.split("/");
       return splitted.join("s-s");
     }
+    cambioUrl(str:String): string{
+      var splitted = str.split("/");
+      var splitted2 = splitted.join("s-s").split("?");
+      var splitted3 = splitted2.join("d-d").split("%");
+      return splitted3.join("p-p");
+    }
   }
   
   
