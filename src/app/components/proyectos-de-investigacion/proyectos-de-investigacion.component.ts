@@ -48,11 +48,11 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
     private buildForm() {
       this.form = this.fb.group({
         TITPROYINV: new FormControl('', [Validators.required]),
-        TPOPROYINV: new FormControl('Proyectos de Investigación'),
+        TPOPROYINV: new FormControl('Proyectos de investigación'),
         RSMPROYINV: new FormControl(''),
         CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
-        ANIOPROYINV: new FormControl(''),
-        listAutor: this.fb.array([], []),
+        ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(2021)]),
+        listAutor: this.fb.array([]),
         listIns: this.fb.array([], [Validators.required, Validators.min(1)]),
         URLPROYINV: new FormControl(''),
         VOLPROYINV: new FormControl(''),
@@ -129,12 +129,14 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
     guardar() {
       console.log(this.autoresArr.value);
       console.log(this.paisesArr?.value);
-      this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
+      this.form.controls.AUTPROYINV.setValue('');
   
       this.form.controls.INSPROYINV.setValue(this.instArr.value.join(','));
   
       this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
   
+      this.form.controls.TITPROYINV.setValue(this.formatoTitulo(this.form.controls.TITPROYINV.value));
+
       delete this.form.value.listIns;
       if (this.form.invalid) {
         this.form.markAllAsTouched();
@@ -144,15 +146,20 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
       // imprimir el valor del formulario, sólo si es válido
       this.servicesForm.postDatos(this.form).subscribe(mensaje => {
         
-        console.log(mensaje.respuesta);
-        console.log(typeof mensaje.respuesta);
-        
-        if(mensaje.respuesta === "true"){
+        console.log(mensaje);
+        console.log(this.form.controls.TITPROYINV.value);
+        if(mensaje !== null){
+        if(mensaje.respuesta === 'true'){
           this.limpiar();
           this.alertWithSuccess();
         }else{
+          this.selectedCountry = [];
           this.erroalert();
         }
+      }else{
+        this.selectedCountry = [];
+        this.erroalert();
+      }
       });
       console.log(this.form.value);
       // console.log(mensaje);
@@ -174,16 +181,16 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
       })  
     }  
     limpiar(){
-      this.autoresArr.clear();
+      
       this.instArr.clear();
-      this.form.reset();
+      //this.form.reset();
+      this.buildForm();
       this.selectedCountry = [];
     }
-    fechaActual(): String{
-      let fecha = new Date;
-      return moment(fecha).format('DD-MM-YY');
+    formatoTitulo(str:String): String{
+      var splitted = str.split("/");
+      return splitted.join("s-s");
     }
-   
   }
   
   

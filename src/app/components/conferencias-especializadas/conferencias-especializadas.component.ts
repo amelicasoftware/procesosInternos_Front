@@ -50,7 +50,7 @@ export class ConferenciasEspecializadasComponent implements OnInit {
 
   private buildForm() {
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern("[^#/\"?]+")]),
       TPOPROYINV: new FormControl('Conferencias especializadas'),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
@@ -59,7 +59,7 @@ export class ConferenciasEspecializadasComponent implements OnInit {
       URLPROYINV: new FormControl(''),
       VOLPROYINV: new FormControl(''),
       FTEPROYINV: new FormControl(''),
-      INSPROYINV: new FormControl(''),
+      INSPROYINV: new FormControl('',[Validators.pattern("[^#/\"?]+")]),
       AUTPADPROY: new FormControl(''),
       PARPROYINV: new FormControl(''),
       integrantes: new FormControl(''),
@@ -69,8 +69,8 @@ export class ConferenciasEspecializadasComponent implements OnInit {
       FECCAPPROY: new FormControl(this.fechaActual()),
       REAPROYINV: new FormControl('', [Validators.required]),
       AGDREDPROY: new FormControl('', [Validators.required]),
-      TPOACTPROY: new FormControl('',[Validators.required]),
-      INFADCPROY: new FormControl(''),
+      TPOACTPROY: new FormControl('',[Validators.required,Validators.pattern("[^#/\"?]+")]),
+      INFADCPROY: new FormControl('',[Validators.pattern("[^#/\"?]+")]),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),
     });
@@ -109,26 +109,30 @@ export class ConferenciasEspecializadasComponent implements OnInit {
     this.autoresArr.removeAt(i);
   }
 
-  guardar() {
-
-    console.log(this.autoresArr.value);
-    console.log(this.paisesArr?.value);
-
-    this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
-    this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
-
+  guardar():number {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      return;
+      return 0;
     }
+    console.log(this.autoresArr.value);
+    console.log(this.paisesArr?.value);
+    this.form.controls.TITPROYINV.setValue(this.cambioUrl(this.form.controls.TITPROYINV.value));
+    this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
+    this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
 
     // imprimir el valor del formulario, sólo si es válido
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
       console.log(mensaje);
-      if(mensaje.respuesta === 'true'){
-        this.limpiar();
-        this.alertWithSuccess();
+      if(mensaje !== null){
+        if(mensaje.respuesta === 'true'){
+          this.limpiar();
+          this.alertWithSuccess();
+        }else{
+          this.selectedCountry = [];
+          this.erroalert();
+        }
       }else{
+        this.selectedCountry = [];
         this.erroalert();
       }
     });
@@ -136,6 +140,7 @@ export class ConferenciasEspecializadasComponent implements OnInit {
     // console.log(mensaje);
     // this.alertWithSuccess();
     // this.erroalert();
+    return 0;
   }
 
   alertWithSuccess(){  
@@ -154,7 +159,7 @@ export class ConferenciasEspecializadasComponent implements OnInit {
   limpiar(){
     this.autoresArr.clear();
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern("[^#/\"?]+")]),
       TPOPROYINV: new FormControl('Conferencias especializadas'),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
@@ -163,7 +168,7 @@ export class ConferenciasEspecializadasComponent implements OnInit {
       URLPROYINV: new FormControl(''),
       VOLPROYINV: new FormControl(''),
       FTEPROYINV: new FormControl(''),
-      INSPROYINV: new FormControl(''),
+      INSPROYINV: new FormControl('',[Validators.pattern("[^#/\"?]+")]),
       AUTPADPROY: new FormControl(''),
       PARPROYINV: new FormControl(''),
       integrantes: new FormControl(''),
@@ -173,8 +178,8 @@ export class ConferenciasEspecializadasComponent implements OnInit {
       FECCAPPROY: new FormControl(this.fechaActual()),
       REAPROYINV: new FormControl('', [Validators.required]),
       AGDREDPROY: new FormControl('', [Validators.required]),
-      TPOACTPROY: new FormControl('',[Validators.required]),
-      INFADCPROY: new FormControl(''),
+      TPOACTPROY: new FormControl('',[Validators.required,Validators.pattern("[^#/\"?]+")]),
+      INFADCPROY: new FormControl('',[Validators.pattern("[^#/\"?]+")]),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),
     });
@@ -184,5 +189,9 @@ export class ConferenciasEspecializadasComponent implements OnInit {
     let fecha = new Date;
     this.anioAct = fecha.getFullYear();
     return moment(fecha).format('DD-MM-YY');
+  }
+  cambioUrl(str:String): String{
+    var splitted = str.split("/");
+    return splitted.join("s-s");
   }
 }

@@ -107,8 +107,7 @@ export class FormDireccionDeTesisComponent implements OnInit {
   guardar() {
 
     console.log(this.autoresArr.value);
-    console.log(this.paisesArr?.value);
-    this.form.controls.URLPROYINV.setValue(this.cambioUrl(this.form.controls.URLPROYINV.value));
+    this.form.controls.TITPROYINV.setValue(this.formatoTitulo(this.form.controls.TITPROYINV.value));
 
 
     this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
@@ -122,7 +121,7 @@ export class FormDireccionDeTesisComponent implements OnInit {
     // imprimir el valor del formulario, sólo si es válido
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
       console.log(mensaje);
-      if(mensaje.respuesta === 'true'){
+      if(mensaje.respuesta == "true"){
         this.limpiar();
         this.alertWithSuccess();
       }else{
@@ -140,7 +139,8 @@ export class FormDireccionDeTesisComponent implements OnInit {
   }
   limpiar(){
     this.autoresArr.clear();
-    this.form.reset();
+    //this.form.reset();
+    this.buildForm();
       }
   erroalert()  
   {  
@@ -152,7 +152,7 @@ export class FormDireccionDeTesisComponent implements OnInit {
     })  
   }  
   
-  cambioUrl(str:String): String{
+  formatoTitulo(str:String): String{
     var splitted = str.split("/");
     return splitted.join("s-s");
   }
