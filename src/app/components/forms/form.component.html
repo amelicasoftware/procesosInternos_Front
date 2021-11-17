@@ -25,7 +25,7 @@
     </div>
     <div class="field">
       <label class="label">Año: </label>
-      <input class="input" type="text" formControlName="ANIOPROYINV"
+      <input class="input" type="number" formControlName="ANIOPROYINV"
         [ngClass]="{'is-danger' : campoEsValido('ANIOPROYINV')}">
       <p class="help is-danger" *ngIf="campoEsValido('ANIOPROYINV')">
         Este campo es obligatorio

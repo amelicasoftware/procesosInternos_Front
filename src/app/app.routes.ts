@@ -11,6 +11,6 @@ export const ROUTES: Routes = [
     { path: 'busquedas', component: ConsultaComponent },
     { path: 'validacion', component: ValidacionComponent },
     { path: 'proyecto/:cveProyecto', component: DatosProyectoComponent },
-    // { path: '', pathMatch: 'full', redirectTo: 'home' },
-    // { path: '**', pathMatch: 'full', redirectTo: 'home' },
+    { path: '', pathMatch: 'full', redirectTo: 'home' },
+    { path: '**', pathMatch: 'full', redirectTo: 'home' },
 ];

@@ -14,6 +14,8 @@ export class DatosProyectoComponent implements OnInit {
   cveProyecto: number = 0;
   proyecto: any;
   form!: FormGroup;
+  pais = new FormControl('');
+  lista:any[]=[];
 
   constructor(
     private servicesForm: ServicesFormService,
@@ -26,7 +28,7 @@ export class DatosProyectoComponent implements OnInit {
   private buildForm() {
     this.form = this.fb.group({
       TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
-      TPOPROYINV: new FormControl('Artículos científicos'),
+      TPOPROYINV: new FormControl(''),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(2021)]),
@@ -52,11 +54,41 @@ export class DatosProyectoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.servicesForm.getPaises().subscribe(paises => {
+      console.log(paises);
+      this.lista = paises;
+    });
+
     this.cveProyecto = this.rutaActiva.snapshot.params.cveProyecto;
     this.servicesForm.getProjectId(this.cveProyecto).subscribe(datos => {
       console.log(datos);
       this.proyecto = datos;
       this.form.controls.TITPROYINV.setValue(this.proyecto[0].titproyinv);
+      this.form.controls.TPOPROYINV.setValue(this.proyecto[0].tpoproyinv);
+      this.form.controls.RSMPROYINV.setValue(this.proyecto[0].rsmproyinv);
+      console.log('paises', this.proyecto[0].cvepaispro);
+      const arrayPaises = this.proyecto[0].cvepaispro.split(',');
+      console.log(arrayPaises);
+      this.pais.setValue(arrayPaises);
+      this.form.controls.CVEPAISPRO.setValue(this.proyecto[0].cvepaispro);
+      this.form.controls.ANIOPROYINV.setValue(this.proyecto[0].anioproyinv);
+      this.form.controls.URLPROYINV.setValue(this.proyecto[0].urlproyinv);
+      // this.form.controls.listAutor.setValue(this.proyecto[0].autproyinv);
+      this.form.controls.FTEPROYINV.setValue(this.proyecto[0].fteproyinv);
+      this.form.controls.VOLPROYINV.setValue(this.proyecto[0].volproyinv);
+      this.form.controls.INSPROYINV.setValue(this.proyecto[0].insproyinv);
+      
+      this.form.controls.ALCPROYINV.setValue(this.proyecto[0].alcproyinv);
+      
+      this.form.controls.REAPROYINV.setValue(this.proyecto[0].reaproyinv);
+      this.form.controls.AGDREDPROY.setValue(this.proyecto[0].agdredproy);
+
+      
+      this.form.controls.TPOACTPROY.setValue(this.proyecto[0].tpoactproy);
+      this.form.controls.INFADCPROY.setValue(this.proyecto[0].infadcproy);
+
+
+
     });
 
   }
