@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 export class FormComponent implements OnInit {
   valor: number = 0;
   seleccion:any = {id:0,name:''};
+  charNoAc:string = "[^#/\"?%]+";
   typeForm = new FormControl('Selecciona un formulario');
   autor: FormControl = this.fb.control('', Validators.required);
   pais = new FormControl('');
