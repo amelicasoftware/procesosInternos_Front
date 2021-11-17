@@ -45,7 +45,7 @@
           Este campo es obligatorio y debe ser una direccion del tipo http://ejemplo.com
         </p>
       </div>
-  
+
       <div class="field">
         <label class="label">Autor/es del libro:</label>
         <div class="field has-addons">
@@ -56,12 +56,15 @@
               <i class="fa  fa-user"></i>
             </span>
           </div>
-          <div class="control" (click)="addAutorLib(autorLib.value, $event)">
-            <a class="button is-info">Agregar</a>
+          <div class="control"  (click)="addAutorLib(autorLib.value, $event)">
+            <button class="button is-info" [disabled]="autorLib.errors && autorLib.touched" >Agregar</button>
           </div>
         </div>
         <p class="help is-danger" *ngIf="campoEsValido('listAutorLib')">
           Debe agregar por lo menos un autor
+        </p>
+        <p class="help is-danger" *ngIf="autorLib.errors && autorLib.touched">
+          Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /
         </p>
       </div>
   
@@ -99,12 +102,15 @@
               <i class="fa  fa-user"></i>
             </span>
           </div>
-          <div class="control" (click)="addAutor(autor.value, $event)">
-            <a class="button is-info">Agregar</a>
+          <div class="control"  (click)="addAutor(autor.value, $event)">
+            <button class="button is-info" [disabled]="autor.errors && autor.touched" >Agregar</button>
           </div>
         </div>
         <p class="help is-danger" *ngIf="campoEsValido('listAutor')">
           Debe agregar por lo menos un autor
+        </p>
+        <p class="help is-danger" *ngIf="autor.errors && autor.touched">
+          Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /
         </p>
       </div>
   

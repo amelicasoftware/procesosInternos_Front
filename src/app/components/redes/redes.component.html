@@ -35,7 +35,7 @@
           class="tag is-danger is-light"
           *ngIf="campoEsValido('PRDPROYINV')"
         >
-          Este campo debe colocarse més de inicio y més de finalización
+          En este campo debe colocarse més de inicio y més de finalización
         </span>
     </div>
     <div class="field">
@@ -59,26 +59,24 @@
       </div>
     </div>
     <div class="field">
-      <label class="label">Coordinadores</label>
+      <label class="label">Coordinadores:</label>
       <div class="field has-addons">
         <div class="control has-icons-left">
-          <input
-            type="text"
-            class="input"
-            placeholder="Escribe el nombre del coordinador"
-            [formControl]="autor"
-            (keyup.enter)="addAutor(autor.value, $event)"
-          />
+          <input type="text" class="input" placeholder="Escribe el nombre del autor" [formControl]="autor"
+            (keyup.enter)="addAutor(autor.value, $event)">
           <span class="icon is-medium is-left">
-            <i class="fa fa-user"></i>
+            <i class="fa  fa-user"></i>
           </span>
         </div>
-        <div class="control" (click)="addAutor(autor.value, $event)">
-          <a class="button is-info">Agregar</a>
+        <div class="control"  (click)="addAutor(autor.value, $event)">
+          <button class="button is-info" [disabled]="autor.errors && autor.touched" >Agregar</button>
         </div>
       </div>
       <p class="help is-danger" *ngIf="campoEsValido('listAutor')">
         Debe agregar por lo menos un coordinador
+      </p>
+      <p class="help is-danger" *ngIf="autor.errors && autor.touched">
+        Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /
       </p>
     </div>
 
@@ -106,28 +104,26 @@
         </div>
       </div>
     </div>
-
+    
     <div class="field">
       <label class="label">Instituciones participantes</label>
       <div class="field has-addons">
         <div class="control has-icons-left">
-          <input
-            type="text"
-            class="input"
-            placeholder="Escribe el nombre de la institución"
-            [formControl]="institucion"
-            (keyup.enter)="addIns(institucion.value, $event)"
-          />
+          <input type="text" class="input" placeholder="Escribe el nombre de la institucion" [formControl]="institucion"
+            (keyup.enter)="addIns(institucion.value, $event)">
           <span class="icon is-medium is-left">
-            <i class="fa fa-user"></i>
+            <i class="fa  fa-user"></i>
           </span>
         </div>
-        <div class="control" (click)="addIns(institucion.value, $event)">
-          <a class="button is-info">Agregar</a>
+        <div class="control"  (click)="addIns(institucion.value, $event)">
+          <button class="button is-info" [disabled]="institucion.errors && institucion.touched" >Agregar</button>
         </div>
       </div>
       <p class="help is-danger" *ngIf="campoEsValido('listIns')">
-        Debe agregar por lo menos una institución
+        Debe agregar por lo menos un autor
+      </p>
+      <p class="help is-danger" *ngIf="institucion.errors && institucion.touched">
+        Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /
       </p>
     </div>
 

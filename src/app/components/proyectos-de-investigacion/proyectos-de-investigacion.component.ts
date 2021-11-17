@@ -11,13 +11,13 @@ import * as moment from 'moment';
 })
 export class ProyectosDeInvestigacionComponent implements OnInit {
   typeForm = new FormControl('Selecciona un formulario');
-  autor: FormControl = this.fb.control('', Validators.required);
+  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern("[^#/\"?]+")]);
   pais = new FormControl('');
   form!: FormGroup;
   autores: String[] = [];
   lista: any[] = [];
   dato: boolean = true;
-  institucion: FormControl = this.fb.control('', Validators.required);
+  institucion: FormControl = this.fb.control('', [Validators.required,Validators.pattern("[^#/\"?]+")]);
   selectedCountry:any=[];
 
   constructor(
@@ -47,9 +47,9 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
   
     private buildForm() {
       this.form = this.fb.group({
-        TITPROYINV: new FormControl('', [Validators.required]),
+        TITPROYINV: new FormControl('', [Validators.required,Validators.pattern("[^#/\"?]+")]),
         TPOPROYINV: new FormControl('Proyectos de investigación'),
-        RSMPROYINV: new FormControl(''),
+        RSMPROYINV: new FormControl('',Validators.pattern("[^#/\"?]+")),
         CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
         ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(2021)]),
         listAutor: this.fb.array([]),
@@ -68,7 +68,7 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
         REAPROYINV: new FormControl('', [Validators.required]),
         AGDREDPROY: new FormControl('', [Validators.required]),
         TPOACTPROY: new FormControl(''),
-        INFADCPROY: new FormControl(''),
+        INFADCPROY: new FormControl('',Validators.pattern("[^#/\"?]+")),
         AUTPROYINV: new FormControl(''),
         CTDINTPROY: new FormControl('0'),
       });

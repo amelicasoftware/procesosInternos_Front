@@ -59,29 +59,27 @@
         </span>
       </div>
     </div>
-    <div class="field">
-      <label class="label">Ponente/Conferencista (s):</label>
-      <div class="field has-addons">
-        <div class="control has-icons-left">
-          <input
-            type="text"
-            class="input"
-            placeholder="Escribe el nombre del autor"
-            [formControl]="autor"
-            (keyup.enter)="addAutor(autor.value, $event)"
-          />
-          <span class="icon is-medium is-left">
-            <i class="fa fa-user"></i>
-          </span>
+      <div class="field">
+        <label class="label">Ponente/Conferencista (s):</label>
+        <div class="field has-addons">
+          <div class="control has-icons-left">
+            <input type="text" class="input" placeholder="Escribe el nombre del autor" [formControl]="autor"
+              (keyup.enter)="addAutor(autor.value, $event)">
+            <span class="icon is-medium is-left">
+              <i class="fa  fa-user"></i>
+            </span>
+          </div>
+          <div class="control"  (click)="addAutor(autor.value, $event)">
+            <button class="button is-info" [disabled]="autor.errors && autor.touched" >Agregar</button>
+          </div>
         </div>
-        <div class="control" (click)="addAutor(autor.value, $event)">
-          <a class="button is-info">Agregar</a>
-        </div>
+        <p class="help is-danger" *ngIf="campoEsValido('listAutor')">
+          Debe agregar por lo menos un autor
+        </p>
+        <p class="help is-danger" *ngIf="autor.errors && autor.touched">
+          Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /
+        </p>
       </div>
-      <p class="help is-danger" *ngIf="campoEsValido('listAutor')">
-        Debe agregar por lo menos un ponente
-      </p>
-    </div>
 
     <label class="label" *ngIf="autoresArr.length > 0">Lista</label>
     <div formArrayName="listAutor">

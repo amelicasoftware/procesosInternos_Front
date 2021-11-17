@@ -18,7 +18,7 @@ import * as moment from 'moment';
 })
 export class ConferenciasEspecializadasComponent implements OnInit {
   typeForm = new FormControl('Selecciona un formulario');
-  autor: FormControl = this.fb.control('', Validators.required);
+  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern("[^#/\"?]+")]);
   pais = new FormControl('');
   form!: FormGroup;
   autores: String[] = [];

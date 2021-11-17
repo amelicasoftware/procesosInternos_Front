@@ -11,7 +11,7 @@ import * as moment from 'moment';
 })
 export class LibroCientificoComponent implements OnInit {
   typeForm = new FormControl('Selecciona un formulario');
-  autor: FormControl = this.fb.control('', Validators.required);
+  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern("[^#/\"?]+")]);
   pais = new FormControl('');
   form!: FormGroup;
   autores: String[] = [];
@@ -19,6 +19,7 @@ export class LibroCientificoComponent implements OnInit {
   dato: boolean = true;
   selectedCountry:any=[];
   anioAct:number=2021;
+  userName = '';
   constructor(
     private servicesForm: ServicesFormService,
     private fb: FormBuilder
@@ -74,7 +75,7 @@ export class LibroCientificoComponent implements OnInit {
     //     console.log(value);
     //   });
   }
-
+  
   campoEsValido(campo: string) {
     return this.form.controls[campo].errors
       && this.form.controls[campo].touched;
@@ -190,5 +191,10 @@ export class LibroCientificoComponent implements OnInit {
   cambioUrl(str:String): string{
     var splitted = str.split("/");
     return splitted.join("s-s");
+  }
+  cambioUrl2(str:String): string{
+    var splitted = str.split("/");
+    var splitted2 = splitted.join("s-s").split("?");
+    return splitted2.join("d-d");
   }
 }
