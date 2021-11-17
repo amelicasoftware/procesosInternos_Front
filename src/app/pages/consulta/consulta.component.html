@@ -12,53 +12,7 @@
     </div>
     <div class="container-options-filter">
       <h4 class="subtitle">Restringe los resultados por:</h4>
-    </div>
-    <div class="column is-12 container-options">
-      <div class="select">
-        <select name="select-tipo" 
-                [(ngModel)]="dataBusqueda.TPOPROYINV" 
-                (change)="prepareSearch()">
-          <option value="" disabled selected hidden>Tipo de proyecto</option>  
-          <option [value]="item" *ngFor="let item of listaTipos">{{item}}</option>
-        </select>
-      </div>
-      <div class="select">
-        <select name="select-tipo" 
-          [(ngModel)]="dataBusqueda.ALCPROYINV" 
-          (change)="prepareSearch()">
-          <option value="" disabled selected hidden>Alcance</option>  
-          <option [value]="item" *ngFor="let item of listaAlcances">{{item}}</option>
-        </select>
-      </div>
-      <div class="select">
-        <select name="select-tipo" 
-          [(ngModel)]="dataBusqueda.ANIOPROYINV" 
-          (change)="prepareSearch()">
-          <option value="" disabled selected hidden>Año</option>  
-          <option [value]="item" *ngFor="let item of listaAnios">{{item}}</option>
-        </select>
-      </div>
-      <div class="select">
-        <select name="select-tipo" 
-        [(ngModel)]="dataBusqueda.MESPROYINV" 
-        (change)="prepareSearch()" >
-          <option value="" disabled selected hidden>Mes</option>  
-          <option [value]="item" *ngFor="let item of listaMeses">{{item}}</option>
-        </select>
-      </div>
-      <div class="select select-periodo">
-        <span>periodo</span>
-        <div class="select">
-          <select name="select-tipo" [(ngModel)]="dataBusqueda.PERIIN">
-            <option value="" disabled selected hidden>Inicio</option>  
-            <option [value]="item" *ngFor="let item of inicios">{{item}}</option>
-          </select>
-        </div>
-        <select name="select-tipo" [(ngModel)]="dataBusqueda.PERIFIN">
-          <option value="" disabled selected hidden>Fin</option>  
-          <option [value]="item" *ngFor="let item of finales">{{item}}</option>
-        </select>
-      </div>
+      <div class="numerary-total">Total de resultados:<br/> <b>{{totalOfResults}}</b></div>
     </div>
   </div>
 </header>
@@ -77,26 +31,52 @@
                   [ngStyle]="{
                     'padding': stateSidebar=='show' ? '0' : '0'}">
           <span class="icon">
-              <i class="fas fa-bars" aria-hidden="true"></i>
+              <i class="fa fa-bars" aria-hidden="true"></i>
           </span>
           </button>
         </div>
         <div class="column is-12 containerFiltros"
-             [ngStyle]="{'display': stateSidebar=='show' ? 'initial' : 'none'}">
-          <div class="filtro" *ngFor='let filtro of filtersData; index as i'>
-            <div ng-if="filtro.elementos.length > 1">
+             [ngStyle]="{'display': stateSidebar=='show' ? 'flex' : 'none'}">
+          <div class="filtro" *ngFor='let filtro of filtersData; index as i' [ngClass]="'fill-'+filtro.nombre">
+            <div>
                 <h5 class="tit-filter">{{filtro.nombre}}:</h5>
-                  <div class="{{i &lt; 5 ? 'elemento-filtro' : 'elemento-filtro-hidden'}}" *ngFor="let filter of filtro.elementos; index as j">
+                  <div [ngClass]="{'elemento-filtro': j &lt;= 4 , 'elemento-filtro-hidden':j &gt; 4}" *ngFor="let filter of filtro.elementos; index as j">
                     <label class="container-radio">
-                         <input (click)="findWithFilters({tipo:filtro.nombre,nombre:filter.nombre})" type="checkbox" ng-checked="campoFiltrado({tipo:filtro.nombre,nombre:filter.nombre})"/>
+                         <input (click)="findWithFilters({tipo:filtro.nombre,nombre:filter.nombre})" 
+                         [checked]="campoFiltrado({tipo:filtro.nombre,nombre:filter.nombre})"
+                                type="checkbox" />
                         {{filter.nombre}}
                       <span class="checkmark"></span>
                     </label>
                     <span>({{filter.total}})</span>
                    </div>
-                   <label attr.id="mas-{{filtro.nombre}}" class="ver-mas-menos" (click)="clickListener('mas-'+filtro.nombre, true)" [ngStyle]="{'display': filtro.elementos.length &gt; 5 ? 'initial' : 'none'}">Ver mas...</label>
-                   <label attr.id="menos-{{filtro.nombre}}" style="display:none;" class="ver-mas-menos" (click)="clickListener('menos-'+filtro.nombre, false)">Ver menos...</label>
+                   <button  attr.id="mas-{{filtro.nombre}}" 
+                            class="ver-mas-menos" 
+                            (click)="clickListener('mas-'+filtro.nombre, true)" 
+                            [ngStyle]="{'display': filtro.elementos.length &gt; 5 ? 'initial' : 'none'}">Ver mas...</button>
+                   <button  attr.id="menos-{{filtro.nombre}}" 
+                            style="display:none;" 
+                            class="ver-mas-menos" 
+                            (click)="clickListener('menos-'+filtro.nombre, false)">Ver menos...</button>
                    <br/><br/>
+            </div>
+          </div>
+          <div class="filtro fill-Periodo" 
+               [ngStyle]="{'display': listFillterAnios.length>0 ? 'initial' : 'none'}">
+            <h5 class="tit-filter">Periodo:</h5>
+            <div class="select-periodo">
+              <div class="select">
+                <select name="select-tipo" [(ngModel)]="dataBusqueda.PERIIN" (change)="validatePeriod()">
+                  <option value="" disabled selected hidden>Inicio</option>  
+                  <option [value]="item" *ngFor="let item of listaMeses">{{item}}</option>
+                </select>
+              </div>
+              <div class="select">
+                <select name="select-tipo" [(ngModel)]="dataBusqueda.PERIFIN" (change)="validatePeriod()">
+                  <option value="" disabled selected hidden>Fin</option>  
+                  <option [value]="item" *ngFor="let item of listaMeses">{{item}}</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
@@ -108,18 +88,95 @@
     <div class="card" *ngFor='let proyecto of data; index as i' attr.id="card{{proyecto.cveproyinv}}">
       <header class="card-header">
         <p class="card-header-title">
-          Proyecto
+          {{proyecto.tpoproyinv}}
         </p>
       </header>
       <div class="card-content">
-        <div class="content">
-          <span><b>Titulo:</b> {{proyecto.titproyinv}}</span><br>
-          <span><b>Revista:</b> {{proyecto.fteproyinv}}</span><br>
+        <div class="content" *ngIf="proyecto.tpoproyinv=='Artículos científicos'">
           <span><b>DOI:</b> {{proyecto.urlproyinv}}</span><br>
+          <span><b>Revista:</b> {{proyecto.fteproyinv}}</span><br>
           <span><b>Volumen:</b> {{proyecto.volproyinv}}</span><br>
           <span><b>Año:</b> {{proyecto.anioproyinv}}</span><br>
-          <span><b>País:</b> {{proyecto.cvepaispro}}</span><br>
+          <span><b>País:</b> {{proyecto.nomentnac}}</span><br>
+          <span><b>Título de artículo:</b> {{proyecto.titproyinv}}</span><br>
           <span><b>Autor:</b> {{proyecto.autproyinv}}</span><br>
+          <span><b>Resumen:</b> {{proyecto.rsmproyinv}}</span><br>
+        </div>
+        <div class="content" *ngIf="proyecto.tpoproyinv=='Capítulos de libro científico'">
+          <span><b>DOI:</b> {{proyecto.urlproyinv}}</span><br>
+          <span><b>Titulo del libro:</b> {{proyecto.fteproyinv}}</span><br>
+          <span><b>Autores del libro:</b> {{proyecto.autpadproy}}</span><br>
+          <span><b>Editorial:</b> {{proyecto.insproyinv}}</span><br>
+          <span><b>País:</b> {{proyecto.nomentnac}}</span><br>
+          <span><b>Año:</b> {{proyecto.anioproyinv}}</span><br>
+          <span><b>Titulo del capítulo:</b> {{proyecto.titproyinv}}</span><br>
+          <span><b>Autor/es del capítulo:</b> {{proyecto.autproyinv}}</span><br>
+          <span><b>Resumen:</b> {{proyecto.rsmproyinv}}</span><br>
+        </div>
+        <div class="content" *ngIf="proyecto.tpoproyinv=='Libros científicos'">
+          <span><b>DOI:</b> {{proyecto.urlproyinv}}</span><br>
+          <span><b>Titulo:</b> {{proyecto.titproyinv}}</span><br>
+          <span><b>Autores del libro:</b> {{proyecto.autproyinv}}</span><br>
+          <span><b>Editorial:</b> {{proyecto.insproyinv}}</span><br>
+          <span><b>País:</b> {{proyecto.nomentnac}}</span><br>
+          <span><b>Año:</b> {{proyecto.anioproyinv}}</span><br>
+          <span><b>Resumen:</b> {{proyecto.rsmproyinv}}</span><br>
+        </div>
+        <div class="content" *ngIf="proyecto.tpoproyinv=='Conferencias especializadas'">
+          <span><b>Ponente/conferencista:</b> {{proyecto.autproyinv}}</span><br>
+          <span><b>Título de la conferencia:</b> {{proyecto.titproyinv}}</span><br>
+          <span><b>Tipo de participación:</b> {{proyecto.alcproyinv}}</span><br>
+          <span><b>Evento:</b> {{proyecto.fteproyinv}}</span><br>
+          <span><b>Institución organizadora:</b> {{proyecto.insproyinv}}</span><br>
+          <span><b>País:</b> {{proyecto.nomentnac}}</span><br>
+          <span><b>Año:</b> {{proyecto.anioproyinv}}</span><br>
+        </div>
+        <div class="content" *ngIf="proyecto.tpoproyinv=='Artículos de divulgación'">
+          <span><b>DOI:</b> {{proyecto.urlproyinv}}</span><br>
+          <span><b>Título del escrito:</b> {{proyecto.titproyinv}}</span><br>
+          <span><b>Lugar de publicación:</b> {{proyecto.fteproyinv}}</span><br>
+          <span><b>País:</b> {{proyecto.nomentnac}}</span><br>
+          <span><b>Año:</b> {{proyecto.anioproyinv}}</span><br>
+          <span><b>Autor:</b> {{proyecto.autproyinv}}</span><br>
+        </div>
+
+        <div class="content" *ngIf="proyecto.tpoproyinv=='Libros de divulgación'">
+          <span><b>DOI:</b> {{proyecto.urlproyinv}}</span><br>
+          <span><b>Título del libro:</b> {{proyecto.titproyinv}}</span><br>
+          <span><b>Autor/es del libro:</b> {{proyecto.autproyinv}}</span><br>
+          <span><b>Editorial:</b> {{proyecto.insproyinv}}</span><br>
+          <span><b>País:</b> {{proyecto.nomentnac}}</span><br>
+          <span><b>Año:</b> {{proyecto.anioproyinv}}</span><br>
+          
+        </div>
+        <div class="content" *ngIf="proyecto.tpoproyinv=='Otras actividades de divulgación'">
+          <span><b>Actividad:</b> {{proyecto.titproyinv}}</span><br>
+          <span><b>Año:</b> {{proyecto.anioproyinv}}</span><br>
+          <span><b>Institución:</b> {{proyecto.insproyinv}}</span><br>
+          <span><b>Resumen:</b> {{proyecto.rsmproyinv}}</span><br>
+        </div>
+        <div class="content" *ngIf="proyecto.tpoproyinv=='Dirección de tesis'">
+          <span><b>Autor:</b> {{proyecto.autproyinv}}</span><br>
+          <span><b>Título del proyecto:</b> {{proyecto.titproyinv}}</span><br>
+          <span><b>Carrera/Programa:</b> {{proyecto.fteproyinv}}</span><br>
+          <span><b>Institución:</b> {{proyecto.insproyinv}}</span><br>
+          <span><b>Año:</b> {{proyecto.anioproyinv}}</span><br>
+        </div>
+        <div class="content" *ngIf="proyecto.tpoproyinv=='Proyectos de investigación'">
+          <span><b>Título del proyecto:</b> {{proyecto.titproyinv}}</span><br>
+          <span><b>Instituciones participantes:</b> {{proyecto.insproyinv}}</span><br>
+          <span><b>País de instituciones participantes:</b> {{proyecto.nomentnac}}</span><br>
+          <span><b>Periodo:</b> {{proyecto.prdproyinv}}</span><br>
+          <span><b>Síntesis:</b> {{proyecto.rsmproyinv}}</span><br>
+        </div>
+        <div class="content" *ngIf="proyecto.tpoproyinv=='Redes de investigación'">
+          <span><b>Nombre de la red/grupo:</b> {{proyecto.titproyinv}}</span><br>
+          <span><b>Instituciones participantes:</b> {{proyecto.insproyinv}}</span><br>
+          <span><b>Países participantes:</b> {{proyecto.nomentnac}}</span><br>
+          <span><b>Cantidad de integrantes:</b> ...</span><br>
+          <span><b>Periodo:</b> {{proyecto.prdproyinv}}</span><br>
+          <span><b>Coordinadores:</b> {{proyecto.autproyinv}}</span><br>
+          <span><b>Síntesis:</b> {{proyecto.rsmproyinv}}</span><br>
         </div>
       </div>
       <footer class="card-footer">
