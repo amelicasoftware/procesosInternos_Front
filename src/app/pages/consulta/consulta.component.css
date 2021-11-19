@@ -4,11 +4,25 @@ body {
 .title-page {
   text-align: center;
   margin: 10px 0;
+  color: #e3241b;
+  font-weight: bold;
 }
 
 .container-box-filter {
   width: 100%;
   text-align: center;
+}
+.container-options-filter h4,.container-options-filter div{
+  display: inline-block;
+  vertical-align: middle;
+}
+.container-options-filter h4{
+  width: 85%;
+  color: #e95049;
+}
+.container-options-filter div{
+  text-align: center;
+  color: #e95049;
 }
 .box {
   width: 50%;
@@ -43,7 +57,44 @@ body {
   margin-bottom: 50px;
 }
 .container-cards-proy .card .card-footer{
+  display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+.container-cards-proy .card .card-footer .btn-card{
+  background-color: #6a747d;
+    padding: 0;
+    height: 40px;
+    width: 46%;
+    margin: 0 0 10px 0;
+    border-radius: 5px;
+    display: inline-block;
+    font-weight: unset;
+}
+.container-cards-proy .card .card-footer .btn-card:nth-child(1){
+  margin-right: 5px;
+}
+.button-busq{
+  border: soid 1px #6a747d;
+  color: #6a747d;
+}
+.button-busq:hover{
+  background-color: #e3241b;
+  color: white;
+}
+.container-cards-proy .card .card-footer .btn-card a{
+  color: white;
 
+}
+.container-cards-proy .card .card-footer .btn-card a, .container-cards-proy .card .card-footer .btn-card img{
+  display: inline-block;
+  vertical-align: middle;
+}
+.container-cards-proy .card .card-footer .btn-card:hover{
+  background-color: #e3241b;
+}
+.container-cards-proy .card .card-footer .btn-card:hover a{
+  background-color: #e3241b;
 }
 .container-cards-proy .card .card-content {
   min-height: 280px;
@@ -57,7 +108,7 @@ body {
   top: 0;
 }
 .headFilters {
-  background-color: #485fc7;
+  background-color: #6a747d;
 }
 .button-sidebar {
   width: 10px;

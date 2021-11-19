@@ -4,16 +4,17 @@
   <div class="container-busqueda">
     <div class="column is-12 container-box-filter">
         <input [(ngModel)]="dataBusqueda.TITPROYINV" 
-               class="input is-link box is-8" type="text" 
+               class="input box is-8" type="text" 
                (keypress)="eventHandler($event)"
-               placeholder="Ingresa un titulo">
-      <button type="submit" class="button is-4" (click)="prepareSearch()">buscar</button>
-      <button class="button is-4" (click)="createNewRegister()">New register</button>
-      <button class="button is-4" (click)="updateRegister()">Update register</button>
+               placeholder="Ingresa un titulo"
+               (click)="touchSearch()">
+      <button type="submit" class="button is-4 button-busq" (click)="prepareSearch()">Buscar</button>
+      <!--<button class="button is-4" (click)="createNewRegister()">New register</button>-->
     </div>
     <div class="container-options-filter">
       <h4 class="subtitle">Restringe los resultados por:</h4>
-      <div class="numerary-total">Total de resultados:<br/> <b>{{totalOfResults}}</b></div>
+      <div class="numerary-total" 
+          [ngStyle]="{'display': data ? 'inline-block' : 'none'}">Total de resultados:<br/> <b>{{totalOfResults}}</b></div>
     </div>
   </div>
 </header>
@@ -87,9 +88,8 @@
        [ngStyle]="{'width': stateSidebar=='show' ? '82%' : '100%',
                   'margin-left': stateSidebar=='show' ? '17%' : '0'}">
     <div class="card" *ngFor='let proyecto of data; index as i' attr.id="card{{proyecto.cveproyinv}}">
-      <header class="card-header">
+      <header class="card-header" style="display: none;">
         <p class="card-header-title">
-          {{proyecto.tpoproyinv}}
         </p>
       </header>
       <div class="card-content">
@@ -102,6 +102,9 @@
           <span><b>Título de artículo:</b> {{proyecto.titproyinv}}</span><br>
           <span><b>Autor:</b> {{proyecto.autproyinv}}</span><br>
           <span><b>Resumen:</b> {{proyecto.rsmproyinv}}</span><br>
+          <div class="cite" attr.id="{{proyecto.cveproyinv}}_cite" style="display: none;">
+            {{proyecto.autproyinv}}.{{proyecto.titproyinv}}. [fecha de consulta ]. Disponible en: {{proyecto.urlproyinv}}
+          </div>
         </div>
         <div class="content" *ngIf="proyecto.tpoproyinv=='Capítulos de libro científico'">
           <span><b>DOI:</b> {{proyecto.urlproyinv}}</span><br>
@@ -181,9 +184,15 @@
         </div>
       </div>
       <footer class="card-footer">
-        <a rel="nofollow" class="card-footer-item">Copiar cita</a>
-        <a rel="nofollow" class="card-footer-item" (click)="generateImage('card'+proyecto.cveproyinv)">Descargar Imagen</a>
-      </footer>
+        <div class="card-footer-item btn-card">
+          <img src="assets/img/copias-apa.png"/>
+          <a rel="nofollow" class="button-busq" (click)="citarElement(proyecto.cveproyinv+'_cite')">Copiar cita</a>
+        </div>
+        <div class="card-footer-item btn-card">
+          <img src="assets/img/descargar.png"/>
+          <a rel="nofollow" class="button-busq" (click)="generateImage('card'+proyecto.cveproyinv)">Descargar Imagen</a>
+        </div>
+        </footer>
     </div>
   </div>
   <div class="table-container" id="table-container" style="font-size: 10px; display: none;">
