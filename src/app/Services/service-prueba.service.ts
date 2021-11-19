@@ -2,24 +2,30 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { JsonPipe } from '@angular/common';
+import { environment } from '../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServicePruebaService {
 
+  urlService = environment.urlServices;
+
   constructor(
     private http: HttpClient
   ) { }
 
-  getArticles(): Observable<any> {
-    // search = normalize(search);
-    console.log(`http://148.215.24.22:9084/boardInvestigacion/service/ds/getDataPrueba`);
-    return this.http.get(`http://148.215.24.22:9084/boardInvestigacion/service/ds/getDataPrueba`);
-  }
-
   getPaises(): Observable<any> {
-    return this.http.get(`http://148.215.24.22:9084/boardInvestigacion/service/ds/getDataPais`);
+    console.log(`${this.urlService}getDataPais`);
+    return this.http.get(`${this.urlService}getDataPais`);
   }
 
+  guardarDatos(form: any): Observable<any>{
+    delete form.value.listAutor;
+    console.log(`${this.urlService}sendRegisterOfProy/${JSON.stringify(form.value)}`);
+    return this.http.post(`${this.urlService}sendRegisterOfProy/${JSON.stringify(form.value)}`, (mensaje: String) =>{
+      console.log(mensaje);
+    });
+  }
 }

@@ -1,0 +1,52 @@
+<app-header></app-header>
+<div>
+    <table class="table">
+        <thead>
+          <tr>
+            <th><abbr title="Position">Id</abbr></th>
+            <th>Titulo</th>
+            <th><abbr title="Played">Tipo proyecto</abbr></th>
+            <th><abbr title="Won">Autor</abbr></th>
+            <th><abbr title="Drawn">Fuente</abbr></th>
+            <th><abbr title="Lost">Año</abbr></th>
+            <th><abbr title="Goals for">Alcance</abbr></th>
+            <th><abbr title="Goals for">Acciones</abbr></th>
+          </tr>
+        </thead>
+        <!-- <tfoot>
+          <tr>
+            <th><abbr title="Position">Id</abbr></th>
+            <th>Titulo</th>
+            <th><abbr title="Played">Titulo</abbr></th>
+            <th><abbr title="Won">W</abbr></th>
+            <th><abbr title="Drawn">D</abbr></th>
+            <th><abbr title="Lost">L</abbr></th>
+            <th><abbr title="Goals for">GF</abbr></th>
+            <th><abbr title="Goals against">GA</abbr></th>
+            <th><abbr title="Goal difference">GD</abbr></th>
+            <th><abbr title="Points">Pts</abbr></th>
+            <th>Qualification or relegation</th>
+          </tr>
+        </tfoot> -->
+        <tbody>
+          <tr *ngFor="let item of lista">
+            <th>{{item.cveproyinv}}</th>
+            <td>{{item.titproyinv}}</td>
+            <td>{{item.tpoproyinv}}</td>
+            <td>{{item.autproyinv}}</td>
+            <td>{{item.fteproyinv}}</td>
+            <td>{{item.anioproyinv}}</td>
+            <td>{{item.alcproyinv}}</td>
+            <td>
+              <div style="display: flex;
+              justify-content: space-evenly;">
+                <span class="info"><i class="fa  fa-edit fa-1x" 
+                  style="color: #276cda; cursor: pointer;" 
+                  [routerLink]="['/proyecto',item.cveproyinv]"></i></span>
+              <span><i class="fa fa-times-circle fa-1x" style="color: red"></i></span>
+              </div>              
+            </td>
+          </tr>
+        </tbody>
+      </table>
+</div>

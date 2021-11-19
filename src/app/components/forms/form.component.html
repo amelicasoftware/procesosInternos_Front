@@ -1,155 +1,171 @@
-<div>
-    <nav class="navbar is-transparent">
-        <div class="navbar-brand">
-          <a class="navbar-item" href="https://bulma.io">
-            <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
-          </a>
-          <div class="navbar-burger" data-target="navbarExampleTransparentExample">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        </div>
-      
-        <div id="navbarExampleTransparentExample" class="navbar-menu">
-          <div class="navbar-start">
-            <a class="navbar-item" href="https://bulma.io/">
-              Home
-            </a>
-            <!-- <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link" href="https://bulma.io/documentation/overview/start/">
-                Docs
-              </a>
-              <div class="navbar-dropdown is-boxed">
-                <a class="navbar-item" href="https://bulma.io/documentation/overview/start/">
-                  Overview
-                </a>
-                <a class="navbar-item" href="https://bulma.io/documentation/overview/modifiers/">
-                  Modifiers
-                </a>
-                <a class="navbar-item" href="https://bulma.io/documentation/columns/basics/">
-                  Columns
-                </a>
-                <a class="navbar-item" href="https://bulma.io/documentation/layout/container/">
-                  Layout
-                </a>
-                <a class="navbar-item" href="https://bulma.io/documentation/form/general/">
-                  Form
-                </a>
-                <hr class="navbar-divider">
-                <a class="navbar-item" href="https://bulma.io/documentation/elements/box/">
-                  Elements
-                </a>
-                <a class="navbar-item is-active" href="https://bulma.io/documentation/components/breadcrumb/">
-                  Components
-                </a>
-              </div>
-            </div> -->
-            <select class="select is-link"
-                    palceholder="Selecciona un formulario" 
-                    [formControl]="typeForm">
-                <option value="1">Artículos científicos</option>
-                <option value="2">Capítulos de libro científico</option>
-                <option value="3">Libros científicos</option>
-            </select>
-          </div>
-      
-          <div class="navbar-end">
-            <div class="navbar-item">
-              <div class="field is-grouped">
-                <p class="control">
-                  <a class="bd-tw-button button" data-social-network="Twitter" data-social-action="tweet" data-social-target="https://bulma.io" target="_blank" href="https://twitter.com/intent/tweet?text=Bulma: a modern CSS framework based on Flexbox&amp;hashtags=bulmaio&amp;url=https://bulma.io&amp;via=jgthms">
-                    <span class="icon">
-                      <i class="fab fa-twitter"></i>
-                    </span>
-                    <span>
-                      Tweet
-                    </span>
-                  </a>
-                </p>
-                <p class="control">
-                  <a class="button is-primary" href="https://github.com/jgthms/bulma/releases/download/0.9.3/bulma-0.9.3.zip">
-                    <span class="icon">
-                      <i class="fas fa-download"></i>
-                    </span>
-                    <span>Download</span>
-                  </a>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-</div>
-
 <div class="container is-widescreen">
-    <h3>Formulario Artículos científicos</h3>
-    <form [formGroup]="form">
-        <p>
-            Título de artículo: <br />
-            <input class="" type="text" formControlName="titulo">
-        </p>
-        <span class="tag is-danger is-light">dato invalido</span>
-        <p>
-            Revista: <br />
-            <input class="input" type="text" formControlName="fuente">
-        </p>
-        <p>
-            Volúmen: <br />
-            <input class="input" type="text" formControlName="volumen">
-        </p>
-        <p>
-            Año: <br />
-            <input class="input" type="number" formControlName="anio">
-        </p>
-        <p>
-            DOI/Enlace: <br />
-            <input class="input" type="email" formControlName="enlace">
-        </p>
-        <p>
-        Autor/es: <br />
-        <div class="field has-addons">
-            <div class="control has-icons-left">
-            <input type="text" class="input" placeholder="Escribe el nombre del autor"
-                    [formControl]="autor">
-            <span class="icon is-medium is-left">
-                <i class="fa fa-futbol-o"></i>
-            </span>
-            </div>
-            <div class="control" (click)="addAutor(autor.value)">
-                <a class="button is-info">Agregar</a>
-            </div>
+  <!-- <h2>Formulario Artículos científicos</h2> -->
+  <br>
+  <form [formGroup]="form" class="box">
+    <div class="field">
+      <label for="" class="label">Título de artículo:</label>
+      <input class="input" type="text" formControlName="TITPROYINV"
+        [ngClass]="{'is-danger' : campoEsValido('TITPROYINV')}">
+      <p class="help is-danger" *ngIf="campoEsValido('TITPROYINV')">
+        Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %
+      </p>
+    </div>
+    
+    <div class="field">
+      <label class="label">Revista:</label>
+      <input class="input" type="text" formControlName="FTEPROYINV"
+        [ngClass]="{'is-danger' : campoEsValido('FTEPROYINV')}">
+      <p class="help is-danger" *ngIf="campoEsValido('FTEPROYINV')">
+        Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %
+      </p>
+    </div>
+    <div class="field">
+      <label class="label">Volúmen:</label>
+      <input class="input" type="text" formControlName="VOLPROYINV">
+      <p class="help is-danger" *ngIf="campoEsValido('VOLPROYINV')">
+        Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %
+      </p>
+    </div>
+    <div class="field">
+      <label class="label">Año: </label>
+      <input class="input" type="number" formControlName="ANIOPROYINV"
+        [ngClass]="{'is-danger' : campoEsValido('ANIOPROYINV')}">
+      <p class="help is-danger" *ngIf="campoEsValido('ANIOPROYINV')">
+        Este campo es obligatorio
+      </p>
+    </div>
+    <div class="field">
+      <label class="label"> DOI/Enlace:</label>
+      <input class="input" type="email" placeholder="https://www.redalyc.org/articulo.oa?id=10411213" formControlName="URLPROYINV"
+        [ngClass]="{'is-danger' : campoEsValido('URLPROYINV')}">
+      <p class="help is-danger" *ngIf="campoEsValido('URLPROYINV')">
+        Este campo es obligatorio y debe ser una direccion del tipo http://ejemplo.com
+      </p>
+    </div>
+
+    <div class="field">
+      <label class="label">Autor/es del libro:</label>
+      <div class="field has-addons">
+        <div class="control has-icons-left">
+          <input type="text" class="input" placeholder="Escribe el nombre del autor" [formControl]="autor"
+            (keyup.enter)="addAutor(autor.value, $event)">
+          <span class="icon is-medium is-left">
+            <i class="fa  fa-user"></i>
+          </span>
         </div>
-        <p>
-            <input class="input" type="text" formControlName="autores_Padre">
-        </p>
-        <!-- <p>
-            Pais: <br />
-            <select class="select is-info" formControlName="cvepais" >
-                <option [value]="item.cveentnac" *ngFor="let item of lista">{{item.nomentnac}}</option>
-            </select>
-        </p> -->
-        <p>
-            Pais: <br />
-            <ng-select class="select is-info" [multiple]="true" [formControl]="paises">
-                <ng-option *ngFor="let item of lista" [value]="item.cveentnac">{{item.nomentnac}}</ng-option>
-                <ng-option [value]="'custom'">Custom</ng-option>
-            </ng-select>
-        </p>
-        <p>
-            Resumen: <br />
-            <textarea cols="30" rows="5" formControlName="resumen"></textarea>
-        </p>
-        <p>
-            Alcance: <br />
-            <select formControlName="alcance">
-                <option value="1">Institucional</option>
-                <option value="2">Nacional</option>
-                <option value="3">Lationamérica</option>
-                <option value="3">Otras regiones</option>
-            </select>
-        </p>
+        <div class="control"  (click)="addAutor(autor.value, $event)">
+          <button class="button is-info" [disabled]="autor.errors && autor.touched" >Agregar</button>
+        </div>
+      </div>
+      <p class="help is-danger" *ngIf="campoEsValido('listAutor')">
+        Debe agregar por lo menos un autor
+      </p>
+      <p class="help is-danger" *ngIf="autor.errors && autor.touched">
+        Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %
+      </p>
+    </div>
 
+    <label class="label" *ngIf="autoresArr.length>0">Lista de Autores</label>
+    <div formArrayName="listAutor">
+      <div class="field has-addons" *ngFor="let autor of autoresArr.controls; let i = index">
+        <div class="control has-icons-left">
+          <input type="text" class="input" [formControlName]="i" readonly="readonly">
+          <span class="icon is-medium is-left">
+            <i class="fa  fa-user"></i>
+          </span>
+        </div>
+        <div class="control" (click)="borrar(i)">
+          <a class="button is-danger">Eliminar</a>
+        </div>
+      </div>
+    </div>
 
-    </form>
+    <div class="field">
+      <label class="label">País:</label>
+      <ng-select class="select is-multiple" [multiple]="true" [formControl]="pais">
+        <ng-option *ngFor="let item of lista" [value]="item.cveentnac">{{item.nomentnac}}</ng-option>
+      </ng-select>
+      <p class="help is-danger" *ngIf="campoEsValido('CVEPAISPRO')">Este campo es obligatorio</p>
+    </div>
+
+    <div class="field">
+      <label class="label">Resumen:</label>
+      <textarea class="textarea" cols="30" rows="5" formControlName="RSMPROYINV"></textarea>
+      <p class="help is-danger" *ngIf="campoEsValido('RSMPROYINV')">
+        Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %
+      </p>
+    </div>
+
+    <div class="field">
+      <label class="label">Alcance</label>
+      <div class="select" [ngClass]="{'is-danger' : campoEsValido('ALCPROYINV')}">
+        <select formControlName="ALCPROYINV">
+          <option value="Institucional">Institucional</option>
+          <option value="Nacional">Nacional</option>
+          <option value="Lationamérica">Lationamérica</option>
+          <option value="Otras regiones">Otras regiones</option>
+        </select>
+      </div>
+      <p class="help is-danger" *ngIf="campoEsValido('REAPROYINV')">Este campo es obligatorio</p>
+    </div>
+
+    <div class="field">
+      <label class="label">Realizado</label>
+      <div class="control">
+        <label class="radio">
+          <input type="radio" name="REAPROYINV" formControlName="REAPROYINV" value=1>
+          Si
+        </label>
+        <label class="radio">
+          <input type="radio" name="REAPROYINV" formControlName="REAPROYINV" value=0>
+          No
+        </label>
+      </div>
+      <p class="help is-danger" *ngIf="campoEsValido('REAPROYINV')">Este campo es obligatorio</p>
+    </div>
+
+    <div class="field">
+      <label class="label">Agenda</label>
+      <div class="control">
+        <label class="radio">
+          <input type="radio" name="AGDREDPROY" formControlName="AGDREDPROY" value="Si">
+          Si
+        </label>
+        <label class="radio">
+          <input type="radio" name="AGDREDPROY" formControlName="AGDREDPROY" value="No">
+          No
+        </label>
+      </div>
+      <p class="help is-danger" *ngIf="campoEsValido('AGDREDPROY')">Este campo es obligatorio</p>
+    </div>
+
+    <div class="field">
+      <label class="label">Información adicional: </label>
+      <div class="control">
+        <textarea class="textarea" placeholder="" formControlName="INFADCPROY"></textarea>
+      </div>
+      <p class="help is-danger" *ngIf="campoEsValido('INFADCPROY')">
+        Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %
+      </p>
+    </div>
+
+    <div class="field is-grouped">
+      <div class="control">
+        <button class="button is-link" (click)="guardar()">Guardar</button>
+      </div>
+      <div class="control">
+        <button class="button is-link is-light">Cancel</button>
+      </div>
+    </div>
+  </form>
 </div>
+
+
+
+<!-- <span>Valid</span>
+<pre>{{ form.valid }}</pre>
+<br>
+
+<span>value</span>
+<pre>{{ form.value | json  }}</pre>
+<br> -->

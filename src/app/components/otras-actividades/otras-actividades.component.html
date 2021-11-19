@@ -1,0 +1,40 @@
+<div class="container is-widescreen">
+    <form [formGroup]="form" class="box">
+      <div class="field">
+        <label for="" class="label">Actividad:</label>
+        <input class="input" type="text" formControlName="TITPROYINV"
+          [ngClass]="{'is-danger' : campoEsValido('TITPROYINV')}">
+        <p class="help is-danger" *ngIf="campoEsValido('TITPROYINV')">
+          Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %
+        </p>
+      </div>
+      
+      <div class="field">
+        <label class="label">Tipo de actividad:</label>
+        <input class="input" type="text" formControlName="TPOACTPROY"
+          [ngClass]="{'is-danger' : campoEsValido('TPOACTPROY')}">
+        <p class="help is-danger" *ngIf="campoEsValido('TPOACTPROY')">
+          Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %
+        </p>
+      </div>
+  
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="button is-link" (click)="guardar()">Guardar</button>
+        </div>
+        <div class="control">
+          <button class="button is-link is-light" (click)="limpiar()">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+  
+  
+  <!--<span>Valid</span>
+  <pre>{{ form.valid }}</pre>
+  <br>
+  
+  <span>value</span>
+  <pre>{{ form.value | json  }}</pre>
+  <br>-->

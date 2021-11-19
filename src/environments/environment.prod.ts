@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  urlServices: 'http://148.215.2.10:9092/boardInvestigacion/service/ds/'
 };
