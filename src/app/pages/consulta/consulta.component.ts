@@ -45,6 +45,12 @@ export class ConsultaComponent implements OnInit {
   stateSidebar="show";
   totalOfResults= String;
   banSearch="false";
+  f = new Date();
+  meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo",
+				"Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre",
+				"Diciembre");
+  fecha = this.f.getDate() + " de " + this.meses[this.f.getMonth()] + " de "
+				+ this.f.getFullYear();
   dataBusqueda= {"TITPROYINV":"",
                   "TPOPROYINV":"",
                   "ANIOPROYINV":"",
@@ -385,7 +391,7 @@ citarElement(idCard:String){
   Swal.fire({  
     position: 'center',  
     icon: 'success',  
-    title: 'Cita copiada en formato apa6\n'+$("#"+idCard).text().replace(/&amp;/g,"&"),  
+    title: 'Cita copiada en formato APA\n'+$("#"+idCard).text().replace(/&amp;/g,"&"),  
     showConfirmButton: false,  
     timer: 2500  
   }) 

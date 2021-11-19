@@ -103,7 +103,7 @@
           <span><b>Autor:</b> {{proyecto.autproyinv}}</span><br>
           <span><b>Resumen:</b> {{proyecto.rsmproyinv}}</span><br>
           <div class="cite" attr.id="{{proyecto.cveproyinv}}_cite" style="display: none;">
-            {{proyecto.autproyinv}}.{{proyecto.titproyinv}}. [fecha de consulta ]. Disponible en: {{proyecto.urlproyinv}}
+            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en: {{proyecto.urlproyinv}}
           </div>
         </div>
         <div class="content" *ngIf="proyecto.tpoproyinv=='Capítulos de libro científico'">
@@ -116,6 +116,9 @@
           <span><b>Titulo del capítulo:</b> {{proyecto.titproyinv}}</span><br>
           <span><b>Autor/es del capítulo:</b> {{proyecto.autproyinv}}</span><br>
           <span><b>Resumen:</b> {{proyecto.rsmproyinv}}</span><br>
+          <div class="cite" attr.id="{{proyecto.cveproyinv}}_cite" style="display: none;">
+            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en: {{proyecto.urlproyinv}}
+          </div>
         </div>
         <div class="content" *ngIf="proyecto.tpoproyinv=='Libros científicos'">
           <span><b>DOI:</b> {{proyecto.urlproyinv}}</span><br>
@@ -125,6 +128,9 @@
           <span><b>País:</b> {{proyecto.nomentnac}}</span><br>
           <span><b>Año:</b> {{proyecto.anioproyinv}}</span><br>
           <span><b>Resumen:</b> {{proyecto.rsmproyinv}}</span><br>
+          <div class="cite" attr.id="{{proyecto.cveproyinv}}_cite" style="display: none;">
+            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en: {{proyecto.urlproyinv}}
+          </div>
         </div>
         <div class="content" *ngIf="proyecto.tpoproyinv=='Conferencias especializadas'">
           <span><b>Ponente/conferencista:</b> {{proyecto.autproyinv}}</span><br>
@@ -134,6 +140,9 @@
           <span><b>Institución organizadora:</b> {{proyecto.insproyinv}}</span><br>
           <span><b>País:</b> {{proyecto.nomentnac}}</span><br>
           <span><b>Año:</b> {{proyecto.anioproyinv}}</span><br>
+          <div class="cite" attr.id="{{proyecto.cveproyinv}}_cite" style="display: none;">
+            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en: {{proyecto.urlproyinv}}
+          </div>
         </div>
         <div class="content" *ngIf="proyecto.tpoproyinv=='Artículos de divulgación'">
           <span><b>DOI:</b> {{proyecto.urlproyinv}}</span><br>
@@ -142,6 +151,9 @@
           <span><b>País:</b> {{proyecto.nomentnac}}</span><br>
           <span><b>Año:</b> {{proyecto.anioproyinv}}</span><br>
           <span><b>Autor:</b> {{proyecto.autproyinv}}</span><br>
+          <div class="cite" attr.id="{{proyecto.cveproyinv}}_cite" style="display: none;">
+            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en: {{proyecto.urlproyinv}}
+          </div>
         </div>
 
         <div class="content" *ngIf="proyecto.tpoproyinv=='Libros de divulgación'">
@@ -151,13 +163,18 @@
           <span><b>Editorial:</b> {{proyecto.insproyinv}}</span><br>
           <span><b>País:</b> {{proyecto.nomentnac}}</span><br>
           <span><b>Año:</b> {{proyecto.anioproyinv}}</span><br>
-          
+          <div class="cite" attr.id="{{proyecto.cveproyinv}}_cite" style="display: none;">
+            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en: {{proyecto.urlproyinv}}
+          </div>
         </div>
         <div class="content" *ngIf="proyecto.tpoproyinv=='Otras actividades de divulgación'">
           <span><b>Actividad:</b> {{proyecto.titproyinv}}</span><br>
           <span><b>Año:</b> {{proyecto.anioproyinv}}</span><br>
           <span><b>Institución:</b> {{proyecto.insproyinv}}</span><br>
           <span><b>Resumen:</b> {{proyecto.rsmproyinv}}</span><br>
+          <div class="cite" attr.id="{{proyecto.cveproyinv}}_cite" style="display: none;">
+            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en: {{proyecto.urlproyinv}}
+          </div>
         </div>
         <div class="content" *ngIf="proyecto.tpoproyinv=='Dirección de tesis'">
           <span><b>Autor:</b> {{proyecto.autproyinv}}</span><br>
@@ -165,6 +182,9 @@
           <span><b>Carrera/Programa:</b> {{proyecto.fteproyinv}}</span><br>
           <span><b>Institución:</b> {{proyecto.insproyinv}}</span><br>
           <span><b>Año:</b> {{proyecto.anioproyinv}}</span><br>
+          <div class="cite" attr.id="{{proyecto.cveproyinv}}_cite" style="display: none;">
+            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en: {{proyecto.urlproyinv}}
+          </div>
         </div>
         <div class="content" *ngIf="proyecto.tpoproyinv=='Proyectos de investigación'">
           <span><b>Título del proyecto:</b> {{proyecto.titproyinv}}</span><br>
@@ -172,6 +192,9 @@
           <span><b>País de instituciones participantes:</b> {{proyecto.nomentnac}}</span><br>
           <span><b>Periodo:</b> {{proyecto.prdproyinv}}</span><br>
           <span><b>Síntesis:</b> {{proyecto.rsmproyinv}}</span><br>
+          <div class="cite" attr.id="{{proyecto.cveproyinv}}_cite" style="display: none;">
+            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en: {{proyecto.urlproyinv}}
+          </div>
         </div>
         <div class="content" *ngIf="proyecto.tpoproyinv=='Redes de investigación'">
           <span><b>Nombre de la red/grupo:</b> {{proyecto.titproyinv}}</span><br>
@@ -181,12 +204,15 @@
           <span><b>Periodo:</b> {{proyecto.prdproyinv}}</span><br>
           <span><b>Coordinadores:</b> {{proyecto.autproyinv}}</span><br>
           <span><b>Síntesis:</b> {{proyecto.rsmproyinv}}</span><br>
+          <div class="cite" attr.id="{{proyecto.cveproyinv}}_cite" style="display: none;">
+            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en: {{proyecto.urlproyinv}}
+          </div>
         </div>
       </div>
       <footer class="card-footer">
         <div class="card-footer-item btn-card">
           <img src="assets/img/copias-apa.png"/>
-          <a rel="nofollow" class="button-busq" (click)="citarElement(proyecto.cveproyinv+'_cite')">Copiar cita</a>
+          <a rel="nofollow" class="button-busq" (click)="citarElement(proyecto.cveproyinv+'_cite')">Copiar cita APA</a>
         </div>
         <div class="card-footer-item btn-card">
           <img src="assets/img/descargar.png"/>
