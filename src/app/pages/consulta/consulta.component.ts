@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BusquedasService } from 'src/app/Services/busquedas.service';
 import html2canvas from 'html2canvas';
 import  {saveAs}  from 'file-saver';
+import Swal from 'sweetalert2';
 declare var $: any;
 @Component({
   selector: 'app-consulta',
@@ -9,7 +10,7 @@ declare var $: any;
   styleUrls: ['./consulta.component.css']
 })
 export class ConsultaComponent implements OnInit {
-  title = 'Systemas internos redalyc';
+  title = 'Counsulta de proyectos de investigación';
   headers= [      "agdredproy",
                   "alcproyinv",
                   "anioproyinv",
@@ -43,6 +44,7 @@ export class ConsultaComponent implements OnInit {
   listFillterFines: Array<String> = [];
   stateSidebar="show";
   totalOfResults= String;
+  banSearch="false";
   dataBusqueda= {"TITPROYINV":"",
                   "TPOPROYINV":"",
                   "ANIOPROYINV":"",
@@ -274,6 +276,10 @@ findWithFilters(data:any){
                                       ""+this.listFillterAnios[alc] :
                                       ","+this.listFillterAnios[alc];
       }
+      if(sizeAnios==0){
+        this.dataBusqueda.PERIIN="";
+        this.dataBusqueda.PERIFIN="";
+      }
     break;
     case 3: //Filtro Meses
     var index=-1;
@@ -368,4 +374,27 @@ campoFiltrado(data:any) {
   }
   return st;
 }
+citarElement(idCard:String){
+  $(document).ready(function(){
+  var aux = document.createElement("input");
+  aux.setAttribute("value", $("#"+idCard).text().replace(/&amp;/g,"&"));
+  document.body.appendChild(aux);
+  aux.select();
+  document.execCommand("copy");
+  document.body.removeChild(aux);
+  Swal.fire({  
+    position: 'center',  
+    icon: 'success',  
+    title: 'Cita copiada en formato apa6\n'+$("#"+idCard).text().replace(/&amp;/g,"&"),  
+    showConfirmButton: false,  
+    timer: 2500  
+  }) 
+  });
+}
+  touchSearch(){
+    this.banSearch=this.banSearch=="false" ? "true" : this.banSearch;
+    $(document).ready(function(){
+      $(".box").addClass("is-danger");
+    });
+  }
 }
