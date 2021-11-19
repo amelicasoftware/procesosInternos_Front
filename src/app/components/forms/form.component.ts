@@ -169,6 +169,5 @@ export class FormComponent implements OnInit {
   limpiar(){
     //this.form.reset();
     this.buildForm();
-    //** */
   }
 }
