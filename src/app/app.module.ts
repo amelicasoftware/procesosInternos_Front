@@ -22,6 +22,7 @@ import { ConsultaComponent } from './pages/consulta/consulta.component';
 import { ValidacionComponent } from './pages/validacion/validacion.component';
 import { HeaderComponent } from './components/header/header.component';
 import { DatosProyectoComponent } from './pages/datos-proyecto/datos-proyecto.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { DatosProyectoComponent } from './pages/datos-proyecto/datos-proyecto.co
     ConsultaComponent,
     ValidacionComponent,
     HeaderComponent,
-    DatosProyectoComponent
+    DatosProyectoComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
