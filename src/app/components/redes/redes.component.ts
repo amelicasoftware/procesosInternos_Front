@@ -11,7 +11,7 @@ import * as moment from 'moment';
 })
 export class RedesComponent implements OnInit {
   typeForm = new FormControl('Selecciona un formulario');
-  charNoAc:string = "[^#/\"?%]+";
+  charNoAc:string = "";
   autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern(this.charNoAc)]);
   institucion: FormControl = this.fb.control('', [Validators.required,Validators.pattern(this.charNoAc)]);
   pais = new FormControl('');
@@ -50,7 +50,7 @@ export class RedesComponent implements OnInit {
 
   private buildForm() {
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100),Validators.pattern("[^#/\"?]+")]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
       TPOPROYINV: new FormControl('Artículos científicos'),
       RSMPROYINV: new FormControl('',[Validators.pattern(this.charNoAc)]),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
@@ -184,7 +184,7 @@ export class RedesComponent implements OnInit {
     this.autoresArr.clear();
     this.instArr.clear();
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100),Validators.pattern("[^#/\"?]+")]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
       TPOPROYINV: new FormControl('Artículos científicos'),
       RSMPROYINV: new FormControl('',[Validators.pattern(this.charNoAc)]),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
