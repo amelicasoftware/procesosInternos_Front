@@ -15,7 +15,7 @@ export class OtrasActividadesComponent implements OnInit {
   pais = new FormControl('');
   form!: FormGroup;
   autores: String[] = [];
-  charNoAc:string = "[^\'#/\"?%]+";
+  charNoAc:string = "";
   lista: any[] = [];
   dato: boolean = true;
   selectedCountry:any=[];
@@ -108,6 +108,11 @@ export class OtrasActividadesComponent implements OnInit {
       this.form.markAllAsTouched();
       return 0;
     }
+    this.form.controls.TITPROYINV.setValue(this.cambioResumen(this.form.controls.TITPROYINV.value));
+    this.form.controls.VOLPROYINV.setValue(this.cambioResumen(this.form.controls.VOLPROYINV.value));
+    this.form.controls.INSPROYINV.setValue(this.cambioResumen(this.form.controls.INSPROYINV.value));
+    this.form.controls.TPOACTPROY.setValue(this.cambioResumen(this.form.controls.TPOACTPROY.value));
+    this.form.controls.FTEPROYINV.setValue(this.cambioResumen(this.form.controls.FTEPROYINV.value));
     console.log(this.paisesArr?.value);
     // imprimir el valor del formulario, sólo si es válido
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
@@ -184,5 +189,11 @@ export class OtrasActividadesComponent implements OnInit {
     var splitted2 = splitted.join("s-s").split("?");
     var splitted3 = splitted2.join("d-d").split("%");
     return splitted3.join("p-p");
+  }
+  cambioResumen(str:String): string{
+    str = this.cambioUrl(str);
+    var splitted = str.split("\'");
+    var splitted2 = splitted.join("c-c").split("\"");
+    return splitted2.join("b-b");
   }
 }

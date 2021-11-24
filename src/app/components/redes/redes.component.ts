@@ -11,7 +11,7 @@ import * as moment from 'moment';
 })
 export class RedesComponent implements OnInit {
   typeForm = new FormControl('Selecciona un formulario');
-  charNoAc:string = "[^#/\"?%]+";
+  charNoAc:string = "";
   autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern(this.charNoAc)]);
   institucion: FormControl = this.fb.control('', [Validators.required,Validators.pattern(this.charNoAc)]);
   pais = new FormControl('');
@@ -52,7 +52,7 @@ export class RedesComponent implements OnInit {
     this.form = this.fb.group({
       TITPROYINV: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
       TPOPROYINV: new FormControl('Redes de Investigación'),
-      RSMPROYINV: new FormControl('',[Validators.pattern(this.charNoAc)]),
+      RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
@@ -71,7 +71,7 @@ export class RedesComponent implements OnInit {
       REAPROYINV: new FormControl('', [Validators.required]),
       AGDREDPROY: new FormControl('', [Validators.required]),
       TPOACTPROY: new FormControl(''),
-      INFADCPROY: new FormControl('',[Validators.pattern(this.charNoAc)]),
+      INFADCPROY: new FormControl(''),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1',[Validators.pattern("[1-9]+[0-9]*"),Validators.min(1),Validators.max(10000)]),
     });
@@ -134,10 +134,15 @@ export class RedesComponent implements OnInit {
     }
     console.log(this.autoresArr.value);
     console.log(this.paisesArr?.value);
-    this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
+    this.form.controls.TITPROYINV.setValue(this.cambioResumen(this.form.controls.TITPROYINV.value));
+    this.form.controls.VOLPROYINV.setValue(this.cambioResumen(this.form.controls.VOLPROYINV.value));
+    this.form.controls.INSPROYINV.setValue(this.cambioResumen(this.form.controls.INSPROYINV.value));
+    this.form.controls.TPOACTPROY.setValue(this.cambioResumen(this.form.controls.TPOACTPROY.value));
+    this.form.controls.FTEPROYINV.setValue(this.cambioResumen(this.form.controls.FTEPROYINV.value));
+    this.form.controls.AUTPROYINV.setValue(this.cambioResumen(this.autoresArr.value.join(',')));
     this.form.controls.RSMPROYINV.setValue(this.cambioResumen(this.form.controls.RSMPROYINV.value));
     this.form.controls.INFADCPROY.setValue(this.cambioResumen(this.form.controls.INFADCPROY.value));
-    this.form.controls.INSPROYINV.setValue(this.instArr.value.join(','));
+    this.form.controls.INSPROYINV.setValue(this.cambioResumen(this.instArr.value.join(',')));
 
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
 
@@ -183,32 +188,7 @@ export class RedesComponent implements OnInit {
   limpiar(){
     this.autoresArr.clear();
     this.instArr.clear();
-    this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
-      TPOPROYINV: new FormControl('Redes de Investigación'),
-      RSMPROYINV: new FormControl('',[Validators.pattern(this.charNoAc)]),
-      CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
-      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
-      listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
-      listIns: this.fb.array([], [Validators.required, Validators.min(1)]),
-      URLPROYINV: new FormControl(''),
-      VOLPROYINV: new FormControl(''),
-      FTEPROYINV: new FormControl(''),
-      INSPROYINV: new FormControl(''),
-      AUTPADPROY: new FormControl(''),
-      PARPROYINV: new FormControl(''),
-      integrantes: new FormControl(''),
-      ALCPROYINV: new FormControl('', [Validators.required]),
-      PRDPROYINV: new FormControl('',[Validators.pattern(""+this.expreg)]),
-      MESPROYINV: new FormControl(''),
-      FECCAPPROY: new FormControl(this.fechaActual()),
-      REAPROYINV: new FormControl('', [Validators.required]),
-      AGDREDPROY: new FormControl('', [Validators.required]),
-      TPOACTPROY: new FormControl(''),
-      INFADCPROY: new FormControl('',[Validators.pattern(this.charNoAc)]),
-      AUTPROYINV: new FormControl(''),
-      CTDINTPROY: new FormControl('1',[Validators.pattern("[1-9]+[0-9]*"),Validators.min(1),Validators.max(10000)]),
-    });
+    this.buildForm();
     this.selectedCountry = [];
   }
   fechaActual(): String{
