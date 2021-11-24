@@ -66,7 +66,7 @@ export class FormComponent implements OnInit {
   
   private buildForm() {
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
       TPOPROYINV: new FormControl('Artículos científicos'),
       RSMPROYINV: new FormControl('',Validators.pattern(this.charNoAc)),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
@@ -186,6 +186,7 @@ export class FormComponent implements OnInit {
     return moment(fecha).format('DD-MM-YY');
   }
   cambioResumen(str:String): string{
+    str = this.cambioUrl(str);
     var splitted = str.split("\'");
     var splitted2 = splitted.join("c-c").split("\"");
     return splitted2.join("b-b");

@@ -200,6 +200,7 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
       return splitted3.join("p-p");
     }
     cambioResumen(str:String): string{
+      str = this.cambioUrl(str);
       var splitted = str.split("\'");
       var splitted2 = splitted.join("c-c").split("\"");
       return splitted2.join("b-b");
