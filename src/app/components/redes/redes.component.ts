@@ -11,7 +11,7 @@ import * as moment from 'moment';
 })
 export class RedesComponent implements OnInit {
   typeForm = new FormControl('Selecciona un formulario');
-  charNoAc:string = /*"[^#/\"?%]+"*/"";
+  charNoAc:string = "[^#/\"?%]+";
   autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern(this.charNoAc)]);
   institucion: FormControl = this.fb.control('', [Validators.required,Validators.pattern(this.charNoAc)]);
   pais = new FormControl('');
