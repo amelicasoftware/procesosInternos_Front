@@ -117,6 +117,7 @@ export class ConferenciasEspecializadasComponent implements OnInit {
     }
     console.log(this.autoresArr.value);
     console.log(this.paisesArr?.value);
+    this.form.controls.RSMPROYINV.setValue(this.cambioResumen(this.form.controls.RSMPROYINV.value));
     this.form.controls.TITPROYINV.setValue(this.cambioUrl(this.form.controls.TITPROYINV.value));
     this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
@@ -196,5 +197,10 @@ export class ConferenciasEspecializadasComponent implements OnInit {
     var splitted2 = splitted.join("s-s").split("?");
     var splitted3 = splitted2.join("d-d").split("%");
     return splitted3.join("p-p");
+  }
+  cambioResumen(str:String): string{
+    var splitted = str.split("\'");
+    var splitted2 = splitted.join("c-c").split("\"");
+    return splitted2.join("b-b");
   }
 }

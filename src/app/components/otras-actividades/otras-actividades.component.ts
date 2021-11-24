@@ -15,6 +15,7 @@ export class OtrasActividadesComponent implements OnInit {
   pais = new FormControl('');
   form!: FormGroup;
   autores: String[] = [];
+  charNoAc:string = "[^\'#/\"?%]+";
   lista: any[] = [];
   dato: boolean = true;
   selectedCountry:any=[];
@@ -28,6 +29,7 @@ export class OtrasActividadesComponent implements OnInit {
   ngOnInit() {
     this.typeForm.valueChanges.subscribe(valor => {
       console.log(valor);
+      
     });
 
     this.pais.valueChanges.subscribe(valor => {
@@ -43,7 +45,7 @@ export class OtrasActividadesComponent implements OnInit {
 
   private buildForm() {
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern("[^#/\"?]+")]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
       TPOPROYINV: new FormControl('Otras Actividades'),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl(''),
@@ -61,7 +63,7 @@ export class OtrasActividadesComponent implements OnInit {
       FECCAPPROY: new FormControl(this.fechaActual()),
       REAPROYINV: new FormControl('0'),
       AGDREDPROY: new FormControl(''),
-      TPOACTPROY: new FormControl('',[Validators.required,Validators.pattern("[^#/\"?]+")]),
+      TPOACTPROY: new FormControl('',[Validators.required,Validators.pattern(this.charNoAc)]),
       INFADCPROY: new FormControl(''),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),
@@ -144,8 +146,11 @@ export class OtrasActividadesComponent implements OnInit {
     })  
   } 
   limpiar(){
+    console.log(btoa("demo@demo.com"));
+    console.log("ZGVtb0BkZW1vLmNvbQ==");
+    console.log(atob("ZGVtb0BkZW1vLmNvbQ=="));
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern("[^#/\"?]+")]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
       TPOPROYINV: new FormControl('Otras Actividades'),
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl(''),
@@ -163,7 +168,7 @@ export class OtrasActividadesComponent implements OnInit {
       FECCAPPROY: new FormControl(this.fechaActual()),
       REAPROYINV: new FormControl('0'),
       AGDREDPROY: new FormControl(''),
-      TPOACTPROY: new FormControl('',[Validators.required,Validators.pattern("[^#/\"?]+")]),
+      TPOACTPROY: new FormControl('',[Validators.required,Validators.pattern(this.charNoAc)]),
       INFADCPROY: new FormControl(''),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),

@@ -133,7 +133,7 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
       this.form.controls.AUTPROYINV.setValue('');
   
       this.form.controls.INSPROYINV.setValue(this.instArr.value.join(','));
-  
+      this.form.controls.RSMPROYINV.setValue(this.cambioResumen(this.form.controls.RSMPROYINV.value));
       this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
   
       this.form.controls.TITPROYINV.setValue(this.formatoTitulo(this.form.controls.TITPROYINV.value));
@@ -197,6 +197,11 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
       var splitted2 = splitted.join("s-s").split("?");
       var splitted3 = splitted2.join("d-d").split("%");
       return splitted3.join("p-p");
+    }
+    cambioResumen(str:String): string{
+      var splitted = str.split("\'");
+      var splitted2 = splitted.join("c-c").split("\"");
+      return splitted2.join("b-b");
     }
   }
   

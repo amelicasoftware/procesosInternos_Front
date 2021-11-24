@@ -114,11 +114,11 @@
         <label class="label">Agenda</label>
         <div class="control">
           <label class="radio">
-            <input type="radio" name="AGDREDPROY" formControlName="AGDREDPROY" value="Si">
+            <input type="radio" name="AGDREDPROY" formControlName="AGDREDPROY" value="si">
             Si
           </label>
           <label class="radio">
-            <input type="radio" name="AGDREDPROY" formControlName="AGDREDPROY" value="No">
+            <input type="radio" name="AGDREDPROY" formControlName="AGDREDPROY" value="no">
             No
           </label>
         </div>
@@ -139,7 +139,7 @@
           <button class="button is-link" (click)="guardar()">Guardar</button>
         </div>
         <div class="control">
-          <button class="button is-link is-light">Cancel</button>
+          <button class="button is-link is-light" (click)="limpiar()">Cancel</button>
         </div>
       </div>
     </form>
