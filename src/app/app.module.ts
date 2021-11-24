@@ -19,6 +19,10 @@ import { OtrasActividadesComponent } from './components/otras-actividades/otras-
 import { HomeComponent } from './pages/home/home.component';
 import { RouterModule } from '@angular/router';
 import { ConsultaComponent } from './pages/consulta/consulta.component';
+import { ValidacionComponent } from './pages/validacion/validacion.component';
+import { HeaderComponent } from './components/header/header.component';
+import { DatosProyectoComponent } from './pages/datos-proyecto/datos-proyecto.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 @NgModule({
@@ -37,7 +41,10 @@ import { ConsultaComponent } from './pages/consulta/consulta.component';
     OtrasActividadesComponent,
     HomeComponent,
     ConsultaComponent,
-    ProyectosDeInvestigacionComponent
+    ValidacionComponent,
+    HeaderComponent,
+    DatosProyectoComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

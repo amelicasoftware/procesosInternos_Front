@@ -1,0 +1,12 @@
+footer{
+    width: 100%;
+    height: auto;
+    background-color: white;
+    text-align: center;
+    color: gray;
+    margin-top: 1%;
+}
+
+#uaem, #admin{
+    margin: 1%;
+}

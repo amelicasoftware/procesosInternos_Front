@@ -66,7 +66,7 @@ export class FormComponent implements OnInit {
   
   private buildForm() {
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('prueba', [Validators.required, Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
       TPOPROYINV: new FormControl('Artículos científicos'),
       RSMPROYINV: new FormControl('',Validators.pattern(this.charNoAc)),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),

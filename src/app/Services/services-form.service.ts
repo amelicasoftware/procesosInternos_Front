@@ -29,7 +29,7 @@ export class ServicesFormService {
     });
   }
 
-  getAllProjects(){
+  getAllProjects(): Observable<any>{
     console.log(`${this.urlService}getAllData`)
     return this.http.get(`${this.urlService}getAllData`);
   }
