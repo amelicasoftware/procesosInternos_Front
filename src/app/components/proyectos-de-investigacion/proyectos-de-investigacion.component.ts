@@ -134,6 +134,7 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
   
       this.form.controls.INSPROYINV.setValue(this.instArr.value.join(','));
       this.form.controls.RSMPROYINV.setValue(this.cambioResumen(this.form.controls.RSMPROYINV.value));
+      this.form.controls.INFADCPROY.setValue(this.cambioResumen(this.form.controls.INFADCPROY.value));
       this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
   
       this.form.controls.TITPROYINV.setValue(this.formatoTitulo(this.form.controls.TITPROYINV.value));

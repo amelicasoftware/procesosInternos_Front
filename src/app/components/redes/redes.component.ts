@@ -11,7 +11,7 @@ import * as moment from 'moment';
 })
 export class RedesComponent implements OnInit {
   typeForm = new FormControl('Selecciona un formulario');
-  charNoAc:string = "";
+  charNoAc:string = /*"[^#/\"?%]+"*/"";
   autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern(this.charNoAc)]);
   institucion: FormControl = this.fb.control('', [Validators.required,Validators.pattern(this.charNoAc)]);
   pais = new FormControl('');
@@ -51,7 +51,7 @@ export class RedesComponent implements OnInit {
   private buildForm() {
     this.form = this.fb.group({
       TITPROYINV: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
-      TPOPROYINV: new FormControl('Artículos científicos'),
+      TPOPROYINV: new FormControl('Redes de Investigación'),
       RSMPROYINV: new FormControl('',[Validators.pattern(this.charNoAc)]),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
@@ -136,6 +136,7 @@ export class RedesComponent implements OnInit {
     console.log(this.paisesArr?.value);
     this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
     this.form.controls.RSMPROYINV.setValue(this.cambioResumen(this.form.controls.RSMPROYINV.value));
+    this.form.controls.INFADCPROY.setValue(this.cambioResumen(this.form.controls.INFADCPROY.value));
     this.form.controls.INSPROYINV.setValue(this.instArr.value.join(','));
 
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
@@ -180,12 +181,11 @@ export class RedesComponent implements OnInit {
     })  
   }  
   limpiar(){
-    console.log(this.cambioResumen("gfdgfdg'gggggggggggg\"gfdgfd"));
     this.autoresArr.clear();
     this.instArr.clear();
     this.form = this.fb.group({
       TITPROYINV: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
-      TPOPROYINV: new FormControl('Artículos científicos'),
+      TPOPROYINV: new FormControl('Redes de Investigación'),
       RSMPROYINV: new FormControl('',[Validators.pattern(this.charNoAc)]),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
