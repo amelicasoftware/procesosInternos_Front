@@ -13,7 +13,7 @@ import {Metodos} from '../metodos';
 export class LibroCientificoComponent implements OnInit {
   typeForm = new FormControl('Selecciona un formulario');
   charNoAc:string = "";
-  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern("[^#/\"?%")]);
+  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern("[^#/\"?%']+")]);
   pais = new FormControl('');
   form!: FormGroup;
   autores: String[] = [];
