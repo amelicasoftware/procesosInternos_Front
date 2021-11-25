@@ -14,7 +14,7 @@ export class FormComponent implements OnInit {
   seleccion:any = {id:0,name:''};
   typeForm = new FormControl('Selecciona un formulario');
   charNoAc:string = "";
-  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern(this.charNoAc)]);
+  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern("[^#/\"?%']+")]);
   pais = new FormControl('');
   form!: FormGroup;
   anioAct:number = 2021;

@@ -13,7 +13,7 @@ export class FormDireccionDeTesisComponent implements OnInit {
   typeForm = new FormControl('Selecciona un formulario');
   charNoAc:string = "";
   /*charNoAc:string = "[^#/\"?%]+";*/
-  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern(this.charNoAc)]);
+  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern("[^#/\"?%']+")]);
   pais = new FormControl('');
   form!: FormGroup;
   autores: String[] = [];

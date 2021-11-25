@@ -11,9 +11,9 @@ import * as moment from 'moment';
 })
 export class CapLibroCientificoComponent implements OnInit {
   typeForm = new FormControl('Selecciona un formulario');
-  charNoAc:string = "[^#/\"?%]+";
-  autor: FormControl = this.fb.control('',[Validators.required,Validators.pattern(this.charNoAc)]);
-  autorLib: FormControl = this.fb.control('',[Validators.required,Validators.pattern(this.charNoAc)]);
+  charNoAc:string = "";
+  autor: FormControl = this.fb.control('',[Validators.required,Validators.pattern("[^#/\"?%']+")]);
+  autorLib: FormControl = this.fb.control('',[Validators.required,Validators.pattern("[^#/\"?%']+")]);
   pais = new FormControl('');
   form!: FormGroup;
   autores: String[] = [];
