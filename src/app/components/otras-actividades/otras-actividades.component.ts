@@ -138,9 +138,9 @@ export class OtrasActividadesComponent implements OnInit {
     return 0;
   }
   limpiar(){
-    console.log(btoa("demo@demo.com"));
-    console.log("ZGVtb0BkZW1vLmNvbQ==");
-    console.log(atob("ZGVtb0BkZW1vLmNvbQ=="));
+    //console.log(btoa("demo@demo.com"));
+    //console.log("ZGVtb0BkZW1vLmNvbQ==");
+    //console.log(atob("ZGVtb0BkZW1vLmNvbQ=="));
     this.form = this.fb.group({
       TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
       TPOPROYINV: new FormControl('Otras Actividades'),
