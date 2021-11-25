@@ -65,7 +65,6 @@ export class Metodos{
         for(let x of caracteres){
             str = this.cambio(str,x.signo,x.cambio);  
         }
-        console.log(str);
         return str;
       }
       static codificar(from: string):string{
