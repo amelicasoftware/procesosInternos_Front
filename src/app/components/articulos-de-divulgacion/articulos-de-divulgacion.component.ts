@@ -13,7 +13,7 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
   typeForm = new FormControl('Selecciona un formulario');
   /*charNoAc:string = "[^#/\"?%]+";*/
   charNoAc:string = "";
-  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern("[^#/\"?%]+")]);
+  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern("[^#/\"?%']+")]);
   pais = new FormControl('');
   form!: FormGroup;
   formBack!: FormGroup;
