@@ -45,6 +45,15 @@ export class Metodos{
             },
             {   'signo':'\"',
                 'cambio':'b-b'
+            },
+            {   'signo':'\"',
+                'cambio':'t-t'
+            },
+            {   'signo':'\"',
+                'cambio':'j-j'
+            },
+            {   'signo':'\"',
+                'cambio':'k-k'
             }
         ]
         for(let x of caracteres){
