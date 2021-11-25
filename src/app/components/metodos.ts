@@ -46,13 +46,13 @@ export class Metodos{
             {   'signo':'\"',
                 'cambio':'b-b'
             },
-            {   'signo':'\"',
+            {   'signo':'[',
                 'cambio':'t-t'
             },
-            {   'signo':'\"',
+            {   'signo':']',
                 'cambio':'j-j'
             },
-            {   'signo':'\"',
+            {   'signo':';',
                 'cambio':'k-k'
             }
         ]
