@@ -57,6 +57,9 @@ export class Metodos{
             },
             {   'signo':'#',
                 'cambio':'h-h'
+            },
+            {   'signo':'\\',
+                'cambio':'z-z'
             }
         ]
         for(let x of caracteres){
