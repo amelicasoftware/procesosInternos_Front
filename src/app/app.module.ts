@@ -23,6 +23,7 @@ import { ValidacionComponent } from './pages/validacion/validacion.component';
 import { HeaderComponent } from './components/header/header.component';
 import { DatosProyectoComponent } from './pages/datos-proyecto/datos-proyecto.component';
 import { LogginComponent } from './pages/loggin/loggin.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { LogginComponent } from './pages/loggin/loggin.component';
     ValidacionComponent,
     HeaderComponent,
     DatosProyectoComponent,
-    LogginComponent
+    LogginComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

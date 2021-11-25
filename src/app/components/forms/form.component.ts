@@ -3,7 +3,7 @@ import { Component, OnInit, NgModule } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
 import Swal from 'sweetalert2';
-
+import * as moment from 'moment';
 @Component({
   selector:'app-form',
   templateUrl:'./form.component.html',
@@ -17,6 +17,8 @@ export class FormComponent implements OnInit {
   autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern(this.charNoAc)]);
   pais = new FormControl('');
   form!: FormGroup;
+  anioAct:number = 2021;
+  selectedCountry:any=[];
   autores: String [] = [];
   lista:any[]=[];
   tiposForms  = [
@@ -64,11 +66,11 @@ export class FormComponent implements OnInit {
   
   private buildForm() {
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
       TPOPROYINV: new FormControl('Artículos científicos'),
       RSMPROYINV: new FormControl('',Validators.pattern(this.charNoAc)),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
-      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(2021)]),
+      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl('', [Validators.required, Validators.maxLength(200),Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
       VOLPROYINV: new FormControl('',Validators.pattern(this.charNoAc)),
@@ -118,26 +120,32 @@ export class FormComponent implements OnInit {
     this.autoresArr.removeAt(i);
   }
 
-  guardar() {
+  guardar():number {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return 0;
+    }
 
     console.log(this.autoresArr.value);
     console.log(this.paisesArr?.value);
+    this.form.controls.RSMPROYINV.setValue(this.cambioResumen(this.form.controls.RSMPROYINV.value));
+    this.form.controls.INFADCPROY.setValue(this.cambioResumen(this.form.controls.INFADCPROY.value));
     this.form.controls.URLPROYINV.setValue(this.cambioUrl(this.form.controls.URLPROYINV.value));
     this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
-
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
-
     // imprimir el valor del formulario, sólo si es válido
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
       console.log(mensaje);
-      if(mensaje.respuesta === "true"){
-        this.alertWithSuccess();
-        this.form.reset();
+      if(mensaje !== null){
+        if(mensaje.respuesta === 'true'){
+          this.limpiar();
+          this.alertWithSuccess();
+        }else{
+          this.selectedCountry = [];
+          this.erroalert();
+        }
       }else{
+        this.selectedCountry = [];
         this.erroalert();
       }
     });
@@ -145,6 +153,7 @@ export class FormComponent implements OnInit {
     // console.log(mensaje);
     // this.alertWithSuccess();
     // this.erroalert();
+    return 0;
   }
 
   alertWithSuccess(){  
@@ -169,6 +178,17 @@ export class FormComponent implements OnInit {
   limpiar(){
     //this.form.reset();
     this.buildForm();
-    //** */
+    this.selectedCountry = [];
+  }
+  fechaActual(): String{
+    let fecha = new Date;
+    this.anioAct = fecha.getFullYear();
+    return moment(fecha).format('DD-MM-YY');
+  }
+  cambioResumen(str:String): string{
+    str = this.cambioUrl(str);
+    var splitted = str.split("\'");
+    var splitted2 = splitted.join("c-c").split("\"");
+    return splitted2.join("b-b");
   }
 }

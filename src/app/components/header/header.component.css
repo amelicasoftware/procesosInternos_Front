@@ -1,0 +1,12 @@
+#header{
+    background-image: url(../../../assets/img/encabezado-automatizacion.jpg);
+}
+#contaniner-header{
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    padding: 10px 20px;
+}
+#text-header{
+    text-align: right;
+}
