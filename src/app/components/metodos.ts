@@ -28,13 +28,7 @@ export class Metodos{
           footer: '<a href>Why do I have this issue?</a>'  
         })  
       }  
-      static cambioUrl(str:String): string{
-        var splitted = str.split("/");
-        var splitted2 = splitted.join("s-s").split("?");
-        var splitted3 = splitted2.join("d-d").split("%");
-        return splitted3.join("p-p");
-      }
-      static cambioResumen(str:String): string{
+      static cambioResumen(str:String): String{
         
         let caracteres=[
             {   'signo':'/',
@@ -54,15 +48,10 @@ export class Metodos{
             }
         ]
         for(let x of caracteres){
-            str = this.cambio(str,x.signo,x.cambio);
-            
+            str = this.cambio(str,x.signo,x.cambio);  
         }
         console.log(str);
-        str = this.cambioUrl(str);
-        var splitted = str.split("\'");
-        var splitted2 = splitted.join("c-c").split("\"");
-        console.log(splitted2.join("b-b"));
-        return splitted2.join("b-b");
+        return str;
       }
       static codificar(from: string):string{
         var splitted = btoa(from).split("/");
