@@ -4,6 +4,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Va
 import { ServicesFormService } from 'src/app/Services/services-form.service';
 import Swal from 'sweetalert2';
 import * as moment from 'moment';
+import {Metodos} from '../metodos';
 @Component({
   selector: 'app-cap-libro-cientifico',
   templateUrl: './cap-libro-cientifico.component.html',
@@ -131,16 +132,16 @@ export class CapLibroCientificoComponent implements OnInit {
     }
     console.log(this.autoresArr.value);
     console.log(this.paisesArr?.value);
-    this.form.controls.TITPROYINV.setValue(this.cambioResumen(this.form.controls.TITPROYINV.value));
-    this.form.controls.VOLPROYINV.setValue(this.cambioResumen(this.form.controls.VOLPROYINV.value));
-    this.form.controls.INSPROYINV.setValue(this.cambioResumen(this.form.controls.INSPROYINV.value));
-    this.form.controls.TPOACTPROY.setValue(this.cambioResumen(this.form.controls.TPOACTPROY.value));
-    this.form.controls.FTEPROYINV.setValue(this.cambioResumen(this.form.controls.FTEPROYINV.value));
-    this.form.controls.AUTPROYINV.setValue(this.cambioResumen(this.autoresArr.value.join(',')));
-    this.form.controls.URLPROYINV.setValue(this.cambioUrl(this.form.controls.URLPROYINV.value));
-    this.form.controls.RSMPROYINV.setValue(this.cambioResumen(this.form.controls.RSMPROYINV.value));
-    this.form.controls.INFADCPROY.setValue(this.cambioResumen(this.form.controls.INFADCPROY.value));
-    this.form.controls.AUTPADPROY.setValue(this.cambioResumen(this.autoresLibArr.value.join(',')));
+    this.form.controls.TITPROYINV.setValue(Metodos.cambioResumen(this.form.controls.TITPROYINV.value));
+    this.form.controls.VOLPROYINV.setValue(Metodos.cambioResumen(this.form.controls.VOLPROYINV.value));
+    this.form.controls.INSPROYINV.setValue(Metodos.cambioResumen(this.form.controls.INSPROYINV.value));
+    this.form.controls.TPOACTPROY.setValue(Metodos.cambioResumen(this.form.controls.TPOACTPROY.value));
+    this.form.controls.FTEPROYINV.setValue(Metodos.cambioResumen(this.form.controls.FTEPROYINV.value));
+    this.form.controls.AUTPROYINV.setValue(Metodos.cambioResumen(this.autoresArr.value.join(',')));
+    this.form.controls.URLPROYINV.setValue(Metodos.cambioResumen(this.form.controls.URLPROYINV.value));
+    this.form.controls.RSMPROYINV.setValue(Metodos.cambioResumen(this.form.controls.RSMPROYINV.value));
+    this.form.controls.INFADCPROY.setValue(Metodos.cambioResumen(this.form.controls.INFADCPROY.value));
+    this.form.controls.AUTPADPROY.setValue(Metodos.cambioResumen(this.autoresLibArr.value.join(',')));
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
     delete this.form.value.listAutorLib;
 
@@ -150,14 +151,14 @@ export class CapLibroCientificoComponent implements OnInit {
       if(mensaje !== null){
         if(mensaje.respuesta === 'true'){
           this.limpiar();
-          this.alertWithSuccess();
+          Metodos.alertWithSuccess();
         }else{
           this.selectedCountry = [];
-          this.erroalert();
+          Metodos.erroalert();
         }
       }else{
         this.selectedCountry = [];
-        this.erroalert();
+        Metodos.erroalert();
       }
     });
     console.log(this.form.value);
@@ -166,20 +167,6 @@ export class CapLibroCientificoComponent implements OnInit {
     // this.erroalert();
     return 0;
   }
-
-  alertWithSuccess(){  
-    Swal.fire('', 'guardado correctamente!', 'success')  
-  }
-
-  erroalert()  
-  {  
-    Swal.fire({  
-      icon: 'error',  
-      title: 'Oops...',  
-      text: 'Something went wrong!',  
-      footer: '<a href>Why do I have this issue?</a>'  
-    })  
-  }  
   limpiar(){
     this.autoresArr.clear();
     this.autoresLibArr.clear();
@@ -192,16 +179,4 @@ export class CapLibroCientificoComponent implements OnInit {
     return moment(fecha).format('DD-MM-YY');
   }
   
-  cambioUrl(str:String): string{
-    var splitted = str.split("/");
-    var splitted2 = splitted.join("s-s").split("?");
-    var splitted3 = splitted2.join("d-d").split("%");
-    return splitted3.join("p-p");
-  }
-  cambioResumen(str:String): string{
-    str = this.cambioUrl(str);
-    var splitted = str.split("\'");
-    var splitted2 = splitted.join("c-c").split("\"");
-    return splitted2.join("b-b");
-  }
 }

@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Va
 import { ServicesFormService } from 'src/app/Services/services-form.service';
 import Swal from 'sweetalert2';
 import * as moment from 'moment';
+import {Metodos} from '../metodos';
 @Component({
   selector: 'app-form-direccion-de-tesis',
   templateUrl: './form-direccion-de-tesis.component.html',
@@ -109,15 +110,14 @@ export class FormDireccionDeTesisComponent implements OnInit {
   guardar() {
 
     console.log(this.autoresArr.value);
-    this.form.controls.TITPROYINV.setValue(this.cambioResumen(this.form.controls.TITPROYINV.value));
-    this.form.controls.VOLPROYINV.setValue(this.cambioResumen(this.form.controls.VOLPROYINV.value));
-    this.form.controls.INSPROYINV.setValue(this.cambioResumen(this.form.controls.INSPROYINV.value));
-    this.form.controls.TPOACTPROY.setValue(this.cambioResumen(this.form.controls.TPOACTPROY.value));
-    this.form.controls.FTEPROYINV.setValue(this.cambioResumen(this.form.controls.FTEPROYINV.value));
-    this.form.controls.AUTPROYINV.setValue(this.cambioResumen(this.autoresArr.value.join(',')));
-    this.form.controls.TITPROYINV.setValue(this.formatoTitulo(this.form.controls.TITPROYINV.value));
-    this.form.controls.RSMPROYINV.setValue(this.cambioResumen(this.form.controls.RSMPROYINV.value));
-    this.form.controls.INFADCPROY.setValue(this.cambioResumen(this.form.controls.INFADCPROY.value));
+    this.form.controls.TITPROYINV.setValue(Metodos.cambioResumen(this.form.controls.TITPROYINV.value));
+    this.form.controls.VOLPROYINV.setValue(Metodos.cambioResumen(this.form.controls.VOLPROYINV.value));
+    this.form.controls.INSPROYINV.setValue(Metodos.cambioResumen(this.form.controls.INSPROYINV.value));
+    this.form.controls.TPOACTPROY.setValue(Metodos.cambioResumen(this.form.controls.TPOACTPROY.value));
+    this.form.controls.FTEPROYINV.setValue(Metodos.cambioResumen(this.form.controls.FTEPROYINV.value));
+    this.form.controls.AUTPROYINV.setValue(Metodos.cambioResumen(this.autoresArr.value.join(',')));
+    this.form.controls.RSMPROYINV.setValue(Metodos.cambioResumen(this.form.controls.RSMPROYINV.value));
+    this.form.controls.INFADCPROY.setValue(Metodos.cambioResumen(this.form.controls.INFADCPROY.value));
     this.form.controls.CVEPAISPRO.setValue('');
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -129,9 +129,9 @@ export class FormDireccionDeTesisComponent implements OnInit {
       console.log(mensaje);
       if(mensaje.respuesta == "true"){
         this.limpiar();
-        this.alertWithSuccess();
+        Metodos.alertWithSuccess();
       }else{
-        this.erroalert();
+        Metodos.erroalert();
       }
     });
     console.log(this.form.value);
@@ -139,40 +139,11 @@ export class FormDireccionDeTesisComponent implements OnInit {
     // this.alertWithSuccess();
     // this.erroalert();
   }
-
-  alertWithSuccess(){  
-    Swal.fire('', 'guardado correctamente!', 'success')  
-  }
   limpiar(){
     this.autoresArr.clear();
     //this.form.reset();
     this.buildForm();
       }
-  erroalert()  
-  {  
-    Swal.fire({  
-      icon: 'error',  
-      title: 'Oops...',  
-      text: 'Something went wrong!',  
-      footer: '<a href>Why do I have this issue?</a>'  
-    })  
-  }  
-  
-  formatoTitulo(str:String): String{
-    var splitted = str.split("/");
-    return splitted.join("s-s");
-  }
-  cambioUrl(str:String): string{
-    var splitted = str.split("/");
-    var splitted2 = splitted.join("s-s").split("?");
-    var splitted3 = splitted2.join("d-d").split("%");
-    return splitted3.join("p-p");
-  }
-  cambioResumen(str:String): string{
-    str = this.cambioUrl(str);
-    var splitted = str.split("\'");
-    var splitted2 = splitted.join("c-c").split("\"");
-    return splitted2.join("b-b");
-  }
+
 }
 

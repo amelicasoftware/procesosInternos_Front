@@ -103,7 +103,6 @@ export class RedesComponent implements OnInit  {
   addAutor(nombre: String, event: Event) {
     //console.log(Metodos.codificar(JSON.stringify(this.form.value)));
     //console.log(Metodos.descodificar(Metodos.codificar(JSON.stringify(this.form.value))));
-    Metodos.cambioResumen(this.form.controls.TITPROYINV.value);
     if (nombre !== '') {
       this.autoresArr.push(this.fb.control(this.autor.value, Validators.required));
       console.log(this.autoresArr.length);
