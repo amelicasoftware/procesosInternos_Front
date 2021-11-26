@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
-import Swal from 'sweetalert2';
 import * as moment from 'moment';
 import {Metodos} from '../metodos';
 @Component({
@@ -14,13 +13,13 @@ export class FormDireccionDeTesisComponent implements OnInit {
   typeForm = new FormControl('Selecciona un formulario');
   charNoAc:string = "";
   /*charNoAc:string = "[^#/\"?%]+";*/
-  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern("[^#/\"?%']+")]);
+  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern(Metodos.expreg())]);
   pais = new FormControl('');
   form!: FormGroup;
   autores: String[] = [];
   lista: any[] = [];
   dato: boolean = true;
-
+  signos:string = Metodos.simbolos();
 
   constructor(
     private servicesForm: ServicesFormService,

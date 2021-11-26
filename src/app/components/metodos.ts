@@ -81,4 +81,11 @@ export class Metodos{
             var splitted = str.split(signo);
             return splitted.join(cambio);
       }
+
+      static expreg():string{
+        return "[^#/\"?%'\\\\;\\\[\\\]]+";
+      }
+      static simbolos():string{
+        return "# / \" ? % ' \\ ; [ ]";
+      }
 }

@@ -9,7 +9,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
-import Swal from 'sweetalert2';
 import * as moment from 'moment';
 import {Metodos} from '../metodos';
 @Component({
@@ -20,7 +19,7 @@ import {Metodos} from '../metodos';
 export class ConferenciasEspecializadasComponent implements OnInit {
   typeForm = new FormControl('Selecciona un formulario');
   charNoAc:string = "";
-  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern("[^#/\"?%']+")]);
+  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern(Metodos.expreg())]);
   pais = new FormControl('');
   form!: FormGroup;
   autores: String[] = [];
@@ -28,6 +27,7 @@ export class ConferenciasEspecializadasComponent implements OnInit {
   dato: boolean = true;
   selectedCountry:any=[];
   anioAct:number=2021;
+  signos:string = Metodos.simbolos();
   constructor(
     private servicesForm: ServicesFormService,
     private fb: FormBuilder
