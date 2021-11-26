@@ -98,4 +98,8 @@ export class DatosProyectoComponent implements OnInit {
       && this.form.controls[campo].touched;
   }
 
+  guardar(){
+    console.log(this.form.value);
+    console.log(this.form.valid);
+  }
 }
