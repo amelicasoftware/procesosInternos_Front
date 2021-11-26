@@ -50,7 +50,7 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
       this.form = this.fb.group({
         TITPROYINV: new FormControl('', [Validators.required,Validators.pattern(this.charNoAc)]),
         TPOPROYINV: new FormControl('Proyectos de investigación'),
-        RSMPROYINV: new FormControl(''),
+        RSMPROYINV: new FormControl('',Validators.maxLength(3900)),
         CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
         ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(2021)]),
         listAutor: this.fb.array([]),
@@ -69,7 +69,7 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
         REAPROYINV: new FormControl('', [Validators.required]),
         AGDREDPROY: new FormControl('', [Validators.required]),
         TPOACTPROY: new FormControl(''),
-        INFADCPROY: new FormControl(''),
+        INFADCPROY: new FormControl('',Validators.maxLength(3900)),
         AUTPROYINV: new FormControl(''),
         CTDINTPROY: new FormControl('0'),
       });
@@ -137,8 +137,8 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
       this.form.controls.TPOACTPROY.setValue(Metodos.cambioResumen(this.form.controls.TPOACTPROY.value));
       this.form.controls.FTEPROYINV.setValue(Metodos.cambioResumen(this.form.controls.FTEPROYINV.value));
       this.form.controls.INSPROYINV.setValue(Metodos.cambioResumen(this.instArr.value.join(',')));
-      this.form.controls.RSMPROYINV.setValue(Metodos.cambioResumen(this.form.controls.RSMPROYINV.value));
-      this.form.controls.INFADCPROY.setValue(Metodos.cambioResumen(this.form.controls.INFADCPROY.value));
+      this.form.controls.RSMPROYINV.setValue(Metodos.cambioResumen(this.form.controls.RSMPROYINV.value).replace(/(\r\n|\n|\r)/gm, " "));
+      this.form.controls.INFADCPROY.setValue(Metodos.cambioResumen(this.form.controls.INFADCPROY.value).replace(/(\r\n|\n|\r)/gm, " "));
       this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
   
       this.form.controls.TITPROYINV.setValue(this.formatoTitulo(this.form.controls.TITPROYINV.value));

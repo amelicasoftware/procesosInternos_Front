@@ -60,6 +60,10 @@ export class Metodos{
             },
             {   'signo':'\\',
                 'cambio':'z-z'
+            },
+            {
+                'signo':'/',
+                'cambio':'f-f'
             }
         ]
         for(let x of caracteres){
