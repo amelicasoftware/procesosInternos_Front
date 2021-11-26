@@ -27,12 +27,24 @@
       </p>
     </div>
     <div class="field">
-      <label class="label">Año: </label>
-      <input class="input" type="number" formControlName="ANIOPROYINV"
-        [ngClass]="{'is-danger' : campoEsValido('ANIOPROYINV')}">
-      <p class="help is-danger" *ngIf="campoEsValido('ANIOPROYINV')">
-        Este campo es obligatorio
-      </p>
+      <label class="label">Año</label>
+      <div class="control">
+        <input
+          type="number"
+          class="input"
+          placeholder=""
+          formControlName="ANIOPROYINV"
+          ngModel name="anioActual"
+          [ngClass]="{ 'is-danger': campoEsValido('ANIOPROYINV') }"
+        />
+        <span
+          class="tag is-danger is-light"
+          *ngIf="campoEsValido('ANIOPROYINV')"
+        >
+        Este campo solo acepta caracteres numericos entre 1980 y {{anioAct}}
+          <br />
+        </span>
+      </div>
     </div>
     <div class="field">
       <label class="label"> DOI/Enlace:</label>
@@ -82,10 +94,10 @@
 
     <div class="field">
       <label class="label">País:</label>
-      <ng-select class="select is-multiple" [multiple]="true" [formControl]="pais">
+      <ng-select class="select is-multiple" [multiple]="true" [formControl]="pais" [ngModel]="selectedCountry">
         <ng-option *ngFor="let item of lista" [value]="item.cveentnac">{{item.nomentnac}}</ng-option>
       </ng-select>
-      <p class="help is-danger" *ngIf="campoEsValido('CVEPAISPRO')">Este campo es obligatorio</p>
+      <p class="help is-danger" *ngIf="campoEsValido('CVEPAISPRO')">Debe agregar por lo menos un país</p>
     </div>
 
     <div class="field">
@@ -154,7 +166,7 @@
         <button class="button is-link" (click)="guardar()">Guardar</button>
       </div>
       <div class="control">
-        <button class="button is-link is-light">Cancel</button>
+        <button class="button is-link is-light" (click)="limpiar()">Cancel</button>
       </div>
     </div>
   </form>

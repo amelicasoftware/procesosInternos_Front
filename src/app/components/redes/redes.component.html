@@ -180,10 +180,7 @@
     </div>
     <div class="field">
       <label class="label">Alcance</label>
-      <div
-        class="select"
-        [ngClass]="{ 'is-danger': campoEsValido('ALCPROYINV') }"
-      >
+      <div class="select" [ngClass]="{'is-danger' : campoEsValido('ALCPROYINV')}">
         <select formControlName="ALCPROYINV">
           <option value="Institucional">Institucional</option>
           <option value="Nacional">Nacional</option>
@@ -191,9 +188,7 @@
           <option value="Otras regiones">Otras regiones</option>
         </select>
       </div>
-      <p class="help is-danger" *ngIf="campoEsValido('REAPROYINV')">
-        Este campo es obligatorio
-      </p>
+      <p class="help is-danger" *ngIf="campoEsValido('REAPROYINV')">Este campo es obligatorio</p>
     </div>
     <div class="field">
       <label class="label">Realizado</label>
@@ -230,7 +225,7 @@
             type="radio"
             name="AGDREDPROY"
             formControlName="AGDREDPROY"
-            value="Si"
+            value="si"
           />
           Si
         </label>
@@ -239,7 +234,7 @@
             type="radio"
             name="AGDREDPROY"
             formControlName="AGDREDPROY"
-            value="No"
+            value="no"
           />
           No
         </label>

@@ -50,8 +50,8 @@ export class RedesComponent implements OnInit {
 
   private buildForm() {
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100),Validators.pattern("[^#/\"?]+")]),
-      TPOPROYINV: new FormControl('Artículos científicos'),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
+      TPOPROYINV: new FormControl('Redes de Investigación'),
       RSMPROYINV: new FormControl('',[Validators.pattern(this.charNoAc)]),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
@@ -100,6 +100,8 @@ export class RedesComponent implements OnInit {
   }
 
   addAutor(nombre: String, event: Event) {
+    console.log(this.codificar(JSON.stringify(this.form.value)));
+    console.log(this.descodificar(this.codificar(JSON.stringify(this.form.value))));
     if (nombre !== '') {
       this.autoresArr.push(this.fb.control(this.autor.value, Validators.required));
       console.log(this.autoresArr.length);
@@ -133,7 +135,8 @@ export class RedesComponent implements OnInit {
     console.log(this.autoresArr.value);
     console.log(this.paisesArr?.value);
     this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
-
+    this.form.controls.RSMPROYINV.setValue(this.cambioResumen(this.form.controls.RSMPROYINV.value));
+    this.form.controls.INFADCPROY.setValue(this.cambioResumen(this.form.controls.INFADCPROY.value));
     this.form.controls.INSPROYINV.setValue(this.instArr.value.join(','));
 
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
@@ -181,8 +184,8 @@ export class RedesComponent implements OnInit {
     this.autoresArr.clear();
     this.instArr.clear();
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100),Validators.pattern("[^#/\"?]+")]),
-      TPOPROYINV: new FormControl('Artículos científicos'),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
+      TPOPROYINV: new FormControl('Redes de Investigación'),
       RSMPROYINV: new FormControl('',[Validators.pattern(this.charNoAc)]),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
@@ -218,5 +221,21 @@ export class RedesComponent implements OnInit {
     var splitted2 = splitted.join("s-s").split("?");
     var splitted3 = splitted2.join("d-d").split("%");
     return splitted3.join("p-p");
+  }
+  cambioResumen(str:String): string{
+    str = this.cambioUrl(str);
+    var splitted = str.split("\'");
+    var splitted2 = splitted.join("c-c").split("\"");
+    return splitted2.join("b-b");
+  }
+  codificar(from: string):string{
+    var splitted = btoa(from).split("/");
+    console.log(splitted);
+    return splitted.join("s-s");
+  }
+  descodificar(str:string){
+    var splitted = str.split("s-s");
+    str = atob(splitted.join("/"));
+    return str;
   }
 }

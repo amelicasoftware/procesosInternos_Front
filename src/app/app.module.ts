@@ -22,6 +22,7 @@ import { ConsultaComponent } from './pages/consulta/consulta.component';
 import { ValidacionComponent } from './pages/validacion/validacion.component';
 import { HeaderComponent } from './components/header/header.component';
 import { DatosProyectoComponent } from './pages/datos-proyecto/datos-proyecto.component';
+import { LogginComponent } from './pages/loggin/loggin.component';
 import { FooterComponent } from './components/footer/footer.component';
 
 
@@ -44,6 +45,7 @@ import { FooterComponent } from './components/footer/footer.component';
     ValidacionComponent,
     HeaderComponent,
     DatosProyectoComponent,
+    LogginComponent,
     FooterComponent
   ],
   imports: [

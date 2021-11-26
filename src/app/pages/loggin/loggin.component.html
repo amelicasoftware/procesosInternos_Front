@@ -1,0 +1,25 @@
+<body class="body column is-12">
+    <main class="main column is-12">
+        <section class="container-loggin column is-10">
+            <h2 class="tit-loggin title">Bienvenido</h2>
+            <div class="form-loggin column is-6">
+                <label class="attr-form">Nombre</label>
+                <input [(ngModel)]="user.name" 
+                        class="input box is-12" type="text" 
+                        (keypress)="eventHandler($event)"
+                        placeholder="Ingresa tu nombre"
+                        (click)="touchSearch()">
+                <label class="attr-form">Contraseña</label>
+                <input [(ngModel)]="user.password" 
+                        class="input box is-12" type="text" 
+                        (keypress)="eventHandler($event)"
+                        placeholder="Ingresa tu contraseña"
+                        (click)="touchSearch()">
+                <div style="text-align: center;">
+                    <button type="submit" class="button is-4 button-busq btn-entrar" 
+                            (click)="prepareSearch()">Entrar</button>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
