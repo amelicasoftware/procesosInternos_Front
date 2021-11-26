@@ -51,7 +51,7 @@ export class FormDireccionDeTesisComponent implements OnInit {
       TITPROYINV: new FormControl('', [Validators.required,Validators.pattern(this.charNoAc)]),
       TPOPROYINV: new FormControl('Dirección de tesis'),
       RSMPROYINV: new FormControl(''),
-      CVEPAISPRO: new FormControl(['']),
+      CVEPAISPRO: new FormControl(['96']),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(2021)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl(''),
