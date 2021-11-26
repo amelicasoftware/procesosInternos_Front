@@ -13,6 +13,6 @@ export const ROUTES: Routes = [
     { path: 'loggin', component: LogginComponent },
     { path: 'validacion', component: ValidacionComponent },
     { path: 'proyecto/:cveProyecto', component: DatosProyectoComponent },
-    { path: '', pathMatch: 'full', redirectTo: 'home' },
-    { path: '**', pathMatch: 'full', redirectTo: 'home' },
+    { path: '', pathMatch: 'full', redirectTo: 'loggin' },
+    { path: '**', pathMatch: 'full', redirectTo: 'loggin' },
 ];

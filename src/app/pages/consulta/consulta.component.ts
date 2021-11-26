@@ -3,6 +3,7 @@ import { BusquedasService } from 'src/app/Services/busquedas.service';
 import html2canvas from 'html2canvas';
 import  {saveAs}  from 'file-saver';
 import Swal from 'sweetalert2';
+import { ServicesFormService } from '../../Services/services-form.service';
 declare var $: any;
 @Component({
   selector: 'app-consulta',
@@ -106,9 +107,13 @@ export class ConsultaComponent implements OnInit {
                 "2016",
                 "2015"
   ];
+  usuario: any;
+  loacalitems;
   constructor(
-    private service :BusquedasService
+    private service :BusquedasService,
+    private servicesFormService: ServicesFormService
   ){
+    this.loacalitems = localStorage.getItem("nameUser");
   }
   ngOnInit(){
     //this.service.getInfo().then(console.log);
@@ -118,6 +123,8 @@ export class ConsultaComponent implements OnInit {
     //this.service.getByTit().then(console.log);
 
     this.prepareSearch();
+    this.usuario = this.loacalitems;
+    console.log(typeof this.loacalitems);
     
   }
   createNewRegister(){
@@ -402,5 +409,35 @@ citarElement(idCard:String){
     $(document).ready(function(){
       $(".box").addClass("is-danger");
     });
+  }
+
+  deleteProyecto(id: number){
+    console.log('te voy a borrar ', id);
+    Swal.fire({
+      title: '¿Estas seguro de borrar el proyecto?',
+      text: "Esta acción no se puede revertir!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.servicesFormService.deleteProjectId(id).subscribe( respuesta => {
+          console.log(respuesta);
+          if(respuesta.respuesta === "true"){
+            Swal.fire(
+              'Eliminado!',
+              'El proyecto fue eliminado.',
+              'success'
+            );
+            this.prepareSearch();
+          }else{
+            console.error('Error al elminar el proyecto ', id);
+          }
+        });        
+      }
+    })
   }
 }

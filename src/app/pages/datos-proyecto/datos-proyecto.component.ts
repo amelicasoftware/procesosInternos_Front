@@ -16,7 +16,10 @@ export class DatosProyectoComponent implements OnInit {
   form!: FormGroup;
   pais = new FormControl('');
   lista:any[]=[];
-
+  // autoresArr:any[]=[];
+  charNoAc:string = "[^#/\"?%]+";
+  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern(this.charNoAc)]);
+  
   constructor(
     private servicesForm: ServicesFormService,
     private rutaActiva: ActivatedRoute,
@@ -32,7 +35,7 @@ export class DatosProyectoComponent implements OnInit {
       RSMPROYINV: new FormControl(''),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(2021)]),
-      listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
+      listAutor: this.fb.array(['prueba1', 'prueba2'], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl('', [Validators.required]),
       VOLPROYINV: new FormControl(''),
       FTEPROYINV: new FormControl('', [Validators.required]),
@@ -87,8 +90,14 @@ export class DatosProyectoComponent implements OnInit {
       this.form.controls.TPOACTPROY.setValue(this.proyecto[0].tpoactproy);
       this.form.controls.INFADCPROY.setValue(this.proyecto[0].infadcproy);
 
+      let listaAutores = this.proyecto[0].autproyinv.split(',');
 
+      console.log(listaAutores);
 
+      let prueba = ['prueba1', 'prueba2'];
+
+      this.form.controls.listAutor.setValue(prueba);
+      
     });
 
   }
@@ -98,8 +107,27 @@ export class DatosProyectoComponent implements OnInit {
       && this.form.controls[campo].touched;
   }
 
+  get autoresArr() {
+    return this.form.get('listAutor') as FormArray;
+  }
+
+  addAutor(nombre: String, event: Event) {
+    // event.preventDefault();
+    if (nombre !== '') {
+      this.autoresArr.push(this.fb.control(this.autor.value, Validators.required));
+      console.log(this.autoresArr.length);
+      this.autor.reset('');
+    } else {
+
+    }
+  }
+
   guardar(){
     console.log(this.form.value);
     console.log(this.form.valid);
   }
+
+  borrar(id: number){
+
+  };
 }

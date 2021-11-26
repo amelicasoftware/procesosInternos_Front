@@ -38,4 +38,9 @@ export class ServicesFormService {
     console.log(`${this.urlService}getDataProyById/${id}`)
     return this.http.get(`${this.urlService}getDataProyById/${id}`);
   }
+
+  deleteProjectId(id: number): Observable<any>{
+    console.log(`${this.urlService}sendDataToDelete/${id}`)
+    return this.http.post(`${this.urlService}sendDataToDelete/${id}`, "");
+  }
 }

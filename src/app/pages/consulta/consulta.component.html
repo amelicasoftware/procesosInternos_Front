@@ -3,94 +3,92 @@
   <h1 class="subtitle title-page">{{title}}</h1>
   <div class="container-busqueda">
     <div class="column is-12 container-box-filter">
-        <input [(ngModel)]="dataBusqueda.TITPROYINV" 
-               class="input box is-8" type="text" 
-               (keypress)="eventHandler($event)"
-               placeholder="Ingresa un titulo"
-               (click)="touchSearch()">
+      <input [(ngModel)]="dataBusqueda.TITPROYINV" class="input box is-8" type="text" (keypress)="eventHandler($event)"
+        placeholder="Ingresa un titulo" (click)="touchSearch()">
       <button type="submit" class="button is-4 button-busq" (click)="prepareSearch()">Buscar</button>
       <!--<button class="button is-4" (click)="createNewRegister()">New register</button>-->
     </div>
     <div class="container-options-filter">
       <h4 class="subtitle">Restringe los resultados por:</h4>
-      <div class="numerary-total" 
-          [ngStyle]="{'display': data ? 'inline-block' : 'none'}">Total de resultados:<br/> <b>{{totalOfResults}}</b></div>
+      <div class="numerary-total" [ngStyle]="{'display': data ? 'inline-block' : 'none'}">Total de resultados:<br />
+        <b>{{totalOfResults}}</b>
+      </div>
     </div>
   </div>
 </header>
+
 <body>
-  <div class="column is-3 sidebarFilters" 
-      id="sidebarFilters" 
-      [ngStyle]="{'width': stateSidebar=='show' ? '300px' : '0',
+  <div class="column is-3 sidebarFilters" id="sidebarFilters" [ngStyle]="{'width': stateSidebar=='show' ? '300px' : '0',
               'color': stateSidebar=='show' ? 'white' : 'black',
               'padding': stateSidebar=='show' ? 'initial' : '0'}">
-        <div class="column is-12 headFilters"
-             [ngStyle]="{
+    <div class="column is-12 headFilters" [ngStyle]="{
                     'padding': stateSidebar=='show' ? '.5em .75em' : '0'}">
-          <span [ngStyle]="{'display': stateSidebar=='show' ? 'initial' : 'none'}">Filtros de busqueda</span>
-          <button class="card-header-icon button-sidebar" 
-                  (click)="redimensionarSB()"
-                  [ngStyle]="{
+      <span [ngStyle]="{'display': stateSidebar=='show' ? 'initial' : 'none'}">Filtros de busqueda</span>
+      <button class="card-header-icon button-sidebar" (click)="redimensionarSB()" [ngStyle]="{
                     'padding': stateSidebar=='show' ? '0' : '0'}">
-          <span class="icon">
-              <i class="fa fa-bars" aria-hidden="true"></i>
-          </span>
-          </button>
-        </div>
-        <div class="column is-12 containerFiltros"
-             [ngStyle]="{'display': stateSidebar=='show' ? 'flex' : 'none'}">
-          <div class="filtro" *ngFor='let filtro of filtersData; index as i' [ngClass]="'fill-'+filtro.nombre">
-            <div>
-                <h5 class="tit-filter">{{filtro.nombre}}:</h5>
-                  <div [ngClass]="{'elemento-filtro': j &lt;= 4 , 'elemento-filtro-hidden':j &gt; 4}" *ngFor="let filter of filtro.elementos; index as j">
-                    <label class="container-radio">
-                         <input (click)="findWithFilters({tipo:filtro.nombre,nombre:filter.nombre})" 
-                         [checked]="campoFiltrado({tipo:filtro.nombre,nombre:filter.nombre})"
-                                type="checkbox" />
-                        {{filter.nombre}}
-                      <span class="checkmark"></span>
-                    </label>
-                    <span>({{filter.total}})</span>
-                   </div>
-                   <button  attr.id="mas-{{filtro.nombre}}" 
-                            class="ver-mas-menos" 
-                            (click)="clickListener('mas-'+filtro.nombre, true)" 
-                            [ngStyle]="{'display': filtro.elementos.length &gt; 5 ? 'initial' : 'none'}">Ver mas...</button>
-                   <button  attr.id="menos-{{filtro.nombre}}" 
-                            style="display:none;" 
-                            class="ver-mas-menos" 
-                            (click)="clickListener('menos-'+filtro.nombre, false)">Ver menos...</button>
-                   <br/><br/>
-            </div>
+        <span class="icon">
+          <i class="fa fa-bars" aria-hidden="true"></i>
+        </span>
+      </button>
+    </div>
+    <div class="column is-12 containerFiltros" [ngStyle]="{'display': stateSidebar=='show' ? 'flex' : 'none'}">
+      <div class="filtro" *ngFor='let filtro of filtersData; index as i' [ngClass]="'fill-'+filtro.nombre">
+        <div>
+          <h5 class="tit-filter">{{filtro.nombre}}:</h5>
+          <div [ngClass]="{'elemento-filtro': j &lt;= 4 , 'elemento-filtro-hidden':j &gt; 4}"
+            *ngFor="let filter of filtro.elementos; index as j">
+            <label class="container-radio">
+              <input (click)="findWithFilters({tipo:filtro.nombre,nombre:filter.nombre})"
+                [checked]="campoFiltrado({tipo:filtro.nombre,nombre:filter.nombre})" type="checkbox" />
+              {{filter.nombre}}
+              <span class="checkmark"></span>
+            </label>
+            <span>({{filter.total}})</span>
           </div>
-          <div class="filtro fill-Periodo" 
-               [ngStyle]="{'display': listFillterAnios.length>0 ? 'initial' : 'none'}">
-            <h5 class="tit-filter">Periodo:</h5>
-            <div class="select-periodo">
-              <div class="select">
-                <select name="select-tipo" [(ngModel)]="dataBusqueda.PERIIN" (change)="validatePeriod()">
-                  <option value="" disabled selected hidden>Inicio</option>  
-                  <option [value]="item" *ngFor="let item of listaMeses">{{item}}</option>
-                </select>
-              </div>
-              <div class="select">
-                <select name="select-tipo" [(ngModel)]="dataBusqueda.PERIFIN" (change)="validatePeriod()">
-                  <option value="" disabled selected hidden>Fin</option>  
-                  <option [value]="item" *ngFor="let item of listaMeses">{{item}}</option>
-                </select>
-              </div>
-            </div>
+          <button attr.id="mas-{{filtro.nombre}}" class="ver-mas-menos"
+            (click)="clickListener('mas-'+filtro.nombre, true)"
+            [ngStyle]="{'display': filtro.elementos.length &gt; 5 ? 'initial' : 'none'}">Ver mas...</button>
+          <button attr.id="menos-{{filtro.nombre}}" style="display:none;" class="ver-mas-menos"
+            (click)="clickListener('menos-'+filtro.nombre, false)">Ver menos...</button>
+          <br /><br />
+        </div>
+      </div>
+      <div class="filtro fill-Periodo" [ngStyle]="{'display': listFillterAnios.length>0 ? 'initial' : 'none'}">
+        <h5 class="tit-filter">Periodo:</h5>
+        <div class="select-periodo">
+          <div class="select">
+            <select name="select-tipo" [(ngModel)]="dataBusqueda.PERIIN" (change)="validatePeriod()">
+              <option value="" disabled selected hidden>Inicio</option>
+              <option [value]="item" *ngFor="let item of listaMeses">{{item}}</option>
+            </select>
+          </div>
+          <div class="select">
+            <select name="select-tipo" [(ngModel)]="dataBusqueda.PERIFIN" (change)="validatePeriod()">
+              <option value="" disabled selected hidden>Fin</option>
+              <option [value]="item" *ngFor="let item of listaMeses">{{item}}</option>
+            </select>
           </div>
         </div>
+      </div>
+    </div>
   </div>
-  <div class="column is-12 container-cards-proy" 
-       id="container-cards-proy" 
-       [ngStyle]="{'width': stateSidebar=='show' ? '82%' : '100%',
+  <div class="column is-12 container-cards-proy" id="container-cards-proy" [ngStyle]="{'width': stateSidebar=='show' ? '82%' : '100%',
                   'margin-left': stateSidebar=='show' ? '17%' : '0'}">
     <div class="card" *ngFor='let proyecto of data; index as i' attr.id="card{{proyecto.cveproyinv}}">
-      <header class="card-header" style="display: none;">
-        <p class="card-header-title">
-        </p>
+      <header class="card-header" style="display: flex; justify-content: flex-end;" *ngIf="usuario=='administrador'">
+        <div>
+          <p class="card-header-title">
+            {{proyecto.cveproyinv}}
+          </p>
+        </div>
+        <div style="display: flex;
+              justify-content: space-evenly;
+              padding: 10px;">
+          <span class="info"><i class="fa  fa-edit fa-1x" style="color: #276cda; cursor: pointer; margin: 5px;"
+              [routerLink]="['/proyecto',proyecto.cveproyinv]"></i></span>
+          <span (click)="deleteProyecto(proyecto.cveproyinv)" style="cursor: pointer;"><i
+              class="fa fa-times-circle fa-1x" style="color: red"></i></span>
+        </div>
       </header>
       <div class="card-content">
         <div class="content" *ngIf="proyecto.tpoproyinv=='Artículos científicos'">
@@ -103,7 +101,8 @@
           <span><b>Autor:</b> {{proyecto.autproyinv}}</span><br>
           <span><b>Resumen:</b> {{proyecto.rsmproyinv}}</span><br>
           <div class="cite" attr.id="{{proyecto.cveproyinv}}_cite" style="display: none;">
-            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en: {{proyecto.urlproyinv}}
+            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en:
+            {{proyecto.urlproyinv}}
           </div>
         </div>
         <div class="content" *ngIf="proyecto.tpoproyinv=='Capítulos de libro científico'">
@@ -117,7 +116,8 @@
           <span><b>Autor/es del capítulo:</b> {{proyecto.autproyinv}}</span><br>
           <span><b>Resumen:</b> {{proyecto.rsmproyinv}}</span><br>
           <div class="cite" attr.id="{{proyecto.cveproyinv}}_cite" style="display: none;">
-            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en: {{proyecto.urlproyinv}}
+            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en:
+            {{proyecto.urlproyinv}}
           </div>
         </div>
         <div class="content" *ngIf="proyecto.tpoproyinv=='Libros científicos'">
@@ -129,7 +129,8 @@
           <span><b>Año:</b> {{proyecto.anioproyinv}}</span><br>
           <span><b>Resumen:</b> {{proyecto.rsmproyinv}}</span><br>
           <div class="cite" attr.id="{{proyecto.cveproyinv}}_cite" style="display: none;">
-            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en: {{proyecto.urlproyinv}}
+            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en:
+            {{proyecto.urlproyinv}}
           </div>
         </div>
         <div class="content" *ngIf="proyecto.tpoproyinv=='Conferencias especializadas'">
@@ -141,7 +142,8 @@
           <span><b>País:</b> {{proyecto.nomentnac}}</span><br>
           <span><b>Año:</b> {{proyecto.anioproyinv}}</span><br>
           <div class="cite" attr.id="{{proyecto.cveproyinv}}_cite" style="display: none;">
-            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en: {{proyecto.urlproyinv}}
+            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en:
+            {{proyecto.urlproyinv}}
           </div>
         </div>
         <div class="content" *ngIf="proyecto.tpoproyinv=='Artículos de divulgación'">
@@ -152,7 +154,8 @@
           <span><b>Año:</b> {{proyecto.anioproyinv}}</span><br>
           <span><b>Autor:</b> {{proyecto.autproyinv}}</span><br>
           <div class="cite" attr.id="{{proyecto.cveproyinv}}_cite" style="display: none;">
-            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en: {{proyecto.urlproyinv}}
+            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en:
+            {{proyecto.urlproyinv}}
           </div>
         </div>
 
@@ -164,7 +167,8 @@
           <span><b>País:</b> {{proyecto.nomentnac}}</span><br>
           <span><b>Año:</b> {{proyecto.anioproyinv}}</span><br>
           <div class="cite" attr.id="{{proyecto.cveproyinv}}_cite" style="display: none;">
-            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en: {{proyecto.urlproyinv}}
+            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en:
+            {{proyecto.urlproyinv}}
           </div>
         </div>
         <div class="content" *ngIf="proyecto.tpoproyinv=='Otras actividades de divulgación'">
@@ -173,7 +177,8 @@
           <span><b>Institución:</b> {{proyecto.insproyinv}}</span><br>
           <span><b>Resumen:</b> {{proyecto.rsmproyinv}}</span><br>
           <div class="cite" attr.id="{{proyecto.cveproyinv}}_cite" style="display: none;">
-            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en: {{proyecto.urlproyinv}}
+            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en:
+            {{proyecto.urlproyinv}}
           </div>
         </div>
         <div class="content" *ngIf="proyecto.tpoproyinv=='Dirección de tesis'">
@@ -183,7 +188,8 @@
           <span><b>Institución:</b> {{proyecto.insproyinv}}</span><br>
           <span><b>Año:</b> {{proyecto.anioproyinv}}</span><br>
           <div class="cite" attr.id="{{proyecto.cveproyinv}}_cite" style="display: none;">
-            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en: {{proyecto.urlproyinv}}
+            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en:
+            {{proyecto.urlproyinv}}
           </div>
         </div>
         <div class="content" *ngIf="proyecto.tpoproyinv=='Proyectos de investigación'">
@@ -193,7 +199,8 @@
           <span><b>Periodo:</b> {{proyecto.prdproyinv}}</span><br>
           <span><b>Síntesis:</b> {{proyecto.rsmproyinv}}</span><br>
           <div class="cite" attr.id="{{proyecto.cveproyinv}}_cite" style="display: none;">
-            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en: {{proyecto.urlproyinv}}
+            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en:
+            {{proyecto.urlproyinv}}
           </div>
         </div>
         <div class="content" *ngIf="proyecto.tpoproyinv=='Redes de investigación'">
@@ -205,20 +212,21 @@
           <span><b>Coordinadores:</b> {{proyecto.autproyinv}}</span><br>
           <span><b>Síntesis:</b> {{proyecto.rsmproyinv}}</span><br>
           <div class="cite" attr.id="{{proyecto.cveproyinv}}_cite" style="display: none;">
-            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en: {{proyecto.urlproyinv}}
+            {{proyecto.autproyinv}}. {{proyecto.titproyinv}}. [fecha de consulta {{fecha}}]. Disponible en:
+            {{proyecto.urlproyinv}}
           </div>
         </div>
       </div>
       <footer class="card-footer">
         <div class="card-footer-item btn-card">
-          <img src="assets/img/copias-apa.png"/>
+          <img src="assets/img/copias-apa.png" />
           <a rel="nofollow" class="button-busq" (click)="citarElement(proyecto.cveproyinv+'_cite')">Copiar cita APA</a>
         </div>
         <div class="card-footer-item btn-card">
-          <img src="assets/img/descargar.png"/>
+          <img src="assets/img/descargar.png" />
           <a rel="nofollow" class="button-busq" (click)="generateImage('card'+proyecto.cveproyinv)">Descargar Imagen</a>
         </div>
-        </footer>
+      </footer>
     </div>
   </div>
   <div class="table-container" id="table-container" style="font-size: 10px; display: none;">
@@ -245,9 +253,9 @@
           <th>Tipo de actividad</th>
           <th>Informacion adicional</th>
         </tr>
-        
+
       </thead>
-      
+
       <tbody style="width: 700px;">
         <tr *ngFor='let proyecto of data; index as i'>
           <td>{{proyecto.titproyinv}}</td>
