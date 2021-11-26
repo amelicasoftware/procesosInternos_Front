@@ -2,8 +2,8 @@ import { newArray } from '@angular/compiler/src/util';
 import { Component, OnInit, NgModule } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
-import Swal from 'sweetalert2';
 import * as moment from 'moment';
+import {Metodos} from '../metodos';
 @Component({
   selector: 'app-otras-actividades',
   templateUrl: './otras-actividades.component.html',
@@ -15,7 +15,7 @@ export class OtrasActividadesComponent implements OnInit {
   pais = new FormControl('');
   form!: FormGroup;
   autores: String[] = [];
-  charNoAc:string = "[^\'#/\"?%]+";
+  charNoAc:string = "";
   lista: any[] = [];
   dato: boolean = true;
   selectedCountry:any=[];
@@ -108,6 +108,11 @@ export class OtrasActividadesComponent implements OnInit {
       this.form.markAllAsTouched();
       return 0;
     }
+    this.form.controls.TITPROYINV.setValue(Metodos.cambioResumen(this.form.controls.TITPROYINV.value));
+    this.form.controls.VOLPROYINV.setValue(Metodos.cambioResumen(this.form.controls.VOLPROYINV.value));
+    this.form.controls.INSPROYINV.setValue(Metodos.cambioResumen(this.form.controls.INSPROYINV.value));
+    this.form.controls.TPOACTPROY.setValue(Metodos.cambioResumen(this.form.controls.TPOACTPROY.value));
+    this.form.controls.FTEPROYINV.setValue(Metodos.cambioResumen(this.form.controls.FTEPROYINV.value));
     console.log(this.paisesArr?.value);
     // imprimir el valor del formulario, sólo si es válido
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
@@ -115,14 +120,14 @@ export class OtrasActividadesComponent implements OnInit {
       if(mensaje !== null){
         if(mensaje.respuesta === 'true'){
           this.limpiar();
-          this.alertWithSuccess();
+          Metodos.alertWithSuccess();
         }else{
           this.selectedCountry = [];
-          this.erroalert();
+          Metodos.erroalert();
         }
       }else{
         this.selectedCountry = [];
-        this.erroalert();
+        Metodos.erroalert();
       }
     });
     console.log(this.form.value);
@@ -131,58 +136,15 @@ export class OtrasActividadesComponent implements OnInit {
     // this.erroalert();
     return 0;
   }
-
-  alertWithSuccess(){  
-    Swal.fire('', 'guardado correctamente!', 'success')  
-  }
-
-  erroalert()  
-  {  
-    Swal.fire({  
-      icon: 'error',  
-      title: 'Oops...',  
-      text: 'Something went wrong!',  
-      footer: '<a href>Why do I have this issue?</a>'  
-    })  
-  } 
   limpiar(){
-    console.log(btoa("demo@demo.com"));
-    console.log("ZGVtb0BkZW1vLmNvbQ==");
-    console.log(atob("ZGVtb0BkZW1vLmNvbQ=="));
-    this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
-      TPOPROYINV: new FormControl('Otras Actividades'),
-      RSMPROYINV: new FormControl(''),
-      CVEPAISPRO: new FormControl(''),
-      ANIOPROYINV: new FormControl('0'),
-      URLPROYINV: new FormControl('',),
-      VOLPROYINV: new FormControl(''),
-      FTEPROYINV: new FormControl('',),
-      INSPROYINV: new FormControl(''),
-      AUTPADPROY: new FormControl(''),
-      PARPROYINV: new FormControl(''),
-      integrantes: new FormControl(''),
-      ALCPROYINV: new FormControl(''),
-      PRDPROYINV: new FormControl(''),
-      MESPROYINV: new FormControl(''),
-      FECCAPPROY: new FormControl(this.fechaActual()),
-      REAPROYINV: new FormControl('0'),
-      AGDREDPROY: new FormControl(''),
-      TPOACTPROY: new FormControl('',[Validators.required,Validators.pattern(this.charNoAc)]),
-      INFADCPROY: new FormControl(''),
-      AUTPROYINV: new FormControl(''),
-      CTDINTPROY: new FormControl('1'),
-    });
+    //console.log(btoa("demo@demo.com"));
+    //console.log("ZGVtb0BkZW1vLmNvbQ==");
+    //console.log(atob("ZGVtb0BkZW1vLmNvbQ=="));
+    this.buildForm();
     this.selectedCountry = [];
   }
   fechaActual(): String{
     let fecha = new Date;
     return moment(fecha).format('DD-MM-YY');
-  }
-  cambioUrl(str:String): string{
-    var splitted = str.split("/");
-    var splitted2 = splitted.join("s-s").split("?");
-    var splitted3 = splitted2.join("d-d").split("%");
-    return splitted3.join("p-p");
   }
 }

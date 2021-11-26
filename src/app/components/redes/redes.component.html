@@ -9,7 +9,7 @@
         [ngClass]="{ 'is-danger': campoEsValido('TITPROYINV') }"
       />
       <p class="help is-danger" *ngIf="campoEsValido('TITPROYINV')">
-        Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /
+        Este campo es obligatorio
       </p>
     </div>
 
@@ -76,7 +76,7 @@
         Debe agregar por lo menos un coordinador
       </p>
       <p class="help is-danger" *ngIf="autor.errors && autor.touched">
-        Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /
+        Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %, '
       </p>
     </div>
 
@@ -123,7 +123,7 @@
         Debe agregar por lo menos un autor
       </p>
       <p class="help is-danger" *ngIf="institucion.errors && institucion.touched">
-        Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /
+        Este campo es obligatorio y no se permiten los caracteres: {{signos}}
       </p>
     </div>
 
@@ -176,7 +176,7 @@
         rows="5"
         formControlName="RSMPROYINV"
       ></textarea>
-      <p class="help is-danger" *ngIf="campoEsValido('RSMPROYINV')">Este campo no admite los caracteres: ?, ", #, /</p>
+      <p class="help is-danger" *ngIf="campoEsValido('RSMPROYINV')"></p>
     </div>
     <div class="field">
       <label class="label">Alcance</label>
@@ -250,7 +250,7 @@
       <div class="control">
         <textarea class="textarea" placeholder="" formControlName="INFADCPROY"></textarea>
       </div>
-      <p class="help is-danger" *ngIf="campoEsValido('INFADCPROY')">Este campo no admite los caracteres: ?, ", #, /</p>
+      <p class="help is-danger" *ngIf="campoEsValido('INFADCPROY')">Sobrepasaste el limite de caracteres</p>
     </div>
 
     <div class="field is-grouped">

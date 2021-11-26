@@ -2,8 +2,9 @@ import { newArray } from '@angular/compiler/src/util';
 import { Component, OnInit, NgModule } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
-import Swal from 'sweetalert2';
 import * as moment from 'moment';
+import {Metodos} from '../metodos';
+import { parseStackingContexts } from 'html2canvas/dist/types/render/stacking-context';
 @Component({
   selector: 'app-articulos-de-divulgacion',
   templateUrl: './articulos-de-divulgacion.component.html',
@@ -11,8 +12,9 @@ import * as moment from 'moment';
 })
 export class ArticulosDeDivulgacionComponent implements OnInit {
   typeForm = new FormControl('Selecciona un formulario');
-  charNoAc:string = "[^#/\"?%]+";
-  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern(this.charNoAc)]);
+  /*charNoAc:string = "[^#/\"?%]+";*/
+  charNoAc:string = "";
+  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern(Metodos.expreg())]);
   pais = new FormControl('');
   form!: FormGroup;
   formBack!: FormGroup;
@@ -21,6 +23,7 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
   dato: boolean = true;
   selectedCountry:any=[];
   anioAct:number = 2021;
+  signos:string = Metodos.simbolos();
   constructor(
     private servicesForm: ServicesFormService,
     private fb: FormBuilder
@@ -48,7 +51,7 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
     this.form = this.fb.group({
       TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
       TPOPROYINV: new FormControl('Artículos de divulgación'),
-      RSMPROYINV: new FormControl(''),
+      RSMPROYINV: new FormControl('',[Validators.pattern(this.charNoAc),Validators.maxLength(3900)]),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
@@ -66,7 +69,7 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
       REAPROYINV: new FormControl('', [Validators.required]),
       AGDREDPROY: new FormControl('', [Validators.required]),
       TPOACTPROY: new FormControl(''),
-      INFADCPROY: new FormControl('',[Validators.pattern(this.charNoAc)]),
+      INFADCPROY: new FormControl('',[Validators.maxLength(3900)]),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),
     });
@@ -113,10 +116,16 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
     }
     console.log(this.autoresArr.value);
     console.log(this.paisesArr?.value);
-    this.form.controls.URLPROYINV.setValue(this.cambioUrl(this.form.controls.URLPROYINV.value));
-    this.form.controls.RSMPROYINV.setValue(this.cambioResumen(this.form.controls.RSMPROYINV.value));
-    this.form.controls.INFADCPROY.setValue(this.cambioResumen(this.form.controls.INFADCPROY.value));
+    this.form.controls.TITPROYINV.setValue(Metodos.cambioResumen(this.form.controls.TITPROYINV.value));
+    this.form.controls.VOLPROYINV.setValue(Metodos.cambioResumen(this.form.controls.VOLPROYINV.value));
+    this.form.controls.INSPROYINV.setValue(Metodos.cambioResumen(this.form.controls.INSPROYINV.value));
+    this.form.controls.TPOACTPROY.setValue(Metodos.cambioResumen(this.form.controls.TPOACTPROY.value));
+    this.form.controls.FTEPROYINV.setValue(Metodos.cambioResumen(this.form.controls.FTEPROYINV.value));
     this.form.controls.AUTPROYINV.setValue(this.autoresArr.value.join(','));
+    this.form.controls.URLPROYINV.setValue(Metodos.cambioResumen(this.form.controls.URLPROYINV.value));
+    this.form.controls.RSMPROYINV.setValue(Metodos.cambioResumen(this.form.controls.RSMPROYINV.value.replace(/(\r\n|\n|\r)/gm, " ")));
+    this.form.controls.INFADCPROY.setValue(Metodos.cambioResumen(this.form.controls.INFADCPROY.value.replace(/(\r\n|\n|\r)/gm, " ")));
+    
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
 
     // imprimir el valor del formulario, sólo si es válido
@@ -125,14 +134,14 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
       if(mensaje !== null){
         if(mensaje.respuesta === 'true'){
           this.limpiar();
-          this.alertWithSuccess();
+          Metodos.alertWithSuccess();
         }else{
           this.selectedCountry = [];
-          this.erroalert();
+          Metodos.erroalert();
         }
       }else{
         this.selectedCountry = [];
-        this.erroalert();
+        Metodos.erroalert();
       }
     });
     console.log(this.form.value);
@@ -142,64 +151,14 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
     // this.erroalert();
   }
 
-  alertWithSuccess(){  
-    Swal.fire('', 'guardado correctamente!', 'success')  
-  }
-
-  erroalert()  
-  {  
-    Swal.fire({  
-      icon: 'error',  
-      title: 'Oops...',  
-      text: 'Something went wrong!',  
-      footer: '<a href>Why do I have this issue?</a>'  
-    })  
-  }  
   limpiar(){
     this.autoresArr.clear();
-    this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
-      TPOPROYINV: new FormControl('Artículos de divulgación'),
-      RSMPROYINV: new FormControl(''),
-      CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
-      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
-      listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
-      URLPROYINV: new FormControl('', [Validators.required, Validators.maxLength(200),Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
-      VOLPROYINV: new FormControl(''),
-      FTEPROYINV: new FormControl('', [Validators.required,Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
-      INSPROYINV: new FormControl(''),
-      AUTPADPROY: new FormControl(''),
-      PARPROYINV: new FormControl(''),
-      integrantes: new FormControl(''),
-      ALCPROYINV: new FormControl('', [Validators.required]),
-      PRDPROYINV: new FormControl(''),
-      MESPROYINV: new FormControl(''),
-      FECCAPPROY: new FormControl(this.fechaActual()),
-      REAPROYINV: new FormControl('', [Validators.required]),
-      AGDREDPROY: new FormControl('', [Validators.required]),
-      TPOACTPROY: new FormControl(''),
-      INFADCPROY: new FormControl('',[Validators.pattern(this.charNoAc)]),
-      AUTPROYINV: new FormControl(''),
-      CTDINTPROY: new FormControl('1'),
-    });
+    this.buildForm();
     this.selectedCountry = [];
   }
   fechaActual(): String{
     let fecha = new Date;
     this.anioAct = fecha.getFullYear();
     return moment(fecha).format('DD-MM-YY');
-  }
-
-  cambioUrl(str:String): string{
-    var splitted = str.split("/");
-    var splitted2 = splitted.join("s-s").split("?");
-    var splitted3 = splitted2.join("d-d").split("%");
-    return splitted3.join("p-p");
-  }
-  cambioResumen(str:String): string{
-    str = this.cambioUrl(str);
-    var splitted = str.split("\'");
-    var splitted2 = splitted.join("c-c").split("\"");
-    return splitted2.join("b-b");
   }
 }

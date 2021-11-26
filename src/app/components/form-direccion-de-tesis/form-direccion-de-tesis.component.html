@@ -7,7 +7,7 @@
         <input class="input" type="text" formControlName="TITPROYINV"
           [ngClass]="{'is-danger' : campoEsValido('TITPROYINV')}">
         <p class="help is-danger" *ngIf="campoEsValido('TITPROYINV')">
-          Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %
+          Este campo es obligatorio
         </p>
       </div>
 
@@ -17,7 +17,7 @@
         <input class="input" type="text" formControlName="FTEPROYINV"
           [ngClass]="{'is-danger' : campoEsValido('FTEPROYINV')}">
         <p class="help is-danger" *ngIf="campoEsValido('FTEPROYINV')">
-          Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %
+          Este campo es obligatorio
         </p>
       </div>
 
@@ -27,7 +27,7 @@
         <input class="input" type="text" formControlName="INSPROYINV"
           [ngClass]="{'is-danger' : campoEsValido('INSPROYINV')}">
         <p class="help is-danger" *ngIf="campoEsValido('INSPROYINV')">
-          Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %
+          Este campo es obligatorio
         </p>
       </div>
 
@@ -60,7 +60,7 @@
             Debe agregar por lo menos un autor
           </p>
           <p class="help is-danger" *ngIf="autor.errors && autor.touched">
-            Este campo es obligatorio y no se permiten los caracteres: ?, ", #, /, %
+            Este campo es obligatorio y no se permiten los caracteres: {{signos}}
           </p>
         </div>
         <label class="label" *ngIf="autoresArr.length>0 && 1>autoresArr.length">Autor</label>
@@ -131,7 +131,7 @@
       <div class="control">
         <textarea class="textarea" placeholder="" formControlName="INFADCPROY"></textarea>
       </div>
-      <p class="help is-danger" *ngIf="campoEsValido('INFADCPROY')">Este campo no admite los caracteres: ?, ", #, /, %</p>
+      <p class="help is-danger" *ngIf="campoEsValido('INFADCPROY')">Sobrepasaste el limite de caracteres</p>
     </div>
   
       <div class="field is-grouped">
