@@ -2,7 +2,6 @@ import { newArray } from '@angular/compiler/src/util';
 import { Component, OnInit, NgModule } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
-import Swal from 'sweetalert2';
 import * as moment from 'moment';
 import {Metodos} from '../metodos';
 @Component({
@@ -141,30 +140,7 @@ export class OtrasActividadesComponent implements OnInit {
     //console.log(btoa("demo@demo.com"));
     //console.log("ZGVtb0BkZW1vLmNvbQ==");
     //console.log(atob("ZGVtb0BkZW1vLmNvbQ=="));
-    this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
-      TPOPROYINV: new FormControl('Otras Actividades'),
-      RSMPROYINV: new FormControl(''),
-      CVEPAISPRO: new FormControl(''),
-      ANIOPROYINV: new FormControl('0'),
-      URLPROYINV: new FormControl('',),
-      VOLPROYINV: new FormControl(''),
-      FTEPROYINV: new FormControl('',),
-      INSPROYINV: new FormControl(''),
-      AUTPADPROY: new FormControl(''),
-      PARPROYINV: new FormControl(''),
-      integrantes: new FormControl(''),
-      ALCPROYINV: new FormControl(''),
-      PRDPROYINV: new FormControl(''),
-      MESPROYINV: new FormControl(''),
-      FECCAPPROY: new FormControl(this.fechaActual()),
-      REAPROYINV: new FormControl('0'),
-      AGDREDPROY: new FormControl(''),
-      TPOACTPROY: new FormControl('',[Validators.required,Validators.pattern(this.charNoAc)]),
-      INFADCPROY: new FormControl(''),
-      AUTPROYINV: new FormControl(''),
-      CTDINTPROY: new FormControl('1'),
-    });
+    this.buildForm();
     this.selectedCountry = [];
   }
   fechaActual(): String{

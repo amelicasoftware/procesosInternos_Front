@@ -2,7 +2,6 @@ import { newArray } from '@angular/compiler/src/util';
 import { Component, OnInit, NgModule } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
-import Swal from 'sweetalert2';
 import * as moment from 'moment';
 import {Metodos} from '../metodos';
 @Component({
@@ -15,13 +14,14 @@ export class FormComponent implements OnInit {
   seleccion:any = {id:0,name:''};
   typeForm = new FormControl('Selecciona un formulario');
   charNoAc:string = "";
-  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern("[^#/\"?%']+")]);
+  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern(Metodos.expreg())]);
   pais = new FormControl('');
   form!: FormGroup;
   anioAct:number = 2021;
   selectedCountry:any=[];
   autores: String [] = [];
   lista:any[]=[];
+  signos:string = Metodos.simbolos();
   tiposForms  = [
         { id: 1, name: 'Libros científicos' },
         { id: 2, name: 'Capítulos de libro científico'},

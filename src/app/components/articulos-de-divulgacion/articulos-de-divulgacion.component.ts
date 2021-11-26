@@ -2,9 +2,9 @@ import { newArray } from '@angular/compiler/src/util';
 import { Component, OnInit, NgModule } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
-import Swal from 'sweetalert2';
 import * as moment from 'moment';
 import {Metodos} from '../metodos';
+import { parseStackingContexts } from 'html2canvas/dist/types/render/stacking-context';
 @Component({
   selector: 'app-articulos-de-divulgacion',
   templateUrl: './articulos-de-divulgacion.component.html',
@@ -14,7 +14,7 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
   typeForm = new FormControl('Selecciona un formulario');
   /*charNoAc:string = "[^#/\"?%]+";*/
   charNoAc:string = "";
-  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern("[^#/\"?%']+")]);
+  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern(Metodos.expreg())]);
   pais = new FormControl('');
   form!: FormGroup;
   formBack!: FormGroup;
@@ -23,6 +23,7 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
   dato: boolean = true;
   selectedCountry:any=[];
   anioAct:number = 2021;
+  signos:string = Metodos.simbolos();
   constructor(
     private servicesForm: ServicesFormService,
     private fb: FormBuilder
