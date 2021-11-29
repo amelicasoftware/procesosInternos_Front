@@ -51,7 +51,7 @@ export class RedesComponent implements OnInit  {
   private buildForm() {
     this.form = this.fb.group({
       TITPROYINV: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
-      TPOPROYINV: new FormControl('Redes de Investigación'),
+      TPOPROYINV: new FormControl('Redes de investigación'),
       RSMPROYINV: new FormControl('',Validators.maxLength(3900)),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
