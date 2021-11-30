@@ -128,35 +128,34 @@
    
          <!-- ok -->
          <div class="field">
-           <label class="label">Realizado</label>
-           <div class="control">
-             <label class="radio">
-               <input type="radio" name="REAPROYINV" formControlName="REAPROYINV" value=1>
-               Si
-             </label>
-             <label class="radio">
-               <input type="radio" name="REAPROYINV" formControlName="REAPROYINV" value=0>
-               No
-             </label>
-           </div>
-           <p class="help is-danger" *ngIf="campoEsValido('REAPROYINV')">Este campo es obligatorio</p>
-         </div>
-         
-         <!-- ok -->
-         <div class="field">
-           <label class="label">Agenda</label>
-           <div class="control">
-             <label class="radio">
-               <input type="radio" name="AGDREDPROY" formControlName="AGDREDPROY" value="si">
-               Si
-             </label>
-             <label class="radio">
-               <input type="radio" name="AGDREDPROY" formControlName="AGDREDPROY" value="no">
-               No
-             </label>
-           </div>
-           <p class="help is-danger" *ngIf="campoEsValido('AGDREDPROY')">Este campo es obligatorio</p>
-         </div>
+          <label class="label">¿El proyecto ya fue realizado?</label>
+          <div class="control">
+            <label class="radio">
+              <input type="radio" name="REAPROYINV" formControlName="REAPROYINV" value=1 (click)="deshabilitar()">
+              Si
+            </label>
+            <label class="radio">
+              <input type="radio" name="REAPROYINV" formControlName="REAPROYINV" value=0  (click)="habilitar()">
+              No
+            </label>
+          </div>
+          <p class="help is-danger" *ngIf="campoEsValido('REAPROYINV')">Este campo es obligatorio</p>
+        </div>
+    
+        <div class="field" *ngIf="des == true">
+          <label class="label">¿Quisiera que este proyecto formara parte de la agenda de eventos de Redalyc?</label>
+          <div class="control">
+            <label class="radio">
+              <input type="radio" name="AGDREDPROY" formControlName="AGDREDPROY" value="si">
+              Si
+            </label>
+            <label class="radio">
+              <input type="radio" name="AGDREDPROY" formControlName="AGDREDPROY" value="no">
+              No
+            </label>
+          </div>
+          <p class="help is-danger" *ngIf="campoEsValido('AGDREDPROY')">Este campo es obligatorio</p>
+        </div>
      
        <!-- ok -->
        <div class="field">

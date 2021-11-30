@@ -105,7 +105,15 @@ export class FormComponent implements OnInit {
   get paisesArr() {
     return this.form.get('CVEPAISPRO');
   }
-
+  des = true;
+  habilitar(){
+    this.des = true;
+    this.form.controls.AGDREDPROY.setValue('');
+  }
+  deshabilitar(){
+    this.des = false;
+    this.form.controls.AGDREDPROY.setValue('no');
+  }
   addAutor(nombre: String, event: Event) {
     // event.preventDefault();
     if (nombre !== '') {

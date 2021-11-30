@@ -13,16 +13,16 @@
                     Formularios
                 </p>
                 <ul class="menu-list">
-                    <li><a [ngClass]="{'is-active' : nombreForm == 'Artículos científicos'}" (click)="form('Artículos científicos')">Artículos científicos </a></li>
-                    <li><a [ngClass]="{'is-active' : nombreForm == 'Capítulos de libro científico'}" (click)="form('Capítulos de libro científico')">Capítulos de libro científico</a></li>
-                    <li><a [ngClass]="{'is-active' : nombreForm == 'Libros científicos'}" (click)="form('Libros científicos')">Libros científicos</a></li>
-                    <li><a [ngClass]="{'is-active' : nombreForm == 'Conferencias especializadas'}" (click)="form('Conferencias especializadas')">Conferencias especializadas</a></li>
-                    <li><a [ngClass]="{'is-active' : nombreForm == 'Artículos de divulgación'}" (click)="form('Artículos de divulgación')">Artículos de divulgación</a></li>
-                    <li><a [ngClass]="{'is-active' : nombreForm == 'Libros de divulgación'}" (click)="form('Libros de divulgación')">Libros de divulgación</a></li>
-                    <li><a [ngClass]="{'is-active' : nombreForm == 'Otras actividades de divulgación'}" (click)="form('Otras actividades de divulgación')">Otras actividades de divulgación</a></li>
+                    <li><a [ngClass]="{'is-active' : nombreForm == 'Artículo científico'}" (click)="form('Artículo científico')">Artículo científico</a></li>
+                    <li><a [ngClass]="{'is-active' : nombreForm == 'Capítulo de libro científico'}" (click)="form('Capítulo de libro científico')">Capítulo de libro científico</a></li>
+                    <li><a [ngClass]="{'is-active' : nombreForm == 'Libro científico'}" (click)="form('Libro científico')">Libro científico</a></li>
+                    <li><a [ngClass]="{'is-active' : nombreForm == 'Conferencia especializada'}" (click)="form('Conferencia especializada')">Conferencia especializada</a></li>
+                    <li><a [ngClass]="{'is-active' : nombreForm == 'Artículo de divulgación'}" (click)="form('Artículo de divulgación')">Artículo de divulgación</a></li>
+                    <li><a [ngClass]="{'is-active' : nombreForm == 'Libro de divulgación'}" (click)="form('Libro de divulgación')">Libro de divulgación</a></li>
+                    <li><a [ngClass]="{'is-active' : nombreForm == 'Actividad de divulgación'}" (click)="form('Actividad de divulgación')">Otras actividades de divulgación</a></li>
                     <li><a [ngClass]="{'is-active' : nombreForm == 'Dirección de tesis'}" (click)="form('Dirección de tesis')">Dirección de tesis</a></li>
-                    <li><a [ngClass]="{'is-active' : nombreForm == 'Proyectos de investigación'}" (click)="form('Proyectos de investigación')">Proyectos de investigación</a></li>
-                    <li><a [ngClass]="{'is-active' : nombreForm == 'Redes de investigación'}" (click)="form('Redes de investigación')">Redes de investigación</a></li>
+                    <li><a [ngClass]="{'is-active' : nombreForm == 'Proyecto de investigación'}" (click)="form('Proyecto de investigación')">Proyecto de investigación</a></li>
+                    <li><a [ngClass]="{'is-active' : nombreForm == 'Red de investigación'}" (click)="form('Red de investigación')">Red de investigación</a></li>
                     <!-- <li>
                         <a>Manage Your Team</a>
                         <ul>
@@ -44,26 +44,29 @@
                         <li class="is-active"><a href="#" aria-current="page">Admin</a></li>
                     </ul>
                 </nav> -->
-            <section class="hero is-info welcome is-small">
+            <section class="hero is-info welcome is-small" id="header">
                 <div class="hero-body">
                     <div class="container">
-                        <h2 class="subtitle">
-                            Formulario: {{nombreForm}}
+                        <h2 class="subtitle"*ngIf="nombreForm != 'Conferencia especializada'&&nombreForm != 'Red de investigación'&&nombreForm != 'Dirección de tesis'&&nombreForm != 'Actividad de divulgación'">
+                            Nuevo: {{nombreForm}}
+                        </h2>
+                        <h2 class="subtitle" *ngIf="nombreForm == 'Conferencia especializada'||nombreForm == 'Red de investigación'||nombreForm == 'Dirección de tesis'||nombreForm == 'Actividad de divulgación'">
+                            Nueva: {{nombreForm}}
                         </h2>
                     </div>
                 </div>
             </section>
             <section class="info-tiles">
-                <app-form *ngIf="nombreForm == 'Artículos científicos'"></app-form>
+                <app-form *ngIf="nombreForm == 'Artículo científico'"></app-form>
                 <app-form-direccion-de-tesis  *ngIf="nombreForm == 'Dirección de tesis'"></app-form-direccion-de-tesis>
-                <app-proyectos-de-investigacion *ngIf="nombreForm == 'Proyectos de investigación'"></app-proyectos-de-investigacion>
-                <app-articulos-de-divulgacion *ngIf="nombreForm == 'Artículos de divulgación'"></app-articulos-de-divulgacion>
-                <app-cap-libro-cientifico *ngIf="nombreForm == 'Capítulos de libro científico'"></app-cap-libro-cientifico>
-                <app-conferencias-especializadas *ngIf="nombreForm == 'Conferencias especializadas'"></app-conferencias-especializadas>
-                <app-libro-cientifico *ngIf="nombreForm == 'Libros científicos'"></app-libro-cientifico>
-                <app-libros-de-divulgacion *ngIf="nombreForm == 'Libros de divulgación'"></app-libros-de-divulgacion>
-                <app-otras-actividades *ngIf="nombreForm == 'Otras actividades de divulgación'"></app-otras-actividades>
-                <app-redes *ngIf="nombreForm == 'Redes de investigación'"></app-redes>
+                <app-proyectos-de-investigacion *ngIf="nombreForm == 'Proyecto de investigación'"></app-proyectos-de-investigacion>
+                <app-articulos-de-divulgacion *ngIf="nombreForm == 'Artículo de divulgación'"></app-articulos-de-divulgacion>
+                <app-cap-libro-cientifico *ngIf="nombreForm == 'Capítulo de libro científico'"></app-cap-libro-cientifico>
+                <app-conferencias-especializadas *ngIf="nombreForm == 'Conferencia especializada'"></app-conferencias-especializadas>
+                <app-libro-cientifico *ngIf="nombreForm == 'Libro científico'"></app-libro-cientifico>
+                <app-libros-de-divulgacion *ngIf="nombreForm == 'Libro de divulgación'"></app-libros-de-divulgacion>
+                <app-otras-actividades *ngIf="nombreForm == 'Actividad de divulgación'"></app-otras-actividades>
+                <app-redes *ngIf="nombreForm == 'Red de investigación'"></app-redes>
             </section>
 
         </div>

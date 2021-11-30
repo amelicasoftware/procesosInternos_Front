@@ -6,8 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  nombreForm: String = '';
-
+  nombreForm: String = 'Artículo científico';
   constructor() { }
 
   ngOnInit(): void {

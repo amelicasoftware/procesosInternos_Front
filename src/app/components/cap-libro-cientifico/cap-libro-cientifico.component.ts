@@ -167,6 +167,15 @@ export class CapLibroCientificoComponent implements OnInit {
     // this.erroalert();
     return 0;
   }
+  des = true;
+  habilitar(){
+    this.des = true;
+    this.form.controls.AGDREDPROY.setValue('');
+  }
+  deshabilitar(){
+    this.des = false;
+    this.form.controls.AGDREDPROY.setValue('no');
+  }
   limpiar(){
     this.autoresArr.clear();
     this.autoresLibArr.clear();

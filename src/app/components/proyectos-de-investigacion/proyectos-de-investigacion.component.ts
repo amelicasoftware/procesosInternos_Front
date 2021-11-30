@@ -81,7 +81,15 @@ export class ProyectosDeInvestigacionComponent implements OnInit {
       //     console.log(value);
       //   });
     }
-  
+    des = true;
+  habilitar(){
+    this.des = true;
+    this.form.controls.AGDREDPROY.setValue('');
+  }
+  deshabilitar(){
+    this.des = false;
+    this.form.controls.AGDREDPROY.setValue('no');
+  }
     campoEsValido(campo: string) {
       return this.form.controls[campo].errors
         && this.form.controls[campo].touched;

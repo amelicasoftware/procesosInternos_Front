@@ -24,6 +24,7 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
   selectedCountry:any=[];
   anioAct:number = 2021;
   signos:string = Metodos.simbolos();
+  
   constructor(
     private servicesForm: ServicesFormService,
     private fb: FormBuilder
@@ -67,7 +68,7 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
       MESPROYINV: new FormControl(''),
       FECCAPPROY: new FormControl(this.fechaActual()),
       REAPROYINV: new FormControl('', [Validators.required]),
-      AGDREDPROY: new FormControl('', [Validators.required]),
+      AGDREDPROY: new FormControl('',[Validators.required]),
       TPOACTPROY: new FormControl(''),
       INFADCPROY: new FormControl('',[Validators.maxLength(3900)]),
       AUTPROYINV: new FormControl(''),
@@ -79,7 +80,16 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
     //     console.log(value);
     //   });
   }
-
+  des = true;
+  habilitar(){
+    this.des = true;
+    this.form.controls.AGDREDPROY.setValue('');
+  }
+  deshabilitar(){
+    this.des = false;
+    this.form.controls.AGDREDPROY.setValue('no');
+  }
+    
   campoEsValido(campo: string) {
     return this.form.controls[campo].errors
       && this.form.controls[campo].touched;

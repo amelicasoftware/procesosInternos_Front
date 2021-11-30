@@ -100,7 +100,15 @@ export class LibrosDeDivulgacionComponent implements OnInit {
 
     }
   }
-
+  des = true;
+  habilitar(){
+    this.des = true;
+    this.form.controls.AGDREDPROY.setValue('');
+  }
+  deshabilitar(){
+    this.des = false;
+    this.form.controls.AGDREDPROY.setValue('no');
+  }
   borrar(i: number) {
     this.autoresArr.removeAt(i);
   }
