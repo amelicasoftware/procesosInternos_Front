@@ -43,4 +43,12 @@ export class ServicesFormService {
     console.log(`${this.urlService}sendDataToDelete/${id}`)
     return this.http.post(`${this.urlService}sendDataToDelete/${id}`, "");
   }
+
+  postUpdateProject(form: any): Observable<any>{
+    delete form.value.listAutor;
+    console.log(`${this.urlService}sendUpdateOfProy/${JSON.stringify(form.value)}`);
+    return this.http.post(`${this.urlService}sendUpdateOfProy/${JSON.stringify(form.value)}`, (mensaje: String) =>{
+      console.log(mensaje);
+    });
+  }
 }
