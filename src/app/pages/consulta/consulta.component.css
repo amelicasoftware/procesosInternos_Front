@@ -165,3 +165,39 @@ body {
 .numerary-total{
   text-align: right;
 }
+.paginador{
+  display: flex;
+  justify-content: center;
+}
+.my-pagination /deep/ .ngx-pagination .current {
+  background: red;
+  padding: 0.5rem 0.625rem;
+}
+.my-pagination /deep/ .ngx-pagination .pagination-previous {
+  background: #6a747d;
+  border-radius: 4px;
+
+}
+.my-pagination /deep/ .ngx-pagination .pagination-next {
+  background: #6a747d;
+  border-radius: 4px;
+  
+}
+.my-pagination /deep/ .ngx-pagination .pagination-next a{
+  display: inline;
+  color: #fff;
+}
+.my-pagination /deep/ .ngx-pagination .pagination-next a:hover{
+  display: inline;
+  background: #6a747d;
+}
+.my-pagination /deep/ .ngx-pagination .pagination-previous a{
+  display: inline;
+  background: #6a747d;
+  color: #fff;
+}
+.my-pagination /deep/ .ngx-pagination .pagination-previous a:hover {
+  display: inline;
+  background: #6a747d;
+
+}
