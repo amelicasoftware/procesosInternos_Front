@@ -24,7 +24,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { DatosProyectoComponent } from './pages/datos-proyecto/datos-proyecto.component';
 import { LogginComponent } from './pages/loggin/loggin.component';
 import { FooterComponent } from './components/footer/footer.component';
-
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -54,7 +54,8 @@ import { FooterComponent } from './components/footer/footer.component';
     HttpClientModule,
     ReactiveFormsModule,
     NgSelectModule,
-    FormsModule
+    FormsModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

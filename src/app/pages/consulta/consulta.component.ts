@@ -36,6 +36,7 @@ export class ConsultaComponent implements OnInit {
                   "volproyinv"
                     ];
   data:any;
+  p: number = 1;
   filtersData:any;
   listFillterTipos: Array<String> = [];
   listFillterAlcances: Array<String> = [];
