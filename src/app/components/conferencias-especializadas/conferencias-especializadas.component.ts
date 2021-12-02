@@ -63,7 +63,7 @@ export class ConferenciasEspecializadasComponent implements OnInit {
       FTEPROYINV: new FormControl(''),
       INSPROYINV: new FormControl('',[Validators.pattern(this.charNoAc)]),
       AUTPADPROY: new FormControl(''),
-      PARPROYINV: new FormControl(''),
+      PARPROYINV: new FormControl('', [Validators.required]),
       integrantes: new FormControl(''),
       ALCPROYINV: new FormControl('', [Validators.required]),
       PRDPROYINV: new FormControl(''),

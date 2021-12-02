@@ -19,6 +19,8 @@ export class OtrasActividadesComponent implements OnInit {
   lista: any[] = [];
   dato: boolean = true;
   selectedCountry:any=[];
+  institucion: FormControl = this.fb.control('', [Validators.required,Validators.pattern(this.charNoAc)]);
+  signos:string = Metodos.simbolos();
   constructor(
     private servicesForm: ServicesFormService,
     private fb: FormBuilder
@@ -47,13 +49,13 @@ export class OtrasActividadesComponent implements OnInit {
     this.form = this.fb.group({
       TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
       TPOPROYINV: new FormControl('Otras Actividades'),
-      RSMPROYINV: new FormControl(''),
+      RSMPROYINV: new FormControl('',Validators.maxLength(3900)),
       CVEPAISPRO: new FormControl(''),
-      ANIOPROYINV: new FormControl('0'),
+      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(2021)]),
       URLPROYINV: new FormControl('',),
       VOLPROYINV: new FormControl(''),
       FTEPROYINV: new FormControl('',),
-      INSPROYINV: new FormControl(''),
+      INSPROYINV: new FormControl('', [Validators.required]),
       AUTPADPROY: new FormControl(''),
       PARPROYINV: new FormControl(''),
       integrantes: new FormControl(''),
@@ -61,10 +63,10 @@ export class OtrasActividadesComponent implements OnInit {
       PRDPROYINV: new FormControl(''),
       MESPROYINV: new FormControl(''),
       FECCAPPROY: new FormControl(this.fechaActual()),
-      REAPROYINV: new FormControl('0'),
-      AGDREDPROY: new FormControl(''),
+      REAPROYINV: new FormControl('', [Validators.required]),
+      AGDREDPROY: new FormControl('', [Validators.required]),
       TPOACTPROY: new FormControl('',[Validators.required,Validators.pattern(this.charNoAc)]),
-      INFADCPROY: new FormControl(''),
+      INFADCPROY: new FormControl('',Validators.maxLength(3900)),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),
     });
@@ -74,6 +76,7 @@ export class OtrasActividadesComponent implements OnInit {
     //     console.log(value);
     //   });
   }
+  
 
   campoEsValido(campo: string) {
     return this.form.controls[campo].errors
@@ -98,10 +101,20 @@ export class OtrasActividadesComponent implements OnInit {
 
     }
   }
-
+  
+  des = true;
+  habilitar(){
+    this.des = true;
+    this.form.controls.AGDREDPROY.setValue('');
+  }
+  deshabilitar(){
+    this.des = false;
+    this.form.controls.AGDREDPROY.setValue('no');
+  }
   borrar(i: number) {
     this.autoresArr.removeAt(i);
   }
+  
 
   guardar():number {
     if (this.form.invalid) {
@@ -113,6 +126,7 @@ export class OtrasActividadesComponent implements OnInit {
     this.form.controls.INSPROYINV.setValue(Metodos.cambioResumen(this.form.controls.INSPROYINV.value));
     this.form.controls.TPOACTPROY.setValue(Metodos.cambioResumen(this.form.controls.TPOACTPROY.value));
     this.form.controls.FTEPROYINV.setValue(Metodos.cambioResumen(this.form.controls.FTEPROYINV.value));
+
     console.log(this.paisesArr?.value);
     // imprimir el valor del formulario, sólo si es válido
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
