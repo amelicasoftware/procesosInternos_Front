@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { JsonPipe } from '@angular/common';
 import { environment } from '../../environments/environment';
+import { FormControl } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,12 @@ export class ServicesFormService {
 
   urlService = environment.urlServices;
   dataForm: any;
-  @Output() cambioFiltros: EventEmitter<any> = new EventEmitter();
+  // pais = new FormControl('');
+  form: any;
+  listaPaises = [];
+  @Output() updateDataForm: EventEmitter<any> = new EventEmitter();
+  @Output() updatePais: EventEmitter<any> = new EventEmitter();
+  @Output() updateForm: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private http: HttpClient
@@ -54,9 +60,23 @@ export class ServicesFormService {
   }
 
   dataFormService(dataFomr: any){
-    console.log(dataFomr);
+    // console.log(dataFomr);
     this.dataForm = dataFomr;
-    console.log(this.dataForm);
-    this.cambioFiltros.emit(this.dataForm);
+    // console.log(this.dataForm);
+    this.updateDataForm.emit(this.dataForm);
+  }
+
+  dataPaisService(paises: any){
+    // console.log(paises);
+    this.listaPaises = paises;
+    // console.log(this.listaPaises);
+    this.updatePais.emit(this.listaPaises);
+  }
+
+  updateStrcutureForm(form: any){
+    console.log('estrcutrua form',form);
+    this.form = form;
+    this.updateForm.emit(this.form);
+    console.log('despues del emiit form',this.form);
   }
 }

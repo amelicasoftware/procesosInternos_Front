@@ -24,6 +24,7 @@ export class DatosProyectoComponent implements OnInit {
   selectedCountry: any = [];
   anioAct: number = 2021;
 
+
   constructor(
     private servicesForm: ServicesFormService,
     private rutaActiva: ActivatedRoute,
@@ -31,38 +32,25 @@ export class DatosProyectoComponent implements OnInit {
 
   ) {
     this.buildForm();
+    
   }
 
   private buildForm() {
-    this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100)]),
-      TPOPROYINV: new FormControl(''),
-      RSMPROYINV: new FormControl(''),
-      CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
-      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(2021)]),
-      listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
-      URLPROYINV: new FormControl('', [Validators.required]),
-      VOLPROYINV: new FormControl(''),
-      FTEPROYINV: new FormControl('', [Validators.required]),
-      INSPROYINV: new FormControl(''),
-      AUTPADPROY: new FormControl(''),
-      PARPROYINV: new FormControl(''),
-      integrantes: new FormControl(''),
-      ALCPROYINV: new FormControl('', [Validators.required]),
-      PRDPROYINV: new FormControl(''),
-      MESPROYINV: new FormControl(''),
-      FECCAPPROY: new FormControl(''),
-      REAPROYINV: new FormControl('', [Validators.required]),
-      AGDREDPROY: new FormControl('', [Validators.required]),
-      TPOACTPROY: new FormControl(''),
-      INFADCPROY: new FormControl(''),
-      AUTPROYINV: new FormControl(''),
-      CTDINTPROY: new FormControl('1'),
-      // CVEPROYINV: new FormControl('')
-    });
+    this.form = this.fb.group({});
+    // this.form = this.mensajeHijo;
+    console.log(this.form);
+  }
+
+  addItem(newItem: string) {
+    console.log(newItem);
   }
 
   ngOnInit(): void {
+    this.servicesForm.updateForm.subscribe(form => {
+      this.form = form;
+      console.log('estrcutrura recibida', this.form);
+    })
+
     this.servicesForm.getPaises().subscribe(paises => {
       // console.log(paises);
       this.lista = paises;
@@ -77,12 +65,13 @@ export class DatosProyectoComponent implements OnInit {
 
     //obtener datos del formulario y setearlos al form
     this.servicesForm.getProjectId(this.cveProyecto).subscribe(datos => {
+      let arrayPaises= [];
       console.log(datos);
       this.dataForm = datos[0];
       for (const prop in this.dataForm) {
         // console.log(`obj.${prop} = ${proyecto2[prop]}`);
         let nameProp = prop.toUpperCase();
-        console.log(nameProp);
+        // console.log(nameProp);
         if (nameProp === 'CVEPROYINV') {
           //agregar formcontrol de cveproyecto
           let control = new FormControl(this.dataForm[prop]);
@@ -93,7 +82,7 @@ export class DatosProyectoComponent implements OnInit {
             this.form.addControl('NOMENTNAC', control);
           } else
             if (nameProp === 'CVEPAISPRO') {
-              const arrayPaises = this.dataForm.cvepaispro.split(',');
+              arrayPaises = this.dataForm.cvepaispro.split(',');
               // console.log(arrayPaises);
               this.pais.setValue(arrayPaises);
             } else if (nameProp === 'AUTPROYINV') {
@@ -107,6 +96,8 @@ export class DatosProyectoComponent implements OnInit {
               }
       }
       this.servicesForm.dataFormService(this.form);
+      this.servicesForm.dataPaisService(arrayPaises);
+
     });
 
     

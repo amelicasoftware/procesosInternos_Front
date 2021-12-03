@@ -1,5 +1,5 @@
 import { newArray } from '@angular/compiler/src/util';
-import { Component, OnInit, NgModule } from '@angular/core';
+import { Component, OnInit, NgModule, Output, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
 import * as moment from 'moment';
@@ -35,6 +35,8 @@ export class FormComponent implements OnInit {
 
     dato: boolean = true;
 
+    @Output() newItemEvent = new EventEmitter<string>();
+
   constructor(
     private servicesForm: ServicesFormService,
     private fb: FormBuilder
@@ -60,10 +62,15 @@ export class FormComponent implements OnInit {
       this.lista = paises;
     });
 
-    this.servicesForm.cambioFiltros.subscribe( form => {
+    this.servicesForm.updateDataForm.subscribe( form => {
       console.log(form);
       this.form = form;
     });
+    this.servicesForm.updatePais.subscribe( paises => {
+      console.log(paises);
+      this.pais.setValue(paises);
+    });
+    this.newItemEvent.emit('prueba');
   }
   campoEsValido( campo: string ) {
     return this.form.controls[campo].errors 
