@@ -106,8 +106,10 @@ export class DatosProyectoComponent implements OnInit {
                 this.form.controls[nameProp].setValue(this.dataForm[prop]);
               }
       }
-
+      this.servicesForm.dataFormService(this.form);
     });
+
+    
 
   }
 

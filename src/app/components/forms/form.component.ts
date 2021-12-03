@@ -59,6 +59,11 @@ export class FormComponent implements OnInit {
       console.log(paises);
       this.lista = paises;
     });
+
+    this.servicesForm.cambioFiltros.subscribe( form => {
+      console.log(form);
+      this.form = form;
+    });
   }
   campoEsValido( campo: string ) {
     return this.form.controls[campo].errors 

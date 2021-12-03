@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter} from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { JsonPipe } from '@angular/common';
@@ -10,7 +10,8 @@ import { environment } from '../../environments/environment';
 export class ServicesFormService {
 
   urlService = environment.urlServices;
-
+  dataForm: any;
+  @Output() cambioFiltros: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private http: HttpClient
@@ -50,5 +51,12 @@ export class ServicesFormService {
     return this.http.post(`${this.urlService}sendUpdateOfProy/${JSON.stringify(form.value)}`, (mensaje: String) =>{
       console.log(mensaje);
     });
+  }
+
+  dataFormService(dataFomr: any){
+    console.log(dataFomr);
+    this.dataForm = dataFomr;
+    console.log(this.dataForm);
+    this.cambioFiltros.emit(this.dataForm);
   }
 }
