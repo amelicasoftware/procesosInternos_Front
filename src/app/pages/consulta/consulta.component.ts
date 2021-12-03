@@ -320,8 +320,7 @@ findWithFilters(data:any){
       }
     break;
   }
-  
-  this.prepareSearch();
+  //this.prepareSearch();
 }
 campoFiltrado(data:any) {
   //console.log(data);

@@ -1,8 +1,20 @@
 <body class="body column is-12">
     <main class="main column is-12">
         <section class="container-loggin column is-10">
-            <h2 class="tit-loggin title">Bienvenido</h2>
+            <div class="bienvenido">
+            <img src="../../../assets/img/logo redalyc-w.png"><img><br>
+            <b><h2 class="tit-loggin title">Bienvenido</h2></b><br><br>
+            <p class="b2">al Sistema de Procesos Internos Redalyc</p><br>
+            
+            <div class="acceso">
+            <b>Sistema de Información Científica Redalyc</b>
+            <p>Red de Revistas Científicas</p>
+            <p>Acceso Abierto no comercial propiedad de la academia</p>
+            </div>
+        </div>
             <div class="form-loggin column is-6">
+                <p class="inicio">Iniciar sesión</p>
+                <br>
                 <label class="attr-form">Nombre</label>
                 <input [(ngModel)]="user.name" 
                         class="input box is-12" type="text" 
@@ -16,7 +28,7 @@
                         placeholder="Ingresa tu contraseña"
                         (click)="touchSearch()">
                 <div style="text-align: center;">
-                    <button type="submit" class="button is-4 button-busq btn-entrar" 
+                    <button type="submit" id="entrar" class="button is-4 button-busq btn-entrar" 
                             (click)="prepareSearch()">Entrar</button>
                 </div>
             </div>
