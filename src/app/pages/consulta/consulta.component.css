@@ -137,6 +137,9 @@ body {
 .containerFiltros .fill-Periodo{
   order: 5;
 }
+.containerFiltros .fill-Apply{
+  order: 6;
+}
 .containerFiltros .select{
   display: inline-block;
 }
