@@ -72,6 +72,7 @@
         class="filtro"
         *ngFor="let filtro of filtersData; index as i"
         [ngClass]="'fill-' + filtro.nombre"
+        attr.id="fill-{{filtro.nombre}}"
       >
         <div>
           <h5 class="tit-filter">{{ filtro.nombre }}:</h5>
@@ -150,7 +151,9 @@
           </div>
         </div>
       </div>
-      <div class="filtro fill-Apply"><button class="" (click)="prepareSearch()">Aplicar filtros</button></div>
+      <div class="filtro fill-Apply">
+        <button class="btn-apply" (click)="prepareSearch()">Aplicar filtros</button>
+      </div>
     </div>
   </div>
   <div

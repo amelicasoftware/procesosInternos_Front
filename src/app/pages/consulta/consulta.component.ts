@@ -141,6 +141,32 @@ export class ConsultaComponent implements OnInit {
         saveAs(canvas.toDataURL(), 'file-name.png');
     });
   }
+  validatePeriod(){
+    if(this.dataBusqueda.ANIOPROYINV!="" && this.dataBusqueda.PERIIN!="" && this.dataBusqueda.PERIFIN!=""){
+      this.prepareSearch();
+    }else if(this.dataBusqueda.PERIIN==""){
+      console.log("seleccione el inicio");
+    }else if(this.dataBusqueda.PERIFIN!=""){
+      console.log("seleccione el final");
+    }
+  }
+  validateViewMonth(){
+    $(document).ready(function(){
+      setTimeout(function(){
+        $(document).ready(function(){
+          var filtro=$(".containerFiltros").find("#fill-Mes label").first().html();
+          console.log("validando filtro de mes view:::"+filtro);
+          if(filtro=="" || filtro==null){
+            $(".containerFiltros").find("#fill-Mes").attr("style","display: none !important;");
+            $(".containerFiltros").find(".fill-Periodo").attr("style","display: none !important;");
+          }else{
+            $(".containerFiltros").find("#fill-Mes").attr("style","display: block !important;");
+            $(".containerFiltros").find(".fill-Periodo").attr("style","display: block !important;");
+          }
+        });
+      },1500);
+    });
+  }
   prepareSearch(){
     console.log("cadena 1 a buscar:::"+this.dataBusqueda.TITPROYINV+" :: "+this.dataBusqueda.TPOPROYINV);
     this.service.getInfoFilters(this.dataBusqueda).then(res=>{
@@ -151,16 +177,9 @@ export class ConsultaComponent implements OnInit {
       console.log("total of results::"+this.totalOfResults);
     });
     this.getFilters();
+    this.validateViewMonth();
   }
-  validatePeriod(){
-    if(this.dataBusqueda.ANIOPROYINV!="" && this.dataBusqueda.PERIIN!="" && this.dataBusqueda.PERIFIN!=""){
-      this.prepareSearch();
-    }else if(this.dataBusqueda.PERIIN==""){
-      console.log("seleccione el inicio");
-    }else if(this.dataBusqueda.PERIFIN!=""){
-      console.log("seleccione el final");
-    }
-  }
+  
   getFilters(){
     console.log("llamando filtros:::");
     this.service.getFilters(this.dataBusqueda).then(res=>{
@@ -199,14 +218,14 @@ clickListener(e:string, flag:boolean) {
 findWithFilters(data:any){
   console.log(data);
   var opc = -1;
-        if (data.tipo == "Tipos") {
+        if (data.tipo == "Tipo") {
             opc = 0;
-        } else if (data.tipo == "Alcances") {
+        } else if (data.tipo == "Alcance") {
           opc = 1;
         }
-        else if (data.tipo == "Años") {
+        else if (data.tipo == "Año") {
             opc = 2;
-        }else if (data.tipo == "Meses") {
+        }else if (data.tipo == "Mes") {
           opc = 3;
         }
         else if (data.tipo == "Periodo") {
@@ -325,7 +344,7 @@ findWithFilters(data:any){
 campoFiltrado(data:any) {
   //console.log(data);
   var st=false;
-  if (data.tipo == "Tipos") {
+  if (data.tipo == "Tipo") {
       var sizeTipos = this.listFillterTipos!=null ? this.listFillterTipos.length : 0;
       var index=-1;
       if(sizeTipos>=1){
@@ -340,7 +359,7 @@ campoFiltrado(data:any) {
           st= false;
       }
   }
-  if (data.tipo == "Alcances") {
+  if (data.tipo == "Alcance") {
     var sizeAlcances = this.listFillterAlcances!=null ? this.listFillterAlcances.length : 0;
     var index=-1;
     if(sizeAlcances>=1){
@@ -355,7 +374,7 @@ campoFiltrado(data:any) {
         st= false;
     }
   }
-  if (data.tipo == "Años") {
+  if (data.tipo == "Año") {
     var sizeAnios = this.listFillterAnios!=null ? this.listFillterAnios.length : 0;
     var index=-1;
     if(sizeAnios>=1){
@@ -370,7 +389,7 @@ campoFiltrado(data:any) {
         st= false;
     }
   }
-  if (data.tipo == "Meses") {
+  if (data.tipo == "Mes") {
     var sizeMeses = this.listFillterMeses!=null ? this.listFillterMeses.length : 0;
     var index=-1;
     if(sizeMeses>=1){
