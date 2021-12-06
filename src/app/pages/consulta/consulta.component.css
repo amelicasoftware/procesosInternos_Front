@@ -74,6 +74,13 @@ body {
 .container-cards-proy .card .card-footer .btn-card:nth-child(1){
   margin-right: 5px;
 }
+.btn-apply{
+  background: #6a747d;
+  border-radius: 4px;
+  color: white;
+  padding: 10px 20px;
+  margin: 15px 0 0 0;
+}
 .button-busq{
   border: soid 1px #6a747d;
   color: #6a747d;
@@ -122,21 +129,22 @@ body {
   display: flex;
   flex-flow: row wrap;
 }
-.containerFiltros .fill-Tipos{
+.containerFiltros .fill-Tipo{
   order: 1;
 }
-.containerFiltros .fill-Alcances{
+.containerFiltros .fill-Alcance{
   order: 2;
 }
-.containerFiltros .fill-Años{
+.containerFiltros .fill-Año{
   order: 3;
 }
-.containerFiltros .fill-Meses{
+.containerFiltros .fill-Mes{
   order: 4;
 }
 .containerFiltros .fill-Periodo{
   order: 5;
 }
+
 .containerFiltros .select{
   display: inline-block;
 }
@@ -145,6 +153,11 @@ body {
   border-bottom: solid 1px darkgray;
   width: 90%;
   margin: 0 auto;
+}
+.containerFiltros .fill-Apply{
+  order: 6;
+  text-align: center;
+  border-bottom: unset;
 }
 .containerFiltros .tit-filter {
   text-align: center;
@@ -169,34 +182,34 @@ body {
   display: flex;
   justify-content: center;
 }
-.my-pagination /deep/ .ngx-pagination .current {
+.my-pagination .ngx-pagination .current {
   background: red;
   padding: 0.5rem 0.625rem;
 }
-.my-pagination /deep/ .ngx-pagination .pagination-previous {
+.my-pagination .ngx-pagination .pagination-previous {
   background: #6a747d;
   border-radius: 4px;
 
 }
-.my-pagination /deep/ .ngx-pagination .pagination-next {
+.my-pagination .ngx-pagination .pagination-next {
   background: #6a747d;
   border-radius: 4px;
   
 }
-.my-pagination /deep/ .ngx-pagination .pagination-next a{
+.my-pagination .ngx-pagination .pagination-next a{
   display: inline;
   color: #fff;
 }
-.my-pagination /deep/ .ngx-pagination .pagination-next a:hover{
+.my-pagination .ngx-pagination .pagination-next a:hover{
   display: inline;
   background: #6a747d;
 }
-.my-pagination /deep/ .ngx-pagination .pagination-previous a{
+.my-pagination .ngx-pagination .pagination-previous a{
   display: inline;
   background: #6a747d;
   color: #fff;
 }
-.my-pagination /deep/ .ngx-pagination .pagination-previous a:hover {
+.my-pagination .ngx-pagination .pagination-previous a:hover {
   display: inline;
   background: #6a747d;
 
