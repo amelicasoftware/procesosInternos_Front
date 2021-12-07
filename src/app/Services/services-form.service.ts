@@ -74,9 +74,9 @@ export class ServicesFormService {
   }
 
   updateStrcutureForm(form: any){
-    console.log('estrcutrua form',form);
+    // console.log('estrcutrua form',form);
     this.form = form;
     this.updateForm.emit(this.form);
-    console.log('despues del emiit form',this.form);
+    // console.log('despues del emiit form',this.form);
   }
 }

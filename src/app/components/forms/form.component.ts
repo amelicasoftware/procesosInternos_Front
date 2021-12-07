@@ -1,5 +1,5 @@
 import { newArray } from '@angular/compiler/src/util';
-import { Component, OnInit, NgModule, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, NgModule } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
 import * as moment from 'moment';
@@ -35,8 +35,6 @@ export class FormComponent implements OnInit {
 
     dato: boolean = true;
 
-    @Output() newItemEvent = new EventEmitter<string>();
-
   constructor(
     private servicesForm: ServicesFormService,
     private fb: FormBuilder
@@ -67,10 +65,9 @@ export class FormComponent implements OnInit {
       this.form = form;
     });
     this.servicesForm.updatePais.subscribe( paises => {
-      console.log(paises);
+      // console.log(paises);
       this.pais.setValue(paises);
     });
-    this.newItemEvent.emit('prueba');
   }
   campoEsValido( campo: string ) {
     return this.form.controls[campo].errors 
@@ -108,6 +105,8 @@ export class FormComponent implements OnInit {
     //   .subscribe(value => {
     //     console.log(value);
     //   });
+
+    this.servicesForm.updateStrcutureForm(this.form);
   }
 
   get autoresArr() {
@@ -190,5 +189,46 @@ export class FormComponent implements OnInit {
     let fecha = new Date;
     this.anioAct = fecha.getFullYear();
     return moment(fecha).format('DD-MM-YY');
+  }
+
+  modificar(){
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return 0;
+    }
+
+    console.log(this.autoresArr.value);
+    console.log(this.paisesArr?.value);
+    this.form.controls.TITPROYINV.setValue(Metodos.cambioResumen(this.form.controls.TITPROYINV.value));
+    this.form.controls.VOLPROYINV.setValue(Metodos.cambioResumen(this.form.controls.VOLPROYINV.value));
+    this.form.controls.INSPROYINV.setValue(Metodos.cambioResumen(this.form.controls.INSPROYINV.value));
+    this.form.controls.TPOACTPROY.setValue(Metodos.cambioResumen(this.form.controls.TPOACTPROY.value));
+    this.form.controls.FTEPROYINV.setValue(Metodos.cambioResumen(this.form.controls.FTEPROYINV.value));
+    this.form.controls.AUTPROYINV.setValue(Metodos.cambioResumen(this.autoresArr.value.join(',')));
+    this.form.controls.RSMPROYINV.setValue(Metodos.cambioResumen(this.form.controls.RSMPROYINV.value).replace(/(\r\n|\n|\r)/gm, " "));
+    this.form.controls.INFADCPROY.setValue(Metodos.cambioResumen(this.form.controls.INFADCPROY.value).replace(/(\r\n|\n|\r)/gm, " "));
+    this.form.controls.URLPROYINV.setValue(Metodos.cambioResumen(this.form.controls.URLPROYINV.value));
+    this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
+    // imprimir el valor del formulario, sólo si es válido
+    this.servicesForm.postUpdateProject(this.form).subscribe(mensaje => {
+      console.log(mensaje);
+      if(mensaje !== null){
+        if(mensaje.respuesta === 'true'){
+          this.limpiar();
+          Metodos.alertWithSuccess();
+        }else{
+          this.selectedCountry = [];
+          Metodos.erroalert();
+        }
+      }else{
+        this.selectedCountry = [];
+        Metodos.erroalert();
+      }
+    });
+    console.log(this.form.value);
+    // console.log(mensaje);
+    // this.alertWithSuccess();
+    // this.erroalert();
+    return 0;
   }
 }

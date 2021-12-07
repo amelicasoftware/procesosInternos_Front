@@ -48,6 +48,15 @@ export class ConferenciasEspecializadasComponent implements OnInit {
       console.log(paises);
       this.lista = paises;
     });
+
+    this.servicesForm.updateDataForm.subscribe( form => {
+      console.log(form);
+      this.form = form;
+    });
+    this.servicesForm.updatePais.subscribe( paises => {
+      // console.log(paises);
+      this.pais.setValue(paises);
+    });
   }
 
   private buildForm() {
@@ -81,6 +90,8 @@ export class ConferenciasEspecializadasComponent implements OnInit {
     //   .subscribe(value => {
     //     console.log(value);
     //   });
+
+    this.servicesForm.updateStrcutureForm(this.form);
   }
 
   campoEsValido(campo: string) {

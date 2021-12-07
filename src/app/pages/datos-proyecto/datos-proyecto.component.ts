@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -12,7 +12,7 @@ import * as moment from 'moment';
   templateUrl: './datos-proyecto.component.html',
   styleUrls: ['./datos-proyecto.component.css']
 })
-export class DatosProyectoComponent implements OnInit {
+export class DatosProyectoComponent implements OnInit, AfterViewInit {
   cveProyecto: number = 0;
   dataForm: any;
   form!: FormGroup;
@@ -23,33 +23,50 @@ export class DatosProyectoComponent implements OnInit {
   autor: FormControl = this.fb.control('', [Validators.required, Validators.pattern(this.charNoAc)]);
   selectedCountry: any = [];
   anioAct: number = 2021;
+  tipoForm!: string;
 
 
   constructor(
     private servicesForm: ServicesFormService,
     private rutaActiva: ActivatedRoute,
-    private fb: FormBuilder,
+    private fb: FormBuilder
 
   ) {
-    this.buildForm();
-    
+    // this.buildForm();
+
   }
 
   private buildForm() {
-    this.form = this.fb.group({});
+    this.form = this.fb.group({
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100), Validators.pattern(this.charNoAc)]),
+      TPOPROYINV: new FormControl('Artículos científicos'),
+      RSMPROYINV: new FormControl('', Validators.maxLength(3900)),
+      CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
+      ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
+      listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
+      URLPROYINV: new FormControl('', [Validators.required, Validators.maxLength(200), Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
+      VOLPROYINV: new FormControl('', Validators.pattern(this.charNoAc)),
+      FTEPROYINV: new FormControl('', [Validators.required, Validators.pattern(this.charNoAc)]),
+      INSPROYINV: new FormControl(''),
+      AUTPADPROY: new FormControl(''),
+      PARPROYINV: new FormControl(''),
+      integrantes: new FormControl(''),
+      ALCPROYINV: new FormControl('', [Validators.required]),
+      PRDPROYINV: new FormControl(''),
+      MESPROYINV: new FormControl(''),
+      FECCAPPROY: new FormControl(''),
+      REAPROYINV: new FormControl('', [Validators.required]),
+      AGDREDPROY: new FormControl('', [Validators.required]),
+      TPOACTPROY: new FormControl(''),
+      INFADCPROY: new FormControl('', Validators.maxLength(3900)),
+      AUTPROYINV: new FormControl(''),
+      CTDINTPROY: new FormControl('1'),
+    });
     // this.form = this.mensajeHijo;
-    console.log(this.form);
-  }
-
-  addItem(newItem: string) {
-    console.log(newItem);
+    // console.log(this.form);
   }
 
   ngOnInit(): void {
-    this.servicesForm.updateForm.subscribe(form => {
-      this.form = form;
-      console.log('estrcutrura recibida', this.form);
-    })
 
     this.servicesForm.getPaises().subscribe(paises => {
       // console.log(paises);
@@ -62,10 +79,32 @@ export class DatosProyectoComponent implements OnInit {
     });
 
     this.cveProyecto = this.rutaActiva.snapshot.params.cveProyecto;
+    this.tipoForm = this.rutaActiva.snapshot.params.tipoForm;
+
+    console.log(this.tipoForm);
+
+    // this.servicesForm.updateForm.subscribe(form => {
+    //   this.form = form;
+    //   console.log('estrcutrura recibida', this.form);
+    // })
+
+  }
+
+  ngAfterViewInit() {
+    this.buildForm();
+    console.log('me ejecuto');
+    this.form = this.servicesForm.form;
+    console.log(this.form);
+
+    // this.servicesForm.updateForm.subscribe(form => {
+    //   this.form = form;
+    //   console.log('estrcutrura recibida', this.form);
+    // })
 
     //obtener datos del formulario y setearlos al form
     this.servicesForm.getProjectId(this.cveProyecto).subscribe(datos => {
-      let arrayPaises= [];
+      this.tipoForm = this.form.value['TPOPROYINV'];
+      let arrayPaises = [];
       console.log(datos);
       this.dataForm = datos[0];
       for (const prop in this.dataForm) {
@@ -99,9 +138,6 @@ export class DatosProyectoComponent implements OnInit {
       this.servicesForm.dataPaisService(arrayPaises);
 
     });
-
-    
-
   }
 
   campoEsValido(campo: string) {
@@ -132,50 +168,50 @@ export class DatosProyectoComponent implements OnInit {
     this.autoresArr.push(this.fb.control(nombre, Validators.required));
   }
 
-  guardar() {
-    console.log(this.form.value);
-    console.log(this.form.valid);
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return 0;
-    }
+  // guardar() {
+  //   console.log(this.form.value);
+  //   console.log(this.form.valid);
+  //   if (this.form.invalid) {
+  //     this.form.markAllAsTouched();
+  //     return 0;
+  //   }
 
-    console.log(this.autoresArr.value);
-    console.log(this.paisesArr?.value);
+  //   console.log(this.autoresArr.value);
+  //   console.log(this.paisesArr?.value);
 
 
-    this.form.controls.TITPROYINV.setValue(Metodos.cambioResumen(this.form.controls.TITPROYINV.value));
-    this.form.controls.VOLPROYINV.setValue(Metodos.cambioResumen(this.form.controls.VOLPROYINV.value));
-    this.form.controls.INSPROYINV.setValue(Metodos.cambioResumen(this.form.controls.INSPROYINV.value));
-    this.form.controls.TPOACTPROY.setValue(Metodos.cambioResumen(this.form.controls.TPOACTPROY.value));
-    this.form.controls.FTEPROYINV.setValue(Metodos.cambioResumen(this.form.controls.FTEPROYINV.value));
-    this.form.controls.AUTPROYINV.setValue(Metodos.cambioResumen(this.autoresArr.value.join(',')));
-    this.form.controls.RSMPROYINV.setValue(Metodos.cambioResumen(this.form.controls.RSMPROYINV.value).replace(/(\r\n|\n|\r)/gm, " "));
-    this.form.controls.INFADCPROY.setValue(Metodos.cambioResumen(this.form.controls.INFADCPROY.value).replace(/(\r\n|\n|\r)/gm, " "));
-    this.form.controls.URLPROYINV.setValue(Metodos.cambioResumen(this.form.controls.URLPROYINV.value));
-    this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
-    // imprimir el valor del formulario, sólo si es válido
-    this.servicesForm.postUpdateProject(this.form).subscribe(mensaje => {
-      console.log(mensaje);
-      if (mensaje !== null) {
-        if (mensaje.respuesta === 'true') {
-          this.limpiar();
-          Metodos.alertWithSuccess();
-        } else {
-          this.selectedCountry = [];
-          Metodos.erroalert();
-        }
-      } else {
-        this.selectedCountry = [];
-        Metodos.erroalert();
-      }
-    });
-    console.log(this.form.value);
-    // console.log(mensaje);
-    // this.alertWithSuccess();
-    // this.erroalert();
-    return 0;
-  }
+  //   this.form.controls.TITPROYINV.setValue(Metodos.cambioResumen(this.form.controls.TITPROYINV.value));
+  //   this.form.controls.VOLPROYINV.setValue(Metodos.cambioResumen(this.form.controls.VOLPROYINV.value));
+  //   this.form.controls.INSPROYINV.setValue(Metodos.cambioResumen(this.form.controls.INSPROYINV.value));
+  //   this.form.controls.TPOACTPROY.setValue(Metodos.cambioResumen(this.form.controls.TPOACTPROY.value));
+  //   this.form.controls.FTEPROYINV.setValue(Metodos.cambioResumen(this.form.controls.FTEPROYINV.value));
+  //   this.form.controls.AUTPROYINV.setValue(Metodos.cambioResumen(this.autoresArr.value.join(',')));
+  //   this.form.controls.RSMPROYINV.setValue(Metodos.cambioResumen(this.form.controls.RSMPROYINV.value).replace(/(\r\n|\n|\r)/gm, " "));
+  //   this.form.controls.INFADCPROY.setValue(Metodos.cambioResumen(this.form.controls.INFADCPROY.value).replace(/(\r\n|\n|\r)/gm, " "));
+  //   this.form.controls.URLPROYINV.setValue(Metodos.cambioResumen(this.form.controls.URLPROYINV.value));
+  //   this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
+  //   // imprimir el valor del formulario, sólo si es válido
+  //   this.servicesForm.postUpdateProject(this.form).subscribe(mensaje => {
+  //     console.log(mensaje);
+  //     if (mensaje !== null) {
+  //       if (mensaje.respuesta === 'true') {
+  //         this.limpiar();
+  //         Metodos.alertWithSuccess();
+  //       } else {
+  //         this.selectedCountry = [];
+  //         Metodos.erroalert();
+  //       }
+  //     } else {
+  //       this.selectedCountry = [];
+  //       Metodos.erroalert();
+  //     }
+  //   });
+  //   console.log(this.form.value);
+  //   // console.log(mensaje);
+  //   // this.alertWithSuccess();
+  //   // this.erroalert();
+  //   return 0;
+  // }
 
   borrar(id: number) {
     this.autoresArr.removeAt(id);
@@ -191,4 +227,8 @@ export class DatosProyectoComponent implements OnInit {
     this.anioAct = fecha.getFullYear();
     return moment(fecha).format('DD-MM-YY');
   }
+
+  // ngOnDestroy() {
+  //   this.servicesForm.dataForm.destroy();
+  // }
 }

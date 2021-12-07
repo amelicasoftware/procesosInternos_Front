@@ -12,7 +12,7 @@ export const ROUTES: Routes = [
     { path: 'busquedas', component: ConsultaComponent },
     { path: 'loggin', component: LogginComponent },
     { path: 'validacion', component: ValidacionComponent },
-    { path: 'proyecto/:cveProyecto', component: DatosProyectoComponent },
+    { path: 'proyecto/:cveProyecto/:tipoForm', component: DatosProyectoComponent },
     { path: '', pathMatch: 'full', redirectTo: 'loggin' },
     { path: '**', pathMatch: 'full', redirectTo: 'loggin' },
 ];

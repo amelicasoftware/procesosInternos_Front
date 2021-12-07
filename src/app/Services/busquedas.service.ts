@@ -10,7 +10,7 @@ export class BusquedasService {
   ){
   }
   getInfo() { 
-    return this.http.get<any>('http://127.0.0.1:9084/boardInvestigacion/service/ds/getDataPrueba').toPromise()
+    return this.http.get<any>('http://148.215.24.22:9084/boardInvestigacion/service/ds/getDataPrueba').toPromise()
   }
   getInfoFilters(data:any) { 
 var str=JSON.stringify(data);
@@ -23,14 +23,14 @@ var dataBusqueda=JSON.parse(str);
         "\"PERIIN\":\""+dataBusqueda.PERIIN+"\","+
         "\"PERIFIN\":\""+dataBusqueda.PERIFIN+"\""+
       "}";
-    var url='http://127.0.0.1:9084/boardInvestigacion/service/ds/getDataByFilters/'+json;
+    var url='http://148.215.24.22:9084/boardInvestigacion/service/ds/getDataByFilters/'+json;
     return this.http.get<any>(url).toPromise()
   }
   getById(){
-    return this.http.get<any>('http://127.0.0.1:9084/boardInvestigacion/service/ds/getDataProyById/34').toPromise()
+    return this.http.get<any>('http://148.215.24.22:9084/boardInvestigacion/service/ds/getDataProyById/34').toPromise()
   }
   getByTit(){
-    var url='http://127.0.0.1:9084/boardInvestigacion/service/ds/getDataProyByTitle/'+
+    var url='http://148.215.24.22:9084/boardInvestigacion/service/ds/getDataProyByTitle/'+
     '{"titulo":"solo politica nacional"}'
     return this.http.get<any>(url).toPromise()
   }
@@ -57,7 +57,7 @@ var dataBusqueda=JSON.parse(str);
         '"INFADCPROY":"Este articulo es una prueba",'+
         '"CVEPAISPRO":"5"'+
         '}';
-        var url='http://127.0.0.1:9084/boardInvestigacion/service/ds/sendRegisterOfProy/'+jsonInsert
+        var url='http://148.215.24.22:9084/boardInvestigacion/service/ds/sendRegisterOfProy/'+jsonInsert
     return this.http.post<any>(url,"").toPromise()
   }
   editInfo() { 
@@ -84,7 +84,7 @@ var dataBusqueda=JSON.parse(str);
         '"INFADCPROY":"Este articulo es una prueba",'+
         '"CVEPAISPRO":"73,5"'+
         '}';
-        var url='http://127.0.0.1:9084/boardInvestigacion/service/ds/sendUpdateOfProy/'+jsonUpdate
+        var url='http://148.215.24.22:9084/boardInvestigacion/service/ds/sendUpdateOfProy/'+jsonUpdate
     return this.http.post<any>(url,"").toPromise()
   }
   getFilters(data:any){
@@ -98,6 +98,6 @@ var dataBusqueda=JSON.parse(str);
         "\"PERIIN\":\""+dataBusqueda.PERIIN+"\","+
         "\"PERIFIN\":\""+dataBusqueda.PERIFIN+"\""+
       "}";
-    return this.http.get<any>('http://127.0.0.1:9084/boardInvestigacion/service/ds/getDataProyFilters/'+json).toPromise()
+    return this.http.get<any>('http://148.215.24.22:9084/boardInvestigacion/service/ds/getDataProyFilters/'+json).toPromise()
   }
 }
