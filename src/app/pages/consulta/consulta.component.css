@@ -212,5 +212,9 @@ body {
 .my-pagination .ngx-pagination .pagination-previous a:hover {
   display: inline;
   background: #6a747d;
+}
 
+.doi{
+  width: 322px;
+  overflow-wrap: anywhere;
 }
