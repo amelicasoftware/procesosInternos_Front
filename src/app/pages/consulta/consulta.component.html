@@ -211,7 +211,7 @@
             class="content"
             *ngIf="proyecto.tpoproyinv == 'Artículos científicos'"
           >
-            <span><b>DOI:</b> {{ proyecto.urlproyinv }}</span
+          <span class="doi"><b>DOI:</b><br>{{ proyecto.urlproyinv }}</span
             ><br />
             <span><b>Revista:</b> {{ proyecto.fteproyinv }}</span
             ><br />
@@ -242,7 +242,7 @@
             class="content"
             *ngIf="proyecto.tpoproyinv == 'Capítulos de libro científico'"
           >
-            <span><b>DOI:</b> {{ proyecto.urlproyinv }}</span
+          <span class="doi"><b>DOI:</b><br>{{ proyecto.urlproyinv }}</span
             ><br />
             <span><b>Titulo del libro:</b> {{ proyecto.fteproyinv }}</span
             ><br />
@@ -274,9 +274,9 @@
           </div>
           <div
             class="content"
-            *ngIf="proyecto.tpoproyinv == 'Libros científicos'"
+            *ngIf="proyecto.tpoproyinv == 'Libro científico'"
           >
-            <span><b>DOI:</b> {{ proyecto.urlproyinv }}</span
+          <span class="doi"><b>DOI:</b><br> {{ proyecto.urlproyinv }} </span
             ><br />
             <span><b>Titulo:</b> {{ proyecto.titproyinv }}</span
             ><br />
@@ -335,7 +335,7 @@
             class="content"
             *ngIf="proyecto.tpoproyinv == 'Artículos de divulgación'"
           >
-            <span><b>DOI:</b> {{ proyecto.urlproyinv }}</span
+            <span class="doi"><b>DOI:</b><br>  {{ proyecto.urlproyinv }} </span
             ><br />
             <span><b>Título del escrito:</b> {{ proyecto.titproyinv }}</span
             ><br />
@@ -363,7 +363,7 @@
             class="content"
             *ngIf="proyecto.tpoproyinv == 'Libros de divulgación'"
           >
-            <span><b>DOI:</b> {{ proyecto.urlproyinv }}</span
+          <span class="doi"><b>DOI:</b><br>{{ proyecto.urlproyinv }}</span
             ><br />
             <span><b>Título del libro:</b> {{ proyecto.titproyinv }}</span
             ><br />
@@ -387,7 +387,7 @@
           </div>
           <div
             class="content"
-            *ngIf="proyecto.tpoproyinv == 'Otras actividades de divulgación'"
+            *ngIf="proyecto.tpoproyinv == 'Otras Actividades'"
           >
             <span><b>Actividad:</b> {{ proyecto.titproyinv }}</span
             ><br />
