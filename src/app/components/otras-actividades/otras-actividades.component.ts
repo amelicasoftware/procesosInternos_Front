@@ -1,37 +1,47 @@
 import { newArray } from '@angular/compiler/src/util';
-import { Component, OnInit, NgModule } from '@angular/core';
+import { Component, OnInit, NgModule, OnDestroy } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Subscription } from "rxjs";
+import { Router } from '@angular/router';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
 import * as moment from 'moment';
-import {Metodos} from '../metodos';
+import { Metodos } from '../metodos';
 @Component({
   selector: 'app-otras-actividades',
   templateUrl: './otras-actividades.component.html',
   styleUrls: ['./otras-actividades.component.css']
 })
-export class OtrasActividadesComponent implements OnInit {
+export class OtrasActividadesComponent implements OnInit, OnDestroy {
   typeForm = new FormControl('Selecciona un formulario');
   autor: FormControl = this.fb.control('', Validators.required);
   pais = new FormControl('');
   form!: FormGroup;
   autores: String[] = [];
-  charNoAc:string = "";
+  charNoAc: string = "";
   lista: any[] = [];
   dato: boolean = true;
-  selectedCountry:any=[];
-  institucion: FormControl = this.fb.control('', [Validators.required,Validators.pattern(this.charNoAc)]);
-  signos:string = Metodos.simbolos();
+  selectedCountry: any = [];
+  institucion: FormControl = this.fb.control('', [Validators.required, Validators.pattern(this.charNoAc)]);
+  signos: string = Metodos.simbolos();
+
+  actualizacion = false;
+
+  formSubscription!: Subscription;
+  paisesSubscription!: Subscription;
+
   constructor(
     private servicesForm: ServicesFormService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.buildForm();
   }
 
   ngOnInit() {
+    this.actualizacion = this.servicesForm.actualizacion;
     this.typeForm.valueChanges.subscribe(valor => {
       console.log(valor);
-      
+
     });
 
     this.pais.valueChanges.subscribe(valor => {
@@ -43,13 +53,22 @@ export class OtrasActividadesComponent implements OnInit {
       console.log(paises);
       this.lista = paises;
     });
+
+    this.formSubscription = this.servicesForm.updateDataForm.subscribe(form => {
+      console.log(form);
+      this.form = form;
+    });
+    this.paisesSubscription = this.servicesForm.updatePais.subscribe(paises => {
+      // console.log(paises);
+      this.pais.setValue(paises);
+    });
   }
 
   private buildForm() {
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100), Validators.pattern(this.charNoAc)]),
       TPOPROYINV: new FormControl('Otras Actividades'),
-      RSMPROYINV: new FormControl('',Validators.maxLength(3900)),
+      RSMPROYINV: new FormControl('', Validators.maxLength(3900)),
       CVEPAISPRO: new FormControl(''),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(2021)]),
       URLPROYINV: new FormControl('',),
@@ -65,8 +84,8 @@ export class OtrasActividadesComponent implements OnInit {
       FECCAPPROY: new FormControl(this.fechaActual()),
       REAPROYINV: new FormControl('', [Validators.required]),
       AGDREDPROY: new FormControl('', [Validators.required]),
-      TPOACTPROY: new FormControl('',[Validators.required,Validators.pattern(this.charNoAc)]),
-      INFADCPROY: new FormControl('',Validators.maxLength(3900)),
+      TPOACTPROY: new FormControl('', [Validators.required, Validators.pattern(this.charNoAc)]),
+      INFADCPROY: new FormControl('', Validators.maxLength(3900)),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),
     });
@@ -75,8 +94,9 @@ export class OtrasActividadesComponent implements OnInit {
     //   .subscribe(value => {
     //     console.log(value);
     //   });
+    this.servicesForm.updateStrcutureForm(this.form);
   }
-  
+
 
   campoEsValido(campo: string) {
     return this.form.controls[campo].errors
@@ -101,22 +121,22 @@ export class OtrasActividadesComponent implements OnInit {
 
     }
   }
-  
+
   des = true;
-  habilitar(){
+  habilitar() {
     this.des = true;
     this.form.controls.AGDREDPROY.setValue('');
   }
-  deshabilitar(){
+  deshabilitar() {
     this.des = false;
     this.form.controls.AGDREDPROY.setValue('no');
   }
   borrar(i: number) {
     this.autoresArr.removeAt(i);
   }
-  
 
-  guardar():number {
+
+  guardar(): number {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return 0;
@@ -126,39 +146,67 @@ export class OtrasActividadesComponent implements OnInit {
     this.form.controls.INSPROYINV.setValue(Metodos.cambioResumen(this.form.controls.INSPROYINV.value));
     this.form.controls.TPOACTPROY.setValue(Metodos.cambioResumen(this.form.controls.TPOACTPROY.value));
     this.form.controls.FTEPROYINV.setValue(Metodos.cambioResumen(this.form.controls.FTEPROYINV.value));
+    this.form.controls.CVEPAISPRO.setValue('96');
 
     console.log(this.paisesArr?.value);
     // imprimir el valor del formulario, sólo si es válido
-    this.servicesForm.postDatos(this.form).subscribe(mensaje => {
-      console.log(mensaje);
-      if(mensaje !== null){
-        if(mensaje.respuesta === 'true'){
-          this.limpiar();
-          Metodos.alertWithSuccess();
-        }else{
+    if (!this.actualizacion) {
+      this.servicesForm.postDatos(this.form).subscribe(mensaje => {
+        console.log(mensaje);
+        if (mensaje !== null) {
+          if (mensaje.respuesta === 'true') {
+            this.limpiar();
+            Metodos.alertWithSuccess();
+          } else {
+            this.selectedCountry = [];
+            Metodos.erroalert();
+          }
+        } else {
           this.selectedCountry = [];
           Metodos.erroalert();
         }
-      }else{
-        this.selectedCountry = [];
-        Metodos.erroalert();
-      }
-    });
+      });
+    } else {
+      this.servicesForm.postUpdateProject(this.form).subscribe(mensaje => {
+        console.log(mensaje);
+        if (mensaje !== null) {
+          if (mensaje.respuesta === 'true') {
+            this.limpiar();
+            Metodos.alertWithSuccess();
+          } else {
+            this.selectedCountry = [];
+            Metodos.erroalert();
+          }
+        } else {
+          this.selectedCountry = [];
+          Metodos.erroalert();
+        }
+      });
+    }
     console.log(this.form.value);
     // console.log(mensaje);
     // this.alertWithSuccess();
     // this.erroalert();
     return 0;
   }
-  limpiar(){
+  limpiar() {
     //console.log(btoa("demo@demo.com"));
     //console.log("ZGVtb0BkZW1vLmNvbQ==");
     //console.log(atob("ZGVtb0BkZW1vLmNvbQ=="));
     this.buildForm();
     this.selectedCountry = [];
   }
-  fechaActual(): String{
+  fechaActual(): String {
     let fecha = new Date;
     return moment(fecha).format('DD-MM-YY');
+  }
+
+  redirectConsultas() {
+    this.router.navigate(['busquedas']);
+  }
+
+  ngOnDestroy() {
+    this.formSubscription.unsubscribe();
+    this.paisesSubscription.unsubscribe();
   }
 }

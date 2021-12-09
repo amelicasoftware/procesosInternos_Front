@@ -1,5 +1,6 @@
 import { newArray } from '@angular/compiler/src/util';
-import { Component, OnInit, NgModule } from '@angular/core';
+import { Component, OnInit, NgModule, OnDestroy } from '@angular/core';
+import {Router} from '@angular/router';
 import {
   FormArray,
   FormBuilder,
@@ -9,28 +10,34 @@ import {
   Validators,
 } from '@angular/forms';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
+import { Subscription } from "rxjs";
 import * as moment from 'moment';
-import {Metodos} from '../metodos';
+import { Metodos } from '../metodos';
+
 @Component({
   selector: 'app-conferencias-especializadas',
   templateUrl: './conferencias-especializadas.component.html',
   styleUrls: ['./conferencias-especializadas.component.css'],
 })
-export class ConferenciasEspecializadasComponent implements OnInit {
+export class ConferenciasEspecializadasComponent implements OnInit, OnDestroy {
   typeForm = new FormControl('Selecciona un formulario');
-  charNoAc:string = "";
-  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern(Metodos.expreg())]);
+  charNoAc: string = "";
+  autor: FormControl = this.fb.control('', [Validators.required, Validators.pattern(Metodos.expreg())]);
   pais = new FormControl('');
   form!: FormGroup;
   autores: String[] = [];
   lista: any[] = [];
   dato: boolean = true;
-  selectedCountry:any=[];
-  anioAct:number=2021;
-  signos:string = Metodos.simbolos();
+  selectedCountry: any = [];
+  anioAct: number = 2021;
+  signos: string = Metodos.simbolos();
+  formSubscription!: Subscription;
+  paisesSubscription!: Subscription;
+  actualizacion = false;
   constructor(
     private servicesForm: ServicesFormService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router:Router
   ) {
     this.buildForm();
   }
@@ -49,28 +56,30 @@ export class ConferenciasEspecializadasComponent implements OnInit {
       this.lista = paises;
     });
 
-    this.servicesForm.updateDataForm.subscribe( form => {
+    this.formSubscription = this.servicesForm.updateDataForm.subscribe(form => {
       console.log(form);
       this.form = form;
     });
-    this.servicesForm.updatePais.subscribe( paises => {
+    this.paisesSubscription = this.servicesForm.updatePais.subscribe(paises => {
       // console.log(paises);
       this.pais.setValue(paises);
     });
+
+    this.actualizacion = this.servicesForm.actualizacion;
   }
 
   private buildForm() {
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100), Validators.pattern(this.charNoAc)]),
       TPOPROYINV: new FormControl('Conferencias especializadas'),
-      RSMPROYINV: new FormControl('',Validators.maxLength(3900)),
+      RSMPROYINV: new FormControl('', Validators.maxLength(3900)),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl(''),
       VOLPROYINV: new FormControl(''),
       FTEPROYINV: new FormControl(''),
-      INSPROYINV: new FormControl('',[Validators.pattern(this.charNoAc)]),
+      INSPROYINV: new FormControl('', [Validators.pattern(this.charNoAc)]),
       AUTPADPROY: new FormControl(''),
       PARPROYINV: new FormControl('', [Validators.required]),
       integrantes: new FormControl(''),
@@ -80,8 +89,8 @@ export class ConferenciasEspecializadasComponent implements OnInit {
       FECCAPPROY: new FormControl(this.fechaActual()),
       REAPROYINV: new FormControl('', [Validators.required]),
       AGDREDPROY: new FormControl('', [Validators.required]),
-      TPOACTPROY: new FormControl('',[Validators.required,Validators.pattern(this.charNoAc)]),
-      INFADCPROY: new FormControl('',Validators.maxLength(3900)),
+      TPOACTPROY: new FormControl('', [Validators.required, Validators.pattern(this.charNoAc)]),
+      INFADCPROY: new FormControl('', Validators.maxLength(3900)),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),
     });
@@ -118,11 +127,11 @@ export class ConferenciasEspecializadasComponent implements OnInit {
     }
   }
   des = true;
-  habilitar(){
+  habilitar() {
     this.des = true;
     this.form.controls.AGDREDPROY.setValue('');
   }
-  deshabilitar(){
+  deshabilitar() {
     this.des = false;
     this.form.controls.AGDREDPROY.setValue('no');
   }
@@ -130,7 +139,7 @@ export class ConferenciasEspecializadasComponent implements OnInit {
     this.autoresArr.removeAt(i);
   }
 
-  guardar():number {
+  guardar(): number {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return 0;
@@ -149,21 +158,39 @@ export class ConferenciasEspecializadasComponent implements OnInit {
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
 
     // imprimir el valor del formulario, sólo si es válido
-    this.servicesForm.postDatos(this.form).subscribe(mensaje => {
-      console.log(mensaje);
-      if(mensaje !== null){
-        if(mensaje.respuesta === 'true'){
-          this.limpiar();
-          Metodos.alertWithSuccess();
-        }else{
+    if (!this.actualizacion) {
+      this.servicesForm.postDatos(this.form).subscribe(mensaje => {
+        console.log(mensaje);
+        if (mensaje !== null) {
+          if (mensaje.respuesta === 'true') {
+            this.limpiar();
+            Metodos.alertWithSuccess();
+          } else {
+            this.selectedCountry = [];
+            Metodos.erroalert();
+          }
+        } else {
           this.selectedCountry = [];
           Metodos.erroalert();
         }
-      }else{
-        this.selectedCountry = [];
-        Metodos.erroalert();
-      }
-    });
+      });
+    } else {
+      this.servicesForm.postUpdateProject(this.form).subscribe(mensaje => {
+        console.log(mensaje);
+        if (mensaje !== null) {
+          if (mensaje.respuesta === 'true') {
+            this.limpiar();
+            Metodos.alertWithSuccess();
+          } else {
+            this.selectedCountry = [];
+            Metodos.erroalert();
+          }
+        } else {
+          this.selectedCountry = [];
+          Metodos.erroalert();
+        }
+      });
+    }
     console.log(this.form.value);
     // console.log(mensaje);
     // this.alertWithSuccess();
@@ -171,14 +198,22 @@ export class ConferenciasEspecializadasComponent implements OnInit {
     return 0;
   }
 
-  limpiar(){
+  limpiar() {
     this.autoresArr.clear();
     this.buildForm();
     this.selectedCountry = [];
   }
-  fechaActual(): String{
+  fechaActual(): String {
     let fecha = new Date;
     this.anioAct = fecha.getFullYear();
     return moment(fecha).format('DD-MM-YY');
+  }
+  redirectConsultas(){
+    this.router.navigate(['busquedas']);
+  }
+
+  ngOnDestroy() {
+    this.formSubscription.unsubscribe();
+    this.paisesSubscription.unsubscribe();
   }
 }

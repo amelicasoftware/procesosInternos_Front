@@ -2,6 +2,8 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Subscription } from "rxjs";
+import { Router } from '@angular/router';
 import { Metodos } from '../../components/metodos';
 import * as moment from 'moment';
 
@@ -21,15 +23,20 @@ export class DatosProyectoComponent implements OnInit, AfterViewInit {
   // autoresArr:any[]=[];
   charNoAc: string = "[^#/\"?%]+";
   autor: FormControl = this.fb.control('', [Validators.required, Validators.pattern(this.charNoAc)]);
+  autorLib: FormControl = this.fb.control('', [Validators.required, Validators.pattern(Metodos.expreg())]);
+  institucion: FormControl = this.fb.control('', [Validators.required, Validators.pattern(Metodos.expreg())]);
   selectedCountry: any = [];
   anioAct: number = 2021;
   tipoForm!: string;
+  clientesSubscription!: Subscription;
+
 
 
   constructor(
     private servicesForm: ServicesFormService,
     private rutaActiva: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
 
   ) {
     // this.buildForm();
@@ -44,6 +51,8 @@ export class DatosProyectoComponent implements OnInit, AfterViewInit {
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
+      listAutorLib: this.fb.array([], [Validators.required, Validators.min(1)]),
+      listIns: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl('', [Validators.required, Validators.maxLength(200), Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
       VOLPROYINV: new FormControl('', Validators.pattern(this.charNoAc)),
       FTEPROYINV: new FormControl('', [Validators.required, Validators.pattern(this.charNoAc)]),
@@ -62,8 +71,6 @@ export class DatosProyectoComponent implements OnInit, AfterViewInit {
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),
     });
-    // this.form = this.mensajeHijo;
-    // console.log(this.form);
   }
 
   ngOnInit(): void {
@@ -83,10 +90,7 @@ export class DatosProyectoComponent implements OnInit, AfterViewInit {
 
     console.log(this.tipoForm);
 
-    // this.servicesForm.updateForm.subscribe(form => {
-    //   this.form = form;
-    //   console.log('estrcutrura recibida', this.form);
-    // })
+    this.servicesForm.activarUpdate();
 
   }
 
@@ -96,13 +100,9 @@ export class DatosProyectoComponent implements OnInit, AfterViewInit {
     this.form = this.servicesForm.form;
     console.log(this.form);
 
-    // this.servicesForm.updateForm.subscribe(form => {
-    //   this.form = form;
-    //   console.log('estrcutrura recibida', this.form);
-    // })
-
     //obtener datos del formulario y setearlos al form
-    this.servicesForm.getProjectId(this.cveProyecto).subscribe(datos => {
+    this.clientesSubscription = this.servicesForm.getProjectId(this.cveProyecto).subscribe(datos => {
+      console.log(datos);
       this.tipoForm = this.form.value['TPOPROYINV'];
       let arrayPaises = [];
       console.log(datos);
@@ -124,11 +124,21 @@ export class DatosProyectoComponent implements OnInit, AfterViewInit {
               arrayPaises = this.dataForm.cvepaispro.split(',');
               // console.log(arrayPaises);
               this.pais.setValue(arrayPaises);
-            } else if (nameProp === 'AUTPROYINV') {
+            } else if (nameProp === 'AUTPROYINV' && this.dataForm.autproyinv !== null) {
               let listaAutores = this.dataForm.autproyinv.split(',');
               listaAutores.forEach((autor: any) => this.inicioAutores(autor));
-            } else
-              if (this.dataForm[prop] === null) {
+            } else if (nameProp === 'AUTPADPROY' && this.dataForm.autpadproy !== null) {
+              let listaAutores = this.dataForm.autpadproy.split(',');
+              listaAutores.forEach((autor: any) => this.listaAutoresPadre(autor));
+            } else if((nameProp === 'INSPROYINV' && this.dataForm.insproyinv !== null)){
+              let listaInstituciones = this.dataForm.insproyinv.split(',');
+              console.log(listaInstituciones.length);
+              if(listaInstituciones.length > 1){
+                listaInstituciones.forEach((institucion: any) => this.listaInstituciones(institucion));
+              }else{
+                this.form.controls[nameProp].setValue(this.dataForm[prop]);
+              }              
+            }else if (this.dataForm[prop] === null) {
                 this.form.controls[nameProp].setValue('');
               } else {
                 this.form.controls[nameProp].setValue(this.dataForm[prop]);
@@ -153,6 +163,14 @@ export class DatosProyectoComponent implements OnInit, AfterViewInit {
     return this.form.get('CVEPAISPRO');
   }
 
+  get autoresPadre() {
+    return this.form.get('listAutorLib') as FormArray;
+  }
+
+  get instArr() {
+    return this.form.get('listIns') as FormArray;
+  }
+
   addAutor(nombre: String, event?: Event) {
     // event.preventDefault();
     if (nombre !== '') {
@@ -168,50 +186,13 @@ export class DatosProyectoComponent implements OnInit, AfterViewInit {
     this.autoresArr.push(this.fb.control(nombre, Validators.required));
   }
 
-  // guardar() {
-  //   console.log(this.form.value);
-  //   console.log(this.form.valid);
-  //   if (this.form.invalid) {
-  //     this.form.markAllAsTouched();
-  //     return 0;
-  //   }
+  listaAutoresPadre(nombre: String) {
+    this.autoresPadre.push(this.fb.control(nombre, Validators.required));
+  }
 
-  //   console.log(this.autoresArr.value);
-  //   console.log(this.paisesArr?.value);
-
-
-  //   this.form.controls.TITPROYINV.setValue(Metodos.cambioResumen(this.form.controls.TITPROYINV.value));
-  //   this.form.controls.VOLPROYINV.setValue(Metodos.cambioResumen(this.form.controls.VOLPROYINV.value));
-  //   this.form.controls.INSPROYINV.setValue(Metodos.cambioResumen(this.form.controls.INSPROYINV.value));
-  //   this.form.controls.TPOACTPROY.setValue(Metodos.cambioResumen(this.form.controls.TPOACTPROY.value));
-  //   this.form.controls.FTEPROYINV.setValue(Metodos.cambioResumen(this.form.controls.FTEPROYINV.value));
-  //   this.form.controls.AUTPROYINV.setValue(Metodos.cambioResumen(this.autoresArr.value.join(',')));
-  //   this.form.controls.RSMPROYINV.setValue(Metodos.cambioResumen(this.form.controls.RSMPROYINV.value).replace(/(\r\n|\n|\r)/gm, " "));
-  //   this.form.controls.INFADCPROY.setValue(Metodos.cambioResumen(this.form.controls.INFADCPROY.value).replace(/(\r\n|\n|\r)/gm, " "));
-  //   this.form.controls.URLPROYINV.setValue(Metodos.cambioResumen(this.form.controls.URLPROYINV.value));
-  //   this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
-  //   // imprimir el valor del formulario, sólo si es válido
-  //   this.servicesForm.postUpdateProject(this.form).subscribe(mensaje => {
-  //     console.log(mensaje);
-  //     if (mensaje !== null) {
-  //       if (mensaje.respuesta === 'true') {
-  //         this.limpiar();
-  //         Metodos.alertWithSuccess();
-  //       } else {
-  //         this.selectedCountry = [];
-  //         Metodos.erroalert();
-  //       }
-  //     } else {
-  //       this.selectedCountry = [];
-  //       Metodos.erroalert();
-  //     }
-  //   });
-  //   console.log(this.form.value);
-  //   // console.log(mensaje);
-  //   // this.alertWithSuccess();
-  //   // this.erroalert();
-  //   return 0;
-  // }
+  listaInstituciones(nombre: String) {
+    this.instArr.push(this.fb.control(nombre, Validators.required));
+  }
 
   borrar(id: number) {
     this.autoresArr.removeAt(id);
@@ -228,7 +209,8 @@ export class DatosProyectoComponent implements OnInit, AfterViewInit {
     return moment(fecha).format('DD-MM-YY');
   }
 
-  // ngOnDestroy() {
-  //   this.servicesForm.dataForm.destroy();
-  // }
+  ngOnDestroy() {
+    this.clientesSubscription.unsubscribe();
+    this.servicesForm.actualizacion = false;
+  }
 }

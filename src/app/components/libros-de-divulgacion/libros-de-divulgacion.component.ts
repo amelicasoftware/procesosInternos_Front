@@ -1,7 +1,9 @@
 import { newArray } from '@angular/compiler/src/util';
-import { Component, OnInit, NgModule } from '@angular/core';
+import { Component, OnInit, NgModule, OnDestroy } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
+import { Subscription } from "rxjs";
+import {Router} from '@angular/router';
 import * as moment from 'moment';
 import {Metodos} from '../metodos';
 @Component({
@@ -9,7 +11,7 @@ import {Metodos} from '../metodos';
   templateUrl: './libros-de-divulgacion.component.html',
   styleUrls: ['./libros-de-divulgacion.component.css']
 })
-export class LibrosDeDivulgacionComponent implements OnInit {
+export class LibrosDeDivulgacionComponent implements OnInit, OnDestroy {
   typeForm = new FormControl('Selecciona un formulario');
   charNoAc:string = "";
   autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern(Metodos.expreg())]);
@@ -21,14 +23,23 @@ export class LibrosDeDivulgacionComponent implements OnInit {
   selectedCountry:any=[];
   anioAct:number=2021;
   signos:string = Metodos.simbolos();
+
+  actualizacion = false;
+
+  formSubscription!: Subscription;
+  paisesSubscription!: Subscription;
+
   constructor(
     private servicesForm: ServicesFormService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.buildForm();
   }
 
   ngOnInit() {
+    this.actualizacion = this.servicesForm.actualizacion;
+
     this.typeForm.valueChanges.subscribe(valor => {
       console.log(valor);
     });
@@ -41,6 +52,15 @@ export class LibrosDeDivulgacionComponent implements OnInit {
     this.servicesForm.getPaises().subscribe(paises => {
       console.log(paises);
       this.lista = paises;
+    });
+
+    this.formSubscription = this.servicesForm.updateDataForm.subscribe(form => {
+      console.log(form);
+      this.form = form;
+    });
+    this.paisesSubscription = this.servicesForm.updatePais.subscribe(paises => {
+      // console.log(paises);
+      this.pais.setValue(paises);
     });
   }
 
@@ -75,6 +95,7 @@ export class LibrosDeDivulgacionComponent implements OnInit {
     //   .subscribe(value => {
     //     console.log(value);
     //   });
+    this.servicesForm.updateStrcutureForm(this.form);
   }
 
   campoEsValido(campo: string) {
@@ -134,6 +155,7 @@ export class LibrosDeDivulgacionComponent implements OnInit {
     
 
     // imprimir el valor del formulario, sólo si es válido
+    if(!this.actualizacion){
     this.servicesForm.postDatos(this.form).subscribe(mensaje => {
       console.log(mensaje);
       if(mensaje !== null){
@@ -149,6 +171,23 @@ export class LibrosDeDivulgacionComponent implements OnInit {
         Metodos.erroalert();
       }
     });
+    }else{
+      this.servicesForm.postUpdateProject(this.form).subscribe(mensaje => {
+        console.log(mensaje);
+        if(mensaje !== null){
+          if(mensaje.respuesta === 'true'){
+            this.limpiar();
+            Metodos.alertWithSuccess();
+          }else{
+            this.selectedCountry = [];
+            Metodos.erroalert();
+          }
+        }else{
+          this.selectedCountry = [];
+          Metodos.erroalert();
+        }
+      });
+    }
     console.log(this.form.value);
     // console.log(mensaje);
     // this.alertWithSuccess();
@@ -165,5 +204,14 @@ export class LibrosDeDivulgacionComponent implements OnInit {
     let fecha = new Date;
     this.anioAct = fecha.getFullYear();
     return moment(fecha).format('DD-MM-YY');
+  }
+
+  redirectConsultas() {
+    this.router.navigate(['busquedas']);
+  }
+
+  ngOnDestroy() {
+    this.formSubscription.unsubscribe();
+    this.paisesSubscription.unsubscribe();
   }
 }

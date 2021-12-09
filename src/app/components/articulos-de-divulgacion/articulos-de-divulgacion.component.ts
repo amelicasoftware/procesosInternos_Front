@@ -1,38 +1,49 @@
 import { newArray } from '@angular/compiler/src/util';
-import { Component, OnInit, NgModule } from '@angular/core';
+import { Component, OnInit, NgModule, OnDestroy } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
+import { Subscription } from "rxjs";
 import * as moment from 'moment';
-import {Metodos} from '../metodos';
+import { Metodos } from '../metodos';
 import { parseStackingContexts } from 'html2canvas/dist/types/render/stacking-context';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-articulos-de-divulgacion',
   templateUrl: './articulos-de-divulgacion.component.html',
   styleUrls: ['./articulos-de-divulgacion.component.css']
 })
-export class ArticulosDeDivulgacionComponent implements OnInit {
+export class ArticulosDeDivulgacionComponent implements OnInit, OnDestroy {
   typeForm = new FormControl('Selecciona un formulario');
   /*charNoAc:string = "[^#/\"?%]+";*/
-  charNoAc:string = "";
-  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern(Metodos.expreg())]);
+  charNoAc: string = "";
+  autor: FormControl = this.fb.control('', [Validators.required, Validators.pattern(Metodos.expreg())]);
   pais = new FormControl('');
   form!: FormGroup;
   formBack!: FormGroup;
   autores: String[] = [];
   lista: any[] = [];
   dato: boolean = true;
-  selectedCountry:any=[];
-  anioAct:number = 2021;
-  signos:string = Metodos.simbolos();
-  
+  selectedCountry: any = [];
+  anioAct: number = 2021;
+  signos: string = Metodos.simbolos();
+
+  actualizacion = false;
+
+  formSubscription!: Subscription;
+  paisesSubscription!: Subscription;
+
   constructor(
     private servicesForm: ServicesFormService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.buildForm();
   }
 
   ngOnInit() {
+    this.actualizacion = this.servicesForm.actualizacion;
+
     this.typeForm.valueChanges.subscribe(valor => {
       console.log(valor);
     });
@@ -46,19 +57,28 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
       console.log(paises);
       this.lista = paises;
     });
+
+    this.formSubscription = this.servicesForm.updateDataForm.subscribe(form => {
+      console.log(form);
+      this.form = form;
+    });
+    this.paisesSubscription = this.servicesForm.updatePais.subscribe(paises => {
+      // console.log(paises);
+      this.pais.setValue(paises);
+    });
   }
 
   private buildForm() {
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100), Validators.pattern(this.charNoAc)]),
       TPOPROYINV: new FormControl('Artículos de divulgación'),
-      RSMPROYINV: new FormControl('',[Validators.pattern(this.charNoAc),Validators.maxLength(3900)]),
+      RSMPROYINV: new FormControl('', [Validators.pattern(this.charNoAc), Validators.maxLength(3900)]),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
-      URLPROYINV: new FormControl('', [Validators.required, Validators.maxLength(200),Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
+      URLPROYINV: new FormControl('', [Validators.required, Validators.maxLength(200), Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
       VOLPROYINV: new FormControl(''),
-      FTEPROYINV: new FormControl('', [Validators.required,Validators.maxLength(100),Validators.pattern(this.charNoAc)]),
+      FTEPROYINV: new FormControl('', [Validators.required, Validators.maxLength(100), Validators.pattern(this.charNoAc)]),
       INSPROYINV: new FormControl(''),
       AUTPADPROY: new FormControl(''),
       PARPROYINV: new FormControl(''),
@@ -68,9 +88,9 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
       MESPROYINV: new FormControl(''),
       FECCAPPROY: new FormControl(this.fechaActual()),
       REAPROYINV: new FormControl('', [Validators.required]),
-      AGDREDPROY: new FormControl('',[Validators.required]),
+      AGDREDPROY: new FormControl('', [Validators.required]),
       TPOACTPROY: new FormControl(''),
-      INFADCPROY: new FormControl('',[Validators.maxLength(3900)]),
+      INFADCPROY: new FormControl('', [Validators.maxLength(3900)]),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),
     });
@@ -79,17 +99,18 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
     //   .subscribe(value => {
     //     console.log(value);
     //   });
+    this.servicesForm.updateStrcutureForm(this.form);
   }
   des = true;
-  habilitar(){
+  habilitar() {
     this.des = true;
     this.form.controls.AGDREDPROY.setValue('');
   }
-  deshabilitar(){
+  deshabilitar() {
     this.des = false;
     this.form.controls.AGDREDPROY.setValue('no');
   }
-    
+
   campoEsValido(campo: string) {
     return this.form.controls[campo].errors
       && this.form.controls[campo].touched;
@@ -109,7 +130,7 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
       this.autoresArr.push(this.fb.control(this.autor.value, Validators.required));
       console.log(this.autoresArr.length);
       this.autor.reset('');
-      
+
     } else {
 
     }
@@ -119,7 +140,7 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
     this.autoresArr.removeAt(i);
   }
 
-  guardar():number {
+  guardar(): number {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return 0;
@@ -135,25 +156,43 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
     this.form.controls.URLPROYINV.setValue(Metodos.cambioResumen(this.form.controls.URLPROYINV.value));
     this.form.controls.RSMPROYINV.setValue(Metodos.cambioResumen(this.form.controls.RSMPROYINV.value.replace(/(\r\n|\n|\r)/gm, " ")));
     this.form.controls.INFADCPROY.setValue(Metodos.cambioResumen(this.form.controls.INFADCPROY.value.replace(/(\r\n|\n|\r)/gm, " ")));
-    
+
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
 
     // imprimir el valor del formulario, sólo si es válido
-    this.servicesForm.postDatos(this.form).subscribe(mensaje => {
-      console.log(mensaje);
-      if(mensaje !== null){
-        if(mensaje.respuesta === 'true'){
-          this.limpiar();
-          Metodos.alertWithSuccess();
-        }else{
+    if (!this.actualizacion) {
+      this.servicesForm.postDatos(this.form).subscribe(mensaje => {
+        console.log(mensaje);
+        if (mensaje !== null) {
+          if (mensaje.respuesta === 'true') {
+            this.limpiar();
+            Metodos.alertWithSuccess();
+          } else {
+            this.selectedCountry = [];
+            Metodos.erroalert();
+          }
+        } else {
           this.selectedCountry = [];
           Metodos.erroalert();
         }
-      }else{
-        this.selectedCountry = [];
-        Metodos.erroalert();
-      }
-    });
+      });
+    } else {
+      this.servicesForm.postUpdateProject(this.form).subscribe(mensaje => {
+        console.log(mensaje);
+        if (mensaje !== null) {
+          if (mensaje.respuesta === 'true') {
+            this.limpiar();
+            Metodos.alertWithSuccess();
+          } else {
+            this.selectedCountry = [];
+            Metodos.erroalert();
+          }
+        } else {
+          this.selectedCountry = [];
+          Metodos.erroalert();
+        }
+      });
+    }
     console.log(this.form.value);
     return 0;
     // console.log(mensaje);
@@ -161,14 +200,23 @@ export class ArticulosDeDivulgacionComponent implements OnInit {
     // this.erroalert();
   }
 
-  limpiar(){
+  limpiar() {
     this.autoresArr.clear();
     this.buildForm();
     this.selectedCountry = [];
   }
-  fechaActual(): String{
+  fechaActual(): String {
     let fecha = new Date;
     this.anioAct = fecha.getFullYear();
     return moment(fecha).format('DD-MM-YY');
+  }
+
+  redirectConsultas() {
+    this.router.navigate(['busquedas']);
+  }
+
+  ngOnDestroy() {
+    this.formSubscription.unsubscribe();
+    this.paisesSubscription.unsubscribe();
   }
 }

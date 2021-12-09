@@ -15,9 +15,11 @@ export class ServicesFormService {
   // pais = new FormControl('');
   form: any;
   listaPaises = [];
+  actualizacion = false;
   @Output() updateDataForm: EventEmitter<any> = new EventEmitter();
   @Output() updatePais: EventEmitter<any> = new EventEmitter();
   @Output() updateForm: EventEmitter<any> = new EventEmitter();
+  @Output() estado: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private http: HttpClient
@@ -78,5 +80,11 @@ export class ServicesFormService {
     this.form = form;
     this.updateForm.emit(this.form);
     // console.log('despues del emiit form',this.form);
+  }
+
+  activarUpdate(){
+    this.actualizacion = true;
+    this.estado.emit(this.actualizacion);
+    console.log('emito estado', this.actualizacion);
   }
 }

@@ -1,34 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Subscription } from "rxjs";
+import { Router } from '@angular/router';
 import { ServicesFormService } from 'src/app/Services/services-form.service';
 import * as moment from 'moment';
-import {Metodos} from '../metodos';
+import { Metodos } from '../metodos';
 @Component({
   selector: 'app-form-direccion-de-tesis',
   templateUrl: './form-direccion-de-tesis.component.html',
   styleUrls: ['./form-direccion-de-tesis.component.css']
 })
-export class FormDireccionDeTesisComponent implements OnInit {
+export class FormDireccionDeTesisComponent implements OnInit, OnDestroy {
 
   typeForm = new FormControl('Selecciona un formulario');
-  charNoAc:string = "";
+  charNoAc: string = "";
   /*charNoAc:string = "[^#/\"?%]+";*/
-  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern(Metodos.expreg())]);
+  autor: FormControl = this.fb.control('', [Validators.required, Validators.pattern(Metodos.expreg())]);
   pais = new FormControl('');
   form!: FormGroup;
   autores: String[] = [];
   lista: any[] = [];
   dato: boolean = true;
-  signos:string = Metodos.simbolos();
+  signos: string = Metodos.simbolos();
+
+  actualizacion = false;
+
+  formSubscription!: Subscription;
+  paisesSubscription!: Subscription;
 
   constructor(
     private servicesForm: ServicesFormService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.buildForm();
   }
 
   ngOnInit() {
+    this.actualizacion = this.servicesForm.actualizacion;
     this.typeForm.valueChanges.subscribe(valor => {
       console.log(valor);
     });
@@ -42,21 +51,30 @@ export class FormDireccionDeTesisComponent implements OnInit {
       console.log(paises);
       this.lista = paises;
     });
+
+    this.formSubscription = this.servicesForm.updateDataForm.subscribe(form => {
+      console.log(form);
+      this.form = form;
+    });
+    this.paisesSubscription = this.servicesForm.updatePais.subscribe(paises => {
+      // console.log(paises);
+      this.pais.setValue(paises);
+    });
   }
 
 
   private buildForm() {
     this.form = this.fb.group({
-      TITPROYINV: new FormControl('', [Validators.required,Validators.pattern(this.charNoAc)]),
+      TITPROYINV: new FormControl('', [Validators.required, Validators.pattern(this.charNoAc)]),
       TPOPROYINV: new FormControl('Dirección de tesis'),
-      RSMPROYINV: new FormControl('',Validators.maxLength(3900)),
+      RSMPROYINV: new FormControl('', Validators.maxLength(3900)),
       CVEPAISPRO: new FormControl(['96']),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(2021)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl(''),
       VOLPROYINV: new FormControl(''),
-      FTEPROYINV: new FormControl('' , [Validators.required,Validators.pattern(this.charNoAc)]),
-      INSPROYINV: new FormControl('', [Validators.required,Validators.pattern(this.charNoAc)]),
+      FTEPROYINV: new FormControl('', [Validators.required, Validators.pattern(this.charNoAc)]),
+      INSPROYINV: new FormControl('', [Validators.required, Validators.pattern(this.charNoAc)]),
       AUTPADPROY: new FormControl(''),
       PARPROYINV: new FormControl(''),
       integrantes: new FormControl(''),
@@ -67,7 +85,7 @@ export class FormDireccionDeTesisComponent implements OnInit {
       REAPROYINV: new FormControl('', [Validators.required]),
       AGDREDPROY: new FormControl('', [Validators.required]),
       TPOACTPROY: new FormControl(''),
-      INFADCPROY: new FormControl('',Validators.maxLength(3900)),
+      INFADCPROY: new FormControl('', Validators.maxLength(3900)),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('0'),
     });
@@ -76,6 +94,7 @@ export class FormDireccionDeTesisComponent implements OnInit {
     //   .subscribe(value => {
     //     console.log(value);
     //   });
+    this.servicesForm.updateStrcutureForm(this.form);
   }
 
   campoEsValido(campo: string) {
@@ -91,22 +110,22 @@ export class FormDireccionDeTesisComponent implements OnInit {
     return this.form.get('CVEPAISPRO');
   }
   des = true;
-  habilitar(){
+  habilitar() {
     this.des = true;
     this.form.controls.AGDREDPROY.setValue('');
   }
-  deshabilitar(){
+  deshabilitar() {
     this.des = false;
     this.form.controls.AGDREDPROY.setValue('no');
   }
   addAutor(nombre: String, event: Event) {
     // event.preventDefault();
-    if (nombre !== '' && this.autoresArr.length<1) {
+    if (nombre !== '' && this.autoresArr.length < 1) {
       this.autoresArr.push(this.fb.control(this.autor.value, Validators.required));
       console.log(this.autoresArr.length);
       this.autor.reset('');
     } else {
-      
+
     }
   }
 
@@ -132,25 +151,46 @@ export class FormDireccionDeTesisComponent implements OnInit {
     }
 
     // imprimir el valor del formulario, sólo si es válido
-    this.servicesForm.postDatos(this.form).subscribe(mensaje => {
-      console.log(mensaje);
-      if(mensaje.respuesta == "true"){
-        this.limpiar();
-        Metodos.alertWithSuccess();
-      }else{
-        Metodos.erroalert();
-      }
-    });
+    if (!this.actualizacion) {
+      this.servicesForm.postDatos(this.form).subscribe(mensaje => {
+        console.log(mensaje);
+        if (mensaje.respuesta == "true") {
+          this.limpiar();
+          Metodos.alertWithSuccess();
+        } else {
+          Metodos.erroalert();
+        }
+      });
+    } else {
+      this.servicesForm.postUpdateProject(this.form).subscribe(mensaje => {
+        console.log(mensaje);
+        if (mensaje.respuesta == "true") {
+          this.limpiar();
+          Metodos.alertWithSuccess();
+        } else {
+          Metodos.erroalert();
+        }
+      });
+    }
     console.log(this.form.value);
     // console.log(mensaje);
     // this.alertWithSuccess();
     // this.erroalert();
   }
-  limpiar(){
+  limpiar() {
     this.autoresArr.clear();
     //this.form.reset();
     this.buildForm();
-      }
+  }
+
+  redirectConsultas() {
+    this.router.navigate(['busquedas']);
+  }
+
+  ngOnDestroy() {
+    this.formSubscription.unsubscribe();
+    this.paisesSubscription.unsubscribe();
+  }
 
 }
 

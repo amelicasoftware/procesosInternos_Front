@@ -233,10 +233,12 @@
          
              <div class="field is-grouped">
             <div class="control">
-              <button class="button is-link" (click)="guardar()">Guardar</button>
+              <button class="button is-link" (click)="guardar()" *ngIf="!actualizacion">Guardar</button>
+              <button class="button is-link" (click)="guardar()" *ngIf="actualizacion">Guardar</button>
             </div>
             <div class="control">
-              <button class="button is-link is-light" (click)="limpiar()">Cancelar</button>
+              <button class="button is-link is-light" (click)="limpiar()" *ngIf="!actualizacion">Cancelar</button>
+              <button class="button is-link is-light" (click)="redirectConsultas()" *ngIf="actualizacion">Cancelar</button>
             </div>
           </div>
         </form>
