@@ -8,16 +8,16 @@
             <div>Red de revistas científicas </div>
             <div>Acceso Abierto no comercial propiedad de la academia</div>
         </div>
-        
+
     </div>
 </section>
 <!-- START NAV -->
 <nav class="navbar is-white">
     <div class="container">
         <div class="navbar-brand">
-            <a class="navbar-item brand-text" routerLinkActive="" [routerLink]="['/home']">
-                Admin
-            </a>
+            <!-- <a class="navbar-item brand-text" routerLinkActive="" [routerLink]="['/home']">
+                Home
+            </a> -->
             <div class="navbar-burger burger" data-target="navMenu">
                 <span></span>
                 <span></span>
@@ -32,11 +32,14 @@
                 <a class="navbar-item" routerLinkActive="active" [routerLink]="['/busquedas']">
                     Consultas
                 </a>
-                <a class="navbar-item" routerLinkActive="active" [routerLink]="['/validacion']">
+                <!-- <a class="navbar-item" routerLinkActive="active" [routerLink]="['/validacion']">
                     Validacion
-                </a>
-                <a class="navbar-item" (click)="cerrar()">
+                </a> -->
+                <a class="navbar-item" (click)="cerrar()" *ngIf="sesion">
                     Cerrar Sesión
+                </a>
+                <a class="navbar-item" [routerLink]="['/loggin']" *ngIf="!sesion">
+                    Inicar Sesión
                 </a>
             </div>
 
