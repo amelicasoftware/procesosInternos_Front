@@ -113,8 +113,10 @@ export class ConsultaComponent implements OnInit {
   constructor(
     private service :BusquedasService,
     private servicesFormService: ServicesFormService
+    
   ){
     this.loacalitems = localStorage.getItem("nameUser");
+    this.myFunction(screen.width);
   }
   ngOnInit(){
     //this.service.getInfo().then(console.log);
@@ -122,11 +124,17 @@ export class ConsultaComponent implements OnInit {
     //this.service.getById().then(console.log);
 
     //this.service.getByTit().then(console.log);
-
     this.prepareSearch();
     this.usuario = this.loacalitems;
     console.log(typeof this.loacalitems);
     
+  }
+  myFunction(ancho:Number) {
+    //console.log("ancho1 = "+ancho);
+    if(ancho<=919){
+      this.stateSidebar=this.stateSidebar=="show" ? "hidden" : this.stateSidebar=="hidden" ? "hidden" : this.stateSidebar;
+    }
+    //console.log("ancho2 = "+ancho);
   }
   createNewRegister(){
     this.service.sendInfo().then(console.log);
