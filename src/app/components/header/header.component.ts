@@ -5,11 +5,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  constructor() { }
+
+  usuario;
+
+  sesion = false;
+
+  constructor() {
+    this.usuario = localStorage.getItem("nameUser");
+   }
 
   ngOnInit(): void {
+    if(this.usuario === 'administrador'){
+      this.sesion = true;
+    }
   }
 cerrar(){
   console.log("cerrar");
+  localStorage.removeItem('nameUser');
+  location.reload();
 }
 }

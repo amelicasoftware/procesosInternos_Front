@@ -29,7 +29,7 @@ export class DatosProyectoComponent implements OnInit, AfterViewInit {
   anioAct: number = 2021;
   tipoForm!: string;
   clientesSubscription!: Subscription;
-
+  nombreForm: any;
 
 
   constructor(
@@ -130,19 +130,15 @@ export class DatosProyectoComponent implements OnInit, AfterViewInit {
             } else if (nameProp === 'AUTPADPROY' && this.dataForm.autpadproy !== null) {
               let listaAutores = this.dataForm.autpadproy.split(',');
               listaAutores.forEach((autor: any) => this.listaAutoresPadre(autor));
-            } else if((nameProp === 'INSPROYINV' && this.dataForm.insproyinv !== null)){
+            } else if ((nameProp === 'INSPROYINV' && this.dataForm.insproyinv !== null)) {
               let listaInstituciones = this.dataForm.insproyinv.split(',');
               console.log(listaInstituciones.length);
-              if(listaInstituciones.length > 1){
-                listaInstituciones.forEach((institucion: any) => this.listaInstituciones(institucion));
-              }else{
-                this.form.controls[nameProp].setValue(this.dataForm[prop]);
-              }              
-            }else if (this.dataForm[prop] === null) {
-                this.form.controls[nameProp].setValue('');
-              } else {
-                this.form.controls[nameProp].setValue(this.dataForm[prop]);
-              }
+              listaInstituciones.forEach((institucion: any) => this.listaInstituciones(institucion));
+            } else if (this.dataForm[prop] === null) {
+              this.form.controls[nameProp].setValue('');
+            } else {
+              this.form.controls[nameProp].setValue(this.dataForm[prop]);
+            }
       }
       this.servicesForm.dataFormService(this.form);
       this.servicesForm.dataPaisService(arrayPaises);

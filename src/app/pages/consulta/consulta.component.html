@@ -172,9 +172,10 @@
       }"
     >
       <div
-        class="card"
+        class="card prueba"
+        [ngStyle]="{'box-shadow': shadowCard}"
         *ngFor="
-          let proyecto of data | paginate: { itemsPerPage: 3, currentPage: p };
+          let proyecto of data | paginate: { itemsPerPage: 10, currentPage: p };
           index as i
         "
         attr.id="card{{ proyecto.cveproyinv }}"
