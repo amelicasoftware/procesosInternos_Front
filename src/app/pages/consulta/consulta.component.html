@@ -211,11 +211,11 @@
             class="content"
             *ngIf="proyecto.tpoproyinv == 'Artículos científicos'"
           >
-          <span class="doi"><b>DOI:</b><br>{{ proyecto.urlproyinv }}</span
+          <span class="doi"><b>DOI/Enlace:</b><br>{{ proyecto.urlproyinv }}</span
             ><br />
             <span><b>Revista:</b> {{ proyecto.fteproyinv }}</span
             ><br />
-            <span><b>Volumen:</b> {{ proyecto.volproyinv }}</span
+            <span><b>Volúmen:</b> {{ proyecto.volproyinv }}</span
             ><br />
             <span><b>Año:</b> {{ proyecto.anioproyinv }}</span
             ><br />
@@ -223,7 +223,7 @@
             ><br />
             <span><b>Título de artículo:</b> {{ proyecto.titproyinv }}</span
             ><br />
-            <span><b>Autor:</b> {{ proyecto.autproyinv }}</span
+            <span><b>Autor/es:</b> {{ proyecto.autproyinv }}</span
             ><br />
             <span><b>Resumen:</b> {{ proyecto.rsmproyinv }}</span
             ><br />
@@ -242,11 +242,11 @@
             class="content"
             *ngIf="proyecto.tpoproyinv == 'Capítulos de libro científico'"
           >
-          <span class="doi"><b>DOI:</b><br>{{ proyecto.urlproyinv }}</span
+          <span class="doi"><b>DOI/Enlace:</b><br>{{ proyecto.urlproyinv }}</span
             ><br />
             <span><b>Titulo del libro:</b> {{ proyecto.fteproyinv }}</span
             ><br />
-            <span><b>Autores del libro:</b> {{ proyecto.autpadproy }}</span
+            <span><b>Autor/es del libro:</b> {{ proyecto.autpadproy }}</span
             ><br />
             <span><b>Editorial:</b> {{ proyecto.insproyinv }}</span
             ><br />
@@ -276,11 +276,11 @@
             class="content"
             *ngIf="proyecto.tpoproyinv == 'Libro científico'"
           >
-          <span class="doi"><b>DOI:</b><br> {{ proyecto.urlproyinv }} </span
+          <span class="doi"><b>DOI/Enlace:</b><br> {{ proyecto.urlproyinv }} </span
             ><br />
-            <span><b>Titulo:</b> {{ proyecto.titproyinv }}</span
+            <span><b>Titulo del libro:</b> {{ proyecto.titproyinv }}</span
             ><br />
-            <span><b>Autores del libro:</b> {{ proyecto.autproyinv }}</span
+            <span><b>Autor/es del libro:</b> {{ proyecto.autproyinv }}</span
             ><br />
             <span><b>Editorial:</b> {{ proyecto.insproyinv }}</span
             ><br />
@@ -312,7 +312,7 @@
             ><br />
             <span><b>Tipo de participación:</b> {{ proyecto.alcproyinv }}</span
             ><br />
-            <span><b>Evento:</b> {{ proyecto.fteproyinv }}</span
+            <span><b>Evento:</b> {{ proyecto.tpoactproy }}</span
             ><br />
             <span
               ><b>Institución organizadora:</b> {{ proyecto.insproyinv }}</span
@@ -335,7 +335,7 @@
             class="content"
             *ngIf="proyecto.tpoproyinv == 'Artículos de divulgación'"
           >
-            <span class="doi"><b>DOI:</b><br>  {{ proyecto.urlproyinv }} </span
+            <span class="doi"><b>DOI/Enlace:</b><br>  {{ proyecto.urlproyinv }} </span
             ><br />
             <span><b>Título del escrito:</b> {{ proyecto.titproyinv }}</span
             ><br />
@@ -345,7 +345,7 @@
             ><br />
             <span><b>Año:</b> {{ proyecto.anioproyinv }}</span
             ><br />
-            <span><b>Autor:</b> {{ proyecto.autproyinv }}</span
+            <span><b>Autor/es:</b> {{ proyecto.autproyinv }}</span
             ><br />
             <div
               class="cite"
@@ -363,7 +363,7 @@
             class="content"
             *ngIf="proyecto.tpoproyinv == 'Libros de divulgación'"
           >
-          <span class="doi"><b>DOI:</b><br>{{ proyecto.urlproyinv }}</span
+          <span class="doi"><b>DOI/Enlace:</b><br>{{ proyecto.urlproyinv }}</span
             ><br />
             <span><b>Título del libro:</b> {{ proyecto.titproyinv }}</span
             ><br />
@@ -390,6 +390,8 @@
             *ngIf="proyecto.tpoproyinv == 'Otras Actividades'"
           >
             <span><b>Actividad:</b> {{ proyecto.titproyinv }}</span
+            ><br />
+            <span><b>Tipo de actividad:</b> {{ proyecto.tpoactproy }}</span
             ><br />
             <span><b>Año:</b> {{ proyecto.anioproyinv }}</span
             ><br />
@@ -437,6 +439,8 @@
             ><br />
             <span><b>Periodo:</b> {{ proyecto.prdproyinv }}</span
             ><br />
+            <span><b>Año:</b> {{ proyecto.anioproyinv }}</span
+            ><br />
             <span><b>Síntesis:</b> {{ proyecto.rsmproyinv }}</span
             ><br />
             <div
@@ -461,8 +465,10 @@
             ><br />
             <span><b>Países participantes:</b> {{ proyecto.nomentnac }}</span
             ><br />
-            <span><b>Cantidad de integrantes:</b> ...</span><br />
+            <span><b>Cantidad de integrantes:</b> {{ proyecto.ctdintproy }}</span><br />
             <span><b>Periodo:</b> {{ proyecto.prdproyinv }}</span
+            ><br />
+            <span><b>Año:</b> {{ proyecto.anioproyinv }}</span
             ><br />
             <span><b>Coordinadores:</b> {{ proyecto.autproyinv }}</span
             ><br />
