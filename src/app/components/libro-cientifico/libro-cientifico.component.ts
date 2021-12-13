@@ -200,6 +200,8 @@ export class LibroCientificoComponent implements OnInit, OnDestroy {
     this.autoresArr.clear();
     this.buildForm();
     this.selectedCountry = [];
+    if(this.actualizacion)
+      this.router.navigate(['busquedas']);
   }
   fechaActual(): String {
     let fecha = new Date;

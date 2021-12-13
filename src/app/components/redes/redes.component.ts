@@ -225,6 +225,8 @@ export class RedesComponent implements OnInit, OnDestroy {
     this.instArr.clear();
     this.buildForm();
     this.selectedCountry = [];
+    if(this.actualizacion)
+      this.router.navigate(['busquedas']);
   }
   fechaActual(): String {
     let fecha = new Date;

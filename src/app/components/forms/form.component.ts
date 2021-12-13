@@ -219,6 +219,8 @@ export class FormComponent implements OnInit, OnDestroy {
     //this.form.reset();
     this.buildForm();
     this.selectedCountry = [];
+    if(this.actualizacion)
+      this.router.navigate(['busquedas']);
   }
   fechaActual(): String {
     let fecha = new Date;

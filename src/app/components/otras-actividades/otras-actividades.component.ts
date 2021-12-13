@@ -195,6 +195,8 @@ export class OtrasActividadesComponent implements OnInit, OnDestroy {
     //console.log(atob("ZGVtb0BkZW1vLmNvbQ=="));
     this.buildForm();
     this.selectedCountry = [];
+    if(this.actualizacion)
+      this.router.navigate(['busquedas']);
   }
   fechaActual(): String {
     let fecha = new Date;

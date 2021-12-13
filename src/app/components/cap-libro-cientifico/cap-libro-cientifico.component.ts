@@ -219,6 +219,8 @@ export class CapLibroCientificoComponent implements OnInit, OnDestroy {
     this.autoresLibArr.clear();
     this.buildForm();
     this.selectedCountry = [];
+    if(this.actualizacion)
+      this.router.navigate(['busquedas']);
   }
   fechaActual(): String {
     let fecha = new Date;

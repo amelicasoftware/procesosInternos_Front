@@ -199,6 +199,8 @@ export class LibrosDeDivulgacionComponent implements OnInit, OnDestroy {
    
     this.selectedCountry = [];
     this.buildForm();
+    if(this.actualizacion)
+      this.router.navigate(['busquedas']);
   }
   fechaActual(): String{
     let fecha = new Date;

@@ -181,6 +181,8 @@ export class FormDireccionDeTesisComponent implements OnInit, OnDestroy {
     this.autoresArr.clear();
     //this.form.reset();
     this.buildForm();
+    if(this.actualizacion)
+    this.router.navigate(['busquedas']);
   }
 
   redirectConsultas() {

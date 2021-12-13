@@ -230,6 +230,8 @@ export class ProyectosDeInvestigacionComponent implements OnInit, OnDestroy {
     //this.form.reset();
     this.buildForm();
     this.selectedCountry = [];
+    if(this.actualizacion)
+      this.router.navigate(['busquedas']);
   }
   formatoTitulo(str: String): String {
     var splitted = str.split("/");
