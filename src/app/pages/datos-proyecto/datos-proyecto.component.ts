@@ -130,10 +130,18 @@ export class DatosProyectoComponent implements OnInit, AfterViewInit {
             } else if (nameProp === 'AUTPADPROY' && this.dataForm.autpadproy !== null) {
               let listaAutores = this.dataForm.autpadproy.split(',');
               listaAutores.forEach((autor: any) => this.listaAutoresPadre(autor));
-            } else if ((nameProp === 'INSPROYINV' && this.dataForm.insproyinv !== null)) {
+            } else if ((nameProp === 'INSPROYINV' && this.dataForm.insproyinv !== null && this.form.get('listIns') !== null)) {
+              console.log('control lista institucion-->', )
               let listaInstituciones = this.dataForm.insproyinv.split(',');
               console.log(listaInstituciones.length);
-              listaInstituciones.forEach((institucion: any) => this.listaInstituciones(institucion));
+              // if (listaInstituciones.length === 1) {
+                // let control = this.form.get('listIns');
+                // console.log(control);
+                // this.instArr.push(this.fb.control(listaInstituciones[0], Validators.required));
+              // } else {
+                
+                listaInstituciones.forEach((institucion: any) => this.listaInstituciones(institucion));
+              // }
             } else if (this.dataForm[prop] === null) {
               this.form.controls[nameProp].setValue('');
             } else {
