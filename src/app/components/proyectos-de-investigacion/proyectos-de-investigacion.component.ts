@@ -74,9 +74,9 @@ export class ProyectosDeInvestigacionComponent implements OnInit, OnDestroy {
       RSMPROYINV: new FormControl('', Validators.maxLength(3900)),
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(2021)]),
-      listAutor: this.fb.array([]),
+      listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
       listIns: this.fb.array([], [Validators.required, Validators.min(1)]),
-      URLPROYINV: new FormControl(''),
+      URLPROYINV: new FormControl('', [Validators.maxLength(200), Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
       VOLPROYINV: new FormControl(''),
       FTEPROYINV: new FormControl(''),
       INSPROYINV: new FormControl(''),
@@ -131,7 +131,7 @@ export class ProyectosDeInvestigacionComponent implements OnInit, OnDestroy {
 
   addAutor(nombre: String, event: Event) {
     // event.preventDefault();
-    if (nombre !== '' && this.autoresArr.length < 1) {
+    if (nombre !== '') {
       this.autoresArr.push(this.fb.control(this.autor.value, Validators.required));
       console.log(this.autoresArr.length);
       this.autor.reset('');
@@ -168,11 +168,14 @@ export class ProyectosDeInvestigacionComponent implements OnInit, OnDestroy {
     this.form.controls.TPOACTPROY.setValue(Metodos.cambioResumen(this.form.controls.TPOACTPROY.value));
     this.form.controls.FTEPROYINV.setValue(Metodos.cambioResumen(this.form.controls.FTEPROYINV.value));
     this.form.controls.INSPROYINV.setValue(Metodos.cambioResumen(this.instArr.value.join(',')));
+    this.form.controls.AUTPROYINV.setValue(Metodos.cambioResumen(this.autoresArr.value.join(',')));
     this.form.controls.RSMPROYINV.setValue(Metodos.cambioResumen(this.form.controls.RSMPROYINV.value).replace(/(\r\n|\n|\r)/gm, " "));
     this.form.controls.INFADCPROY.setValue(Metodos.cambioResumen(this.form.controls.INFADCPROY.value).replace(/(\r\n|\n|\r)/gm, " "));
+    this.form.controls.URLPROYINV.setValue(Metodos.cambioResumen(this.form.controls.URLPROYINV.value));
+    this.form.controls.TITPROYINV.setValue(this.formatoTitulo(this.form.controls.TITPROYINV.value));
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
 
-    this.form.controls.TITPROYINV.setValue(this.formatoTitulo(this.form.controls.TITPROYINV.value));
+    
 
     delete this.form.value.listIns;
     if (this.form.invalid) {

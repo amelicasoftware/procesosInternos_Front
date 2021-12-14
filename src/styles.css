@@ -81,3 +81,9 @@ html, body {
     max-height: 250px;
     overflow-y: scroll;
   }
+
+  /* Estilo para campos que no estan en el excel 
+  #campo_ad{
+    display: none;
+  }
+*/

@@ -234,9 +234,7 @@
               style="display: none"
             >
               {{ proyecto.autproyinv }}. ({{ proyecto.anioproyinv }}).
-              {{ proyecto.titproyinv }}, {{ proyecto.volproyinv }}. [fecha de
-              consulta {{ fecha }}]. Disponible en:
-              {{ proyecto.urlproyinv }}
+              {{ proyecto.titproyinv }}. {{ proyecto.fteproyinv }} , {{ proyecto.volproyinv }}. {{ proyecto.urlproyinv }}
             </div>
           </div>
           <div
@@ -261,16 +259,16 @@
             ><br />
             <span><b>Resumen:</b> {{ proyecto.rsmproyinv }}</span
             ><br />
+            <span id="campo_ad" *ngIf="proyecto.volproyinv">
+              <b>Volúmen:</b> {{ proyecto.volproyinv }}</span>
             <div
               class="cite"
               attr.id="{{ proyecto.cveproyinv }}_cite"
-              style="display: none"
+              style="display: none;"
             >
               {{ proyecto.autproyinv }}. ({{ proyecto.anioproyinv }}).
               {{ proyecto.titproyinv }}. {{ proyecto.autpadproy }} (Ed).
-              {{ proyecto.fteproyinv }} {{ proyecto.insproyinv }}. [fecha de
-              consulta {{ fecha }}]. Disponible en:
-              {{ proyecto.urlproyinv }}
+              {{ proyecto.fteproyinv }} <!--(xx ed.,--> <span id="campo_ad" *ngIf="proyecto.volproyinv">. Vol. {{ proyecto.volproyinv }} </span><!-- , pp. xxx–xxx)-->. {{ proyecto.insproyinv }}. {{ proyecto.urlproyinv }}
             </div>
           </div>
           <div
@@ -297,9 +295,7 @@
               style="display: none"
             >
               {{ proyecto.autproyinv }}. ({{ proyecto.anioproyinv }}).
-              {{ proyecto.titproyinv }}. {{ proyecto.insproyinv }}. [fecha de
-              consulta {{ fecha }}]. Disponible en:
-              {{ proyecto.urlproyinv }}
+              {{ proyecto.titproyinv }}. {{ proyecto.insproyinv }}. {{ proyecto.urlproyinv }}
             </div>
           </div>
           <div
@@ -322,14 +318,16 @@
             ><br />
             <span><b>Año:</b> {{ proyecto.anioproyinv }}</span
             ><br />
+            <span class="doi"id="campo_ad" *ngIf="proyecto.urlproyinv">
+              <b>DOI/Enlace:</b><br>  {{ proyecto.urlproyinv }} </span>
             <div
               class="cite"
               attr.id="{{ proyecto.cveproyinv }}_cite"
-              style="display: none"
+              style="display: none;"
             >
-              {{ proyecto.autproyinv }}. ({{ proyecto.feccapproy }}).
+              {{ proyecto.autproyinv }}. ({{ proyecto.feccapproy.split('-') }}).
               <i>{{ proyecto.titproyinv }}.</i>
-              {{ proyecto.tpoactproy }}. [fecha de consulta {{ fecha }}].
+              {{ proyecto.tpoactproy }} <span id="campo_ad" *ngIf="proyecto.urlproyinv">. {{ proyecto.urlproyinv }} </span>
             </div>
           </div>
           <div
@@ -351,12 +349,11 @@
             <div
               class="cite"
               attr.id="{{ proyecto.cveproyinv }}_cite"
-              style="display: none"
+              style=""
             >
-              {{ proyecto.autproyinv }}. ({{ proyecto.feccapproy }}){{
+              {{ proyecto.autproyinv }}. ({{ proyecto.feccapproy.split('-')  }}). {{
                 proyecto.titproyinv
-              }}. [fecha de consulta {{ fecha }}]. Disponible en:
-              {{ proyecto.urlproyinv }}
+              }}. {{ proyecto.urlproyinv }}
             </div>
           </div>
 
@@ -379,11 +376,9 @@
             <div
               class="cite"
               attr.id="{{ proyecto.cveproyinv }}_cite"
-              style="display: none"
+              style=""
             >
-              {{ proyecto.autproyinv }}. {{ proyecto.titproyinv }}. [fecha de
-              consulta {{ fecha }}]. Disponible en:
-              {{ proyecto.urlproyinv }}
+              {{ proyecto.autproyinv }}. ({{ proyecto.anioproyinv }}). {{ proyecto.titproyinv }}. {{ proyecto.insproyinv }}. {{ proyecto.urlproyinv }}
             </div>
           </div>
           <div
@@ -444,14 +439,18 @@
             ><br />
             <span><b>Síntesis:</b> {{ proyecto.rsmproyinv }}</span
             ><br />
+            <span id="campo_ad" *ngIf="proyecto.autproyinv">
+              <b>Autor/es:</b> {{ proyecto.autproyinv }}</span>
+              <br />
+            <span class="doi"id="campo_ad" *ngIf="proyecto.urlproyinv">
+                <b>DOI/Enlace:</b><br>  {{ proyecto.urlproyinv }} </span>
             <div
               class="cite"
               attr.id="{{ proyecto.cveproyinv }}_cite"
-              style="display: none"
+              style="display: none;"
             >
-              {{ proyecto.autproyinv }}. ({{ proyecto.anioproyinv }}).
-              {{ proyecto.titproyinv }}. {{ proyecto.insproyinv }}[fecha de
-              consulta {{ fecha }}].
+            <span id="campo_ad" *ngIf="proyecto.autproyinv"> {{ proyecto.autproyinv }}. </span> ({{ proyecto.anioproyinv }}).
+              {{ proyecto.titproyinv }}. {{ proyecto.insproyinv }} . <span class="doi"id="campo_ad" *ngIf="proyecto.urlproyinv"> {{ proyecto.urlproyinv }} </span>
             </div>
           </div>
           <div
