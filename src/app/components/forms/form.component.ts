@@ -108,6 +108,8 @@ export class FormComponent implements OnInit, OnDestroy {
       integrantes: new FormControl(''),
       ALCPROYINV: new FormControl('', [Validators.required]),
       PRDPROYINV: new FormControl(''),
+      NUMPAGPROY: new FormControl('', [Validators.maxLength(30), Validators.pattern("[1-9]+[ ]?-[ ]?[1-9]+")]),
+      EDICPROY: new FormControl(''),
       MESPROYINV: new FormControl(''),
       FECCAPPROY: new FormControl(''),
       REAPROYINV: new FormControl('', [Validators.required]),

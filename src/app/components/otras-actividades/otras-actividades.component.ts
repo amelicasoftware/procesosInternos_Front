@@ -87,6 +87,8 @@ export class OtrasActividadesComponent implements OnInit, OnDestroy {
       TPOACTPROY: new FormControl('', [Validators.required, Validators.pattern(this.charNoAc)]),
       INFADCPROY: new FormControl('', Validators.maxLength(3900)),
       AUTPROYINV: new FormControl(''),
+      NUMPAGPROY: new FormControl(''),
+      EDICPROY: new FormControl(''),
       CTDINTPROY: new FormControl('1'),
     });
 

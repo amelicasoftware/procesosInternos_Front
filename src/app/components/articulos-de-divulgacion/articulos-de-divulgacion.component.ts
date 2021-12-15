@@ -92,6 +92,8 @@ export class ArticulosDeDivulgacionComponent implements OnInit, OnDestroy {
       TPOACTPROY: new FormControl(''),
       INFADCPROY: new FormControl('', [Validators.maxLength(3900)]),
       AUTPROYINV: new FormControl(''),
+      NUMPAGPROY: new FormControl(''),
+      EDICPROY: new FormControl(''),
       CTDINTPROY: new FormControl('1'),
     });
     this.formBack = this.form;

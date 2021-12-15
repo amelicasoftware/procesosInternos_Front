@@ -67,6 +67,8 @@ export class DatosProyectoComponent implements OnInit, AfterViewInit {
       REAPROYINV: new FormControl('', [Validators.required]),
       AGDREDPROY: new FormControl('', [Validators.required]),
       TPOACTPROY: new FormControl(''),
+      EDICPROY: new FormControl(''),
+      NUMPAGPROY: new FormControl(''),
       INFADCPROY: new FormControl('', Validators.maxLength(3900)),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),

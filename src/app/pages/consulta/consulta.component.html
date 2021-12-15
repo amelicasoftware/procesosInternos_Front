@@ -228,13 +228,18 @@
             ><br />
             <span><b>Resumen:</b> {{ proyecto.rsmproyinv }}</span
             ><br />
+            <span  id="campo_ad" *ngIf="proyecto.numpagproy">
+              <b>Número de página inicio – Número de pagina fin:</b> {{ proyecto.numpagproy }}</span
+            ><br />
             <div
               class="cite"
               attr.id="{{ proyecto.cveproyinv }}_cite"
               style="display: none"
             >
               {{ proyecto.autproyinv }}. ({{ proyecto.anioproyinv }}).
-              {{ proyecto.titproyinv }}. {{ proyecto.fteproyinv }} , {{ proyecto.volproyinv }}. {{ proyecto.urlproyinv }}
+              {{ proyecto.titproyinv }}. {{ proyecto.fteproyinv }} , {{ proyecto.volproyinv }} . <span  id="campo_ad" *ngIf="proyecto.numpagproy">
+              {{ proyecto.numpagproy }} .</span
+              >{{ proyecto.urlproyinv }}
             </div>
           </div>
           <div
@@ -261,6 +266,13 @@
             ><br />
             <span id="campo_ad" *ngIf="proyecto.volproyinv">
               <b>Volúmen:</b> {{ proyecto.volproyinv }}</span>
+              <br />
+              <span  id="campo_ad" *ngIf="proyecto.numpagproy">
+                <b>Número de página inicio – Número de pagina fin:</b> {{ proyecto.numpagproy }}</span
+              ><br />
+              <span id="campo_ad" *ngIf="proyecto.edicproy">
+                <b>Edición:</b> {{ proyecto.edicproy }}</span>
+                <br />
             <div
               class="cite"
               attr.id="{{ proyecto.cveproyinv }}_cite"
@@ -268,7 +280,8 @@
             >
               {{ proyecto.autproyinv }}. ({{ proyecto.anioproyinv }}).
               {{ proyecto.titproyinv }}. {{ proyecto.autpadproy }} (Ed).
-              {{ proyecto.fteproyinv }} <!--(xx ed.,--> <span id="campo_ad" *ngIf="proyecto.volproyinv">. Vol. {{ proyecto.volproyinv }} </span><!-- , pp. xxx–xxx)-->. {{ proyecto.insproyinv }}. {{ proyecto.urlproyinv }}
+              {{ proyecto.fteproyinv }}. ( <span id="campo_ad" *ngIf="proyecto.edicproy"> {{ proyecto.edicproy }} ed., </span> <span id="campo_ad" *ngIf="proyecto.volproyinv"> Vol. {{ proyecto.volproyinv }} </span><span  id="campo_ad" *ngIf="proyecto.numpagproy">
+                , pp. {{ proyecto.numpagproy }}</span>). {{ proyecto.insproyinv }}. {{ proyecto.urlproyinv }}
             </div>
           </div>
           <div
@@ -345,15 +358,14 @@
             <span><b>Año:</b> {{ proyecto.anioproyinv }}</span
             ><br />
             <span><b>Autor/es:</b> {{ proyecto.autproyinv }}</span
-            ><br />
+              ><br />
             <div
               class="cite"
               attr.id="{{ proyecto.cveproyinv }}_cite"
-              style=""
+              style="display: none;"
             >
               {{ proyecto.autproyinv }}. ({{ proyecto.feccapproy.split('-')  }}). {{
-                proyecto.titproyinv
-              }}. {{ proyecto.urlproyinv }}
+                proyecto.titproyinv }}. {{ proyecto.urlproyinv }}
             </div>
           </div>
 
@@ -373,12 +385,15 @@
             ><br />
             <span><b>Año:</b> {{ proyecto.anioproyinv }}</span
             ><br />
+            <span  id="campo_ad" *ngIf="proyecto.numpagproy">
+              <b>Número de páginas:</b> {{ proyecto.numpagproy }}</span
+            ><br />
             <div
               class="cite"
               attr.id="{{ proyecto.cveproyinv }}_cite"
-              style=""
+              style="display: none;"
             >
-              {{ proyecto.autproyinv }}. ({{ proyecto.anioproyinv }}). {{ proyecto.titproyinv }}. {{ proyecto.insproyinv }}. {{ proyecto.urlproyinv }}
+              {{ proyecto.autproyinv }}. ({{ proyecto.anioproyinv }}). {{ proyecto.titproyinv }}. <span  id="campo_ad" *ngIf="proyecto.numpagproy"> ( P. {{ proyecto.numpagproy }}).</span> {{ proyecto.insproyinv }}. {{ proyecto.urlproyinv }}
             </div>
           </div>
           <div
@@ -487,11 +502,9 @@
         <footer class="card-footer">
           <div
             class="card-footer-item btn-card"
-            *ngIf="
-              proyecto.tpoproyinv != 'Otras actividades de divulgación' &&
-              proyecto.tpoproyinv != 'Dirección de tesis' &&
-              proyecto.tpoproyinv != 'Redes de investigación'
-            "
+            *ngIf="proyecto.tpoproyinv !== 'Otras Actividades' 
+            && proyecto.tpoproyinv != 'Dirección de tesis' 
+            && proyecto.tpoproyinv != 'Redes de investigación'"
           >
             <img src="assets/img/copias-apa.png" />
             <a

@@ -141,6 +141,7 @@
         <textarea class="textarea" cols="30" rows="5" formControlName="RSMPROYINV"></textarea>
         <p class="help is-danger" *ngIf="campoEsValido('RSMPROYINV')">Sobrepasaste el limite de caracteres</p>
       </div>
+      
   
       <div class="field">
         <label class="label">Alcance</label>
@@ -159,6 +160,22 @@
         <input class="input" type="text" formControlName="VOLPROYINV">
         <p class="help is-danger" *ngIf="campoEsValido('VOLPROYINV')">
           Este campo es obligatorio
+        </p>
+      </div>
+      <div class="field">
+        <label for="" class="label">Número de página inicio – Número de pagina fin:</label>
+        <input class="input" type="text" formControlName="NUMPAGPROY"
+          [ngClass]="{'is-danger' : campoEsValido('NUMPAGPROY')}">
+        <p class="help is-danger" *ngIf="campoEsValido('NUMPAGPROY')">
+          Este campo debe llevar el formato: Página de inicio - Página de fin
+        </p>
+      </div>
+      <div class="field">
+        <label for="" class="label">Edición:</label>
+        <input class="input" type="text" formControlName="EDICPROY"
+          [ngClass]="{'is-danger' : campoEsValido('EDICPROY')}">
+        <p class="help is-danger" *ngIf="campoEsValido('EDICPROY')">
+          No se permiten los caracteres: {{signos}}
         </p>
       </div>
       <div class="field">
