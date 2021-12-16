@@ -124,8 +124,6 @@ export class FormComponent implements OnInit, OnDestroy {
       INFADCPROY: new FormControl('', Validators.maxLength(3900)),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),
-      NUMPAGPROY: new FormControl(''),
-      EDICPROY: new FormControl(''),
     });
 
     // this.form.valueChanges
