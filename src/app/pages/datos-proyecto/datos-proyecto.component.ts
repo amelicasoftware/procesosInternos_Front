@@ -51,6 +51,7 @@ export class DatosProyectoComponent implements OnInit, AfterViewInit {
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
+      listAutorAux: this.fb.array([], [Validators.required, Validators.min(1)]),
       listAutorLib: this.fb.array([], [Validators.required, Validators.min(1)]),
       listIns: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl('', [Validators.required, Validators.maxLength(200), Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
@@ -126,7 +127,11 @@ export class DatosProyectoComponent implements OnInit, AfterViewInit {
               this.pais.setValue(arrayPaises);
             } else if (nameProp === 'AUTPROYINV' && this.dataForm.autproyinv !== null) {
               let listaAutores = this.dataForm.autproyinv.split(',');
-              listaAutores.forEach((autor: any) => this.inicioAutores(autor));
+              listaAutores.forEach((autor: any) => this.inicioAutoresAux(autor));
+              listaAutores.forEach((autor: any) => {
+                autor = autor.replace('||', ' ');
+                this.inicioAutores(autor)
+              });
             } else if (nameProp === 'AUTPADPROY' && this.dataForm.autpadproy !== null) {
               let listaAutores = this.dataForm.autpadproy.split(',');
               listaAutores.forEach((autor: any) => this.listaAutoresPadre(autor));
@@ -163,6 +168,10 @@ export class DatosProyectoComponent implements OnInit, AfterViewInit {
     return this.form.get('listAutor') as FormArray;
   }
 
+  get autoresArrAux() {
+    return this.form.get('listAutorAux') as FormArray;
+  }
+
   get paisesArr() {
     return this.form.get('CVEPAISPRO');
   }
@@ -188,6 +197,10 @@ export class DatosProyectoComponent implements OnInit, AfterViewInit {
 
   inicioAutores(nombre: String) {
     this.autoresArr.push(this.fb.control(nombre, Validators.required));
+  }
+
+  inicioAutoresAux(nombre: String) {
+    this.autoresArrAux.push(this.fb.control(nombre, Validators.required));
   }
 
   listaAutoresPadre(nombre: String) {

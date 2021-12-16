@@ -420,6 +420,7 @@ export class ConsultaComponent implements OnInit {
   citarElement(idCard: String) {
     $(document).ready(function () {
       var aux = document.createElement("input");
+      console.log(aux);
       aux.setAttribute("value", $("#" + idCard).text().replace(/&amp;/g, "&"));
       document.body.appendChild(aux);
       aux.select();

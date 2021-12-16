@@ -18,6 +18,7 @@ export class FormComponent implements OnInit, OnDestroy {
   typeForm = new FormControl('Selecciona un formulario');
   charNoAc: string = "";
   autor: FormControl = this.fb.control('', [Validators.required, Validators.pattern(Metodos.expreg())]);
+  apellidoAutor: FormControl = this.fb.control('', [Validators.required, Validators.pattern(Metodos.expreg())]);
   pais = new FormControl('');
   form!: FormGroup;
   anioAct: number = 2021;
@@ -41,6 +42,10 @@ export class FormComponent implements OnInit, OnDestroy {
 
   formSubscription!: Subscription;
   paisesSubscription!: Subscription;
+
+  nombre:string="pedro";
+  apellido:string = 'lopez';
+  nombreApellido:string = '';
 
 
   constructor(
@@ -99,6 +104,7 @@ export class FormComponent implements OnInit, OnDestroy {
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
+      listAutorAux: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl('', [Validators.required, Validators.maxLength(200), Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
       VOLPROYINV: new FormControl('', Validators.pattern(this.charNoAc)),
       FTEPROYINV: new FormControl('', [Validators.required, Validators.pattern(this.charNoAc)]),
@@ -116,6 +122,8 @@ export class FormComponent implements OnInit, OnDestroy {
       INFADCPROY: new FormControl('', Validators.maxLength(3900)),
       AUTPROYINV: new FormControl(''),
       CTDINTPROY: new FormControl('1'),
+      NUMPAGPROY: new FormControl(''),
+      EDICPROY: new FormControl(''),
     });
 
     // this.form.valueChanges
@@ -130,6 +138,10 @@ export class FormComponent implements OnInit, OnDestroy {
     return this.form.get('listAutor') as FormArray;
   }
 
+  get autoresArrAux() {
+    return this.form.get('listAutorAux') as FormArray;
+  }
+
   get paisesArr() {
     return this.form.get('CVEPAISPRO');
   }
@@ -142,12 +154,14 @@ export class FormComponent implements OnInit, OnDestroy {
     this.des = false;
     this.form.controls.AGDREDPROY.setValue('no');
   }
-  addAutor(nombre: String, event: Event) {
+  addAutor(nombre: String, apellido: String, event: Event) {
     // event.preventDefault();
-    if (nombre !== '') {
-      this.autoresArr.push(this.fb.control(this.autor.value, Validators.required));
+    if (nombre !== '' && apellido) {
+      this.autoresArr.push(this.fb.control(`${this.autor.value} ${this.apellidoAutor.value}`, Validators.required));
+      this.autoresArrAux.push(this.fb.control(`${this.autor.value}||${this.apellidoAutor.value}`, Validators.required));
       console.log(this.autoresArr.length);
       this.autor.reset('');
+      this.apellidoAutor.reset('');
     } else {
 
     }
@@ -170,11 +184,13 @@ export class FormComponent implements OnInit, OnDestroy {
     this.form.controls.INSPROYINV.setValue(Metodos.cambioResumen(this.form.controls.INSPROYINV.value));
     this.form.controls.TPOACTPROY.setValue(Metodos.cambioResumen(this.form.controls.TPOACTPROY.value));
     this.form.controls.FTEPROYINV.setValue(Metodos.cambioResumen(this.form.controls.FTEPROYINV.value));
-    this.form.controls.AUTPROYINV.setValue(Metodos.cambioResumen(this.autoresArr.value.join(',')));
+    this.form.controls.AUTPROYINV.setValue(Metodos.cambioResumen(this.autoresArrAux.value.join(',')));
     this.form.controls.RSMPROYINV.setValue(Metodos.cambioResumen(this.form.controls.RSMPROYINV.value).replace(/(\r\n|\n|\r)/gm, " "));
     this.form.controls.INFADCPROY.setValue(Metodos.cambioResumen(this.form.controls.INFADCPROY.value).replace(/(\r\n|\n|\r)/gm, " "));
     this.form.controls.URLPROYINV.setValue(Metodos.cambioResumen(this.form.controls.URLPROYINV.value));
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
+
+    this.form.removeControl('listAutorAux');
     // imprimir el valor del formulario, sólo si es válido
     if (!this.actualizacion) {
       this.servicesForm.postDatos(this.form).subscribe(mensaje => {
@@ -235,5 +251,9 @@ export class FormComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.formSubscription.unsubscribe();
     this.paisesSubscription.unsubscribe();
+  }
+
+  valueChange(evento: any){
+    console.log(evento)
   }
 }

@@ -21,14 +21,21 @@
         <label class="label">Autor/es del libro:</label>
         <div class="field has-addons">
           <div class="control has-icons-left">
-            <input type="text" class="input" placeholder="Escribe el nombre del autor" [formControl]="autorLib"
-              (keyup.enter)="addAutorLib(autorLib.value, $event)">
+            <input type="text" class="input" placeholder="Nombre del autor" [formControl]="autorLib"
+              (keyup.enter)="addAutorLib(autorLib.value, apellidosLib.value, $event)">
             <span class="icon is-medium is-left">
               <i class="fa  fa-user"></i>
             </span>
           </div>
-          <div class="control"  (click)="addAutorLib(autorLib.value, $event)">
-            <button class="button is-info" [disabled]="autorLib.errors && autorLib.touched" >Agregar</button>
+          <div class="control has-icons-left">
+            <input type="text" class="input" placeholder="Apellido del autor" [formControl]="apellidosLib"
+              (keyup.enter)="addAutorLib(autorLib.value, apellidosLib.value, $event)">
+            <span class="icon is-medium is-left">
+              <i class="fa  fa-user"></i>
+            </span>
+          </div>
+          <div class="control"  (click)="addAutorLib(autorLib.value, apellidosLib.value, $event)">
+            <button class="button is-info" [disabled]="autorLib.errors && autorLib.touched && apellidosLib.errors && apellidosLib.touched" >Agregar</button>
           </div>
         </div>
         <p class="help is-danger" *ngIf="campoEsValido('listAutorLib')">
@@ -102,14 +109,21 @@
         <label class="label">Autor/es del capitulo:</label>
         <div class="field has-addons">
           <div class="control has-icons-left">
-            <input type="text" class="input" placeholder="Escribe el nombre del autor" [formControl]="autor"
-              (keyup.enter)="addAutor(autor.value, $event)">
+            <input type="text" class="input" placeholder="Nombre del autor" [formControl]="autor"
+              (keyup.enter)="addAutor(autor.value, apellidos.value, $event)">
             <span class="icon is-medium is-left">
               <i class="fa  fa-user"></i>
             </span>
           </div>
-          <div class="control"  (click)="addAutor(autor.value, $event)">
-            <button class="button is-info" [disabled]="autor.errors && autor.touched" >Agregar</button>
+          <div class="control has-icons-left">
+            <input type="text" class="input" placeholder="Apellido del autor" [formControl]="apellidos"
+              (keyup.enter)="addAutor(autor.value, apellidos.value, $event)">
+            <span class="icon is-medium is-left">
+              <i class="fa  fa-user"></i>
+            </span>
+          </div>
+          <div class="control"  (click)="addAutor(autor.value, apellidos.value, $event)">
+            <button class="button is-info" [disabled]="autor.errors && autor.touched && apellidos.errors && apellidos.touched" >Agregar</button>
           </div>
         </div>
         <p class="help is-danger" *ngIf="campoEsValido('listAutor')">

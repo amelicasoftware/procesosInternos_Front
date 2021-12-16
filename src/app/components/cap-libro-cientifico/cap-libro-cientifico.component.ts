@@ -16,7 +16,9 @@ export class CapLibroCientificoComponent implements OnInit, OnDestroy {
   typeForm = new FormControl('Selecciona un formulario');
   charNoAc: string = "";
   autor: FormControl = this.fb.control('', [Validators.required, Validators.pattern(Metodos.expreg())]);
+  apellidos: FormControl = this.fb.control('', [Validators.required, Validators.pattern(Metodos.expreg())]);
   autorLib: FormControl = this.fb.control('', [Validators.required, Validators.pattern(Metodos.expreg())]);
+  apellidosLib: FormControl = this.fb.control('', [Validators.required, Validators.pattern(Metodos.expreg())]);
   pais = new FormControl('');
   form!: FormGroup;
   autores: String[] = [];
@@ -73,7 +75,9 @@ export class CapLibroCientificoComponent implements OnInit, OnDestroy {
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
+      listAutorAux: this.fb.array([], [Validators.required, Validators.min(1)]),
       listAutorLib: this.fb.array([], [Validators.required, Validators.min(1)]),
+      listAutorLibAux: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl('', [Validators.required, Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
       VOLPROYINV: new FormControl(''),
       FTEPROYINV: new FormControl('', [Validators.required, Validators.pattern(this.charNoAc)]),
@@ -109,30 +113,40 @@ export class CapLibroCientificoComponent implements OnInit, OnDestroy {
   get autoresArr() {
     return this.form.get('listAutor') as FormArray;
   }
+  get autoresArrAux() {
+    return this.form.get('listAutorAux') as FormArray;
+  }
   get autoresLibArr() {
     return this.form.get('listAutorLib') as FormArray;
+  }
+  get autoresLibArrAux() {
+    return this.form.get('listAutorLibAux') as FormArray;
   }
   get paisesArr() {
     return this.form.get('CVEPAISPRO');
   }
 
-  addAutor(nombre: String, event: Event) {
+  addAutor(nombre: String, apellido: String, event: Event) {
     // event.preventDefault();
-    if (nombre !== '') {
-      this.autoresArr.push(this.fb.control(this.autor.value, Validators.required));
+    if (nombre !== '' && apellido !== '') {
+      this.autoresArr.push(this.fb.control(`${this.autor.value} ${this.apellidos.value}`, Validators.required));
+      this.autoresArrAux.push(this.fb.control(`${this.autor.value}||${this.apellidos.value}`, Validators.required));
       console.log(this.autoresArr.length);
       this.autor.reset('');
+      this.apellidos.reset('');
     } else {
 
     }
   }
 
-  addAutorLib(nombre: String, event: Event) {
+  addAutorLib(nombre: String, apellido: String, event: Event) {
     // event.preventDefault();
     if (nombre !== '') {
-      this.autoresLibArr.push(this.fb.control(this.autorLib.value, Validators.required));
+      this.autoresLibArr.push(this.fb.control(`${this.autorLib.value} ${this.apellidosLib.value}`, Validators.required));
+      this.autoresLibArrAux.push(this.fb.control(`${this.autorLib.value} ${this.apellidosLib.value}`, Validators.required));
       console.log(this.autoresLibArr.length);
       this.autorLib.reset('');
+      this.apellidosLib.reset('');
     } else {
 
     }
@@ -164,6 +178,9 @@ export class CapLibroCientificoComponent implements OnInit, OnDestroy {
     this.form.controls.AUTPADPROY.setValue(Metodos.cambioResumen(this.autoresLibArr.value.join(',')));
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
     delete this.form.value.listAutorLib;
+    this.form.removeControl('listAutorAux');
+    this.form.removeControl('listAutorLibAux');
+    this.form.removeControl('listAutorLib');
 
     // imprimir el valor del formulario, sólo si es válido
     if (!this.actualizacion) {

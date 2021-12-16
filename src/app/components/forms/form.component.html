@@ -1,59 +1,50 @@
 <div class="container is-widescreen">
   <form [formGroup]="form" class="box">
-   
-  <!-- <h2>Formulario Artículos científicos</h2> -->
 
-  <div class="field">
-    <label class="label"> DOI/Enlace:</label>
-    <input class="input" type="email" placeholder="https://www.redalyc.org/articulo.oa?id=10411213" formControlName="URLPROYINV"
-      [ngClass]="{'is-danger' : campoEsValido('URLPROYINV')}">
-    <p class="help is-danger" *ngIf="campoEsValido('URLPROYINV')">
-      Este campo es obligatorio y debe ser una direccion del tipo http://ejemplo.com
-    </p>
-  </div>
-  <div class="field">
-    <label class="label">Revista:</label>
-    <input class="input" type="text" formControlName="FTEPROYINV"
-      [ngClass]="{'is-danger' : campoEsValido('FTEPROYINV')}">
-    <p class="help is-danger" *ngIf="campoEsValido('FTEPROYINV')">
-      Este campo es obligatorio
-    </p>
-  </div>
-  <div class="field">
-    <label class="label">Volúmen:</label>
-    <input class="input" type="text" formControlName="VOLPROYINV">
-    <p class="help is-danger" *ngIf="campoEsValido('VOLPROYINV')">
-      Este campo es obligatorio
-    </p>
-  </div>
-  <div class="field">
-    <label class="label">Año</label>
-    <div class="control">
-      <input
-        type="number"
-        class="input"
-        placeholder=""
-        formControlName="ANIOPROYINV"
-        ngModel name="anioActual"
-        [ngClass]="{ 'is-danger': campoEsValido('ANIOPROYINV') }"
-      />
-      <span
-        class="tag is-danger is-light"
-        *ngIf="campoEsValido('ANIOPROYINV')"
-      >
-      Este campo solo acepta caracteres numericos entre 1980 y {{anioAct}}
-        <br />
-      </span>
+    <!-- <h2>Formulario Artículos científicos</h2> -->
+
+    <div class="field">
+      <label class="label"> DOI/Enlace:</label>
+      <input class="input" type="email" placeholder="https://www.redalyc.org/articulo.oa?id=10411213"
+        formControlName="URLPROYINV" [ngClass]="{'is-danger' : campoEsValido('URLPROYINV')}">
+      <p class="help is-danger" *ngIf="campoEsValido('URLPROYINV')">
+        Este campo es obligatorio y debe ser una direccion del tipo http://ejemplo.com
+      </p>
     </div>
-  </div>
-  <div class="field">
-    <label class="label">País:</label>
-    <ng-select class="select is-multiple" [multiple]="true" [formControl]="pais" [ngModel]="selectedCountry">
-      <ng-option *ngFor="let item of lista" [value]="item.cveentnac">{{item.nomentnac}}</ng-option>
-    </ng-select>
-    <p class="help is-danger" *ngIf="campoEsValido('CVEPAISPRO')">Debe agregar por lo menos un país</p>
-  </div>
-  <div class="field">
+    <div class="field">
+      <label class="label">Revista:</label>
+      <input class="input" type="text" formControlName="FTEPROYINV"
+        [ngClass]="{'is-danger' : campoEsValido('FTEPROYINV')}">
+      <p class="help is-danger" *ngIf="campoEsValido('FTEPROYINV')">
+        Este campo es obligatorio
+      </p>
+    </div>
+    <div class="field">
+      <label class="label">Volúmen:</label>
+      <input class="input" type="text" formControlName="VOLPROYINV">
+      <p class="help is-danger" *ngIf="campoEsValido('VOLPROYINV')">
+        Este campo es obligatorio
+      </p>
+    </div>
+    <div class="field">
+      <label class="label">Año</label>
+      <div class="control">
+        <input type="number" class="input" placeholder="" formControlName="ANIOPROYINV" ngModel name="anioActual"
+          [ngClass]="{ 'is-danger': campoEsValido('ANIOPROYINV') }" />
+        <span class="tag is-danger is-light" *ngIf="campoEsValido('ANIOPROYINV')">
+          Este campo solo acepta caracteres numericos entre 1980 y {{anioAct}}
+          <br />
+        </span>
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">País:</label>
+      <ng-select class="select is-multiple" [multiple]="true" [formControl]="pais" [ngModel]="selectedCountry">
+        <ng-option *ngFor="let item of lista" [value]="item.cveentnac">{{item.nomentnac}}</ng-option>
+      </ng-select>
+      <p class="help is-danger" *ngIf="campoEsValido('CVEPAISPRO')">Debe agregar por lo menos un país</p>
+    </div>
+    <div class="field">
       <label for="" class="label">Título de artículo:</label>
       <input class="input" type="text" formControlName="TITPROYINV"
         [ngClass]="{'is-danger' : campoEsValido('TITPROYINV')}">
@@ -65,14 +56,22 @@
       <label class="label">Autor/es:</label>
       <div class="field has-addons">
         <div class="control has-icons-left">
-          <input type="text" class="input" placeholder="Escribe el nombre del autor" [formControl]="autor"
-            (keyup.enter)="addAutor(autor.value, $event)">
+          <input type="text" class="input" placeholder="Nombre del autor" [formControl]="autor"
+            (keyup.enter)="addAutor(autor.value, apellidoAutor.value, $event)">
           <span class="icon is-medium is-left">
             <i class="fa  fa-user"></i>
           </span>
         </div>
-        <div class="control"  (click)="addAutor(autor.value, $event)">
-          <button class="button is-info" [disabled]="autor.errors && autor.touched" >Agregar</button>
+        <div class="control has-icons-left">
+          <input type="text" class="input" placeholder="Apellido del autor" [formControl]="apellidoAutor"
+            (keyup.enter)="addAutor(autor.value, apellidoAutor.value, $event)">
+          <span class="icon is-medium is-left">
+            <i class="fa  fa-user"></i>
+          </span>
+        </div>
+        <div class="control" (click)="addAutor(autor.value, apellidoAutor.value, $event)">
+          <button class="button is-info"
+            [disabled]="autor.errors && autor.touched && apellidoAutor.errors && apellidoAutor.touched">Agregar</button>
         </div>
       </div>
       <p class="help is-danger" *ngIf="campoEsValido('listAutor')">
@@ -126,7 +125,7 @@
           Si
         </label>
         <label class="radio">
-          <input type="radio" name="REAPROYINV" formControlName="REAPROYINV" value=0  (click)="habilitar()">
+          <input type="radio" name="REAPROYINV" formControlName="REAPROYINV" value=0 (click)="habilitar()">
           No
         </label>
       </div>
