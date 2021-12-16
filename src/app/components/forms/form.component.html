@@ -103,6 +103,16 @@
         Sobrepasaste el limite de caracteres
       </p>
     </div>
+    
+    <div class="field">
+      <label for="" class="label">Número de página inicio – Número de pagina fin:</label>
+      <input class="input" type="text" formControlName="NUMPAGPROY"
+        [ngClass]="{'is-danger' : campoEsValido('NUMPAGPROY')}">
+      <p class="help is-danger" *ngIf="campoEsValido('NUMPAGPROY')">
+        Este campo debe llevar el formato: Página de inicio - Página de fin
+      </p>
+    </div>
+    
 
     <div class="field">
       <label class="label">Alcance</label>

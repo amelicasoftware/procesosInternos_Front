@@ -87,6 +87,14 @@
           </span>
         </div>
       </div>
+      <div class="field">
+        <label for="" class="label">Número de páginas:</label>
+        <input class="input" type="text" formControlName="NUMPAGPROY"
+          [ngClass]="{'is-danger' : campoEsValido('NUMPAGPROY')}">
+        <p class="help is-danger" *ngIf="campoEsValido('NUMPAGPROY')">
+          Este campo debe contener solo números y tener una extensión menor a 30 caracteres
+        </p>
+      </div>
   
       <div class="field">
         <label class="label">Alcance</label>

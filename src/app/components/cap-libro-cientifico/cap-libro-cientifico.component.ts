@@ -79,7 +79,7 @@ export class CapLibroCientificoComponent implements OnInit, OnDestroy {
       listAutorLib: this.fb.array([], [Validators.required, Validators.min(1)]),
       listAutorLibAux: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl('', [Validators.required, Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
-      VOLPROYINV: new FormControl(''),
+      VOLPROYINV: new FormControl('', Validators.pattern(this.charNoAc)),
       FTEPROYINV: new FormControl('', [Validators.required, Validators.pattern(this.charNoAc)]),
       INSPROYINV: new FormControl('', [Validators.required, Validators.pattern(this.charNoAc)]),
       AUTPADPROY: new FormControl(''),
@@ -94,6 +94,8 @@ export class CapLibroCientificoComponent implements OnInit, OnDestroy {
       TPOACTPROY: new FormControl(''),
       INFADCPROY: new FormControl('', Validators.maxLength(3900)),
       AUTPROYINV: new FormControl(''),
+      NUMPAGPROY: new FormControl('', [Validators.maxLength(30), Validators.pattern("[1-9]+[ ]?-[ ]?[1-9]+")]),
+      EDICPROY: new FormControl('', [Validators.maxLength(30), Validators.pattern("([0-9a-zA-ZáéíóúÁÉÍÓÚ]+[ ]?)+")]),
       CTDINTPROY: new FormControl('1'),
     });
 

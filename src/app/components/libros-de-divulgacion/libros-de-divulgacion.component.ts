@@ -88,6 +88,8 @@ export class LibrosDeDivulgacionComponent implements OnInit, OnDestroy {
       TPOACTPROY: new FormControl(''),
       INFADCPROY: new FormControl('',Validators.maxLength(3900)),
       AUTPROYINV: new FormControl(''),
+      NUMPAGPROY: new FormControl('', [Validators.maxLength(30), Validators.pattern("[ ]?[1-9]+[ ]?")]),
+      EDICPROY: new FormControl(''),
       CTDINTPROY: new FormControl('1'),
     });
 

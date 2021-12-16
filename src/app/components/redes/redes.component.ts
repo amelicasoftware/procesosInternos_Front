@@ -93,6 +93,8 @@ export class RedesComponent implements OnInit, OnDestroy {
       TPOACTPROY: new FormControl(''),
       INFADCPROY: new FormControl('', Validators.maxLength(3900)),
       AUTPROYINV: new FormControl(''),
+      NUMPAGPROY: new FormControl(''),
+      EDICPROY: new FormControl(''),
       CTDINTPROY: new FormControl('1', [Validators.pattern("[1-9]+[0-9]*"), Validators.min(1), Validators.max(10000)]),
     });
 

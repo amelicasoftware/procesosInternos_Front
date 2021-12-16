@@ -155,6 +155,7 @@
         <textarea class="textarea" cols="30" rows="5" formControlName="RSMPROYINV"></textarea>
         <p class="help is-danger" *ngIf="campoEsValido('RSMPROYINV')">Sobrepasaste el limite de caracteres</p>
       </div>
+      
   
       <div class="field">
         <label class="label">Alcance</label>
@@ -167,6 +168,29 @@
           </select>
         </div>
         <p class="help is-danger" *ngIf="campoEsValido('REAPROYINV')">Sobrepasaste el limite de caracteres</p>
+      </div>
+      <div class="field" id="campo_ad">
+        <label class="label">Volúmen:</label>
+        <input class="input" type="text" formControlName="VOLPROYINV">
+        <p class="help is-danger" *ngIf="campoEsValido('VOLPROYINV')">
+          Este campo es obligatorio
+        </p>
+      </div>
+      <div class="field">
+        <label for="" class="label">Número de página inicio – Número de pagina fin:</label>
+        <input class="input" type="text" formControlName="NUMPAGPROY"
+          [ngClass]="{'is-danger' : campoEsValido('NUMPAGPROY')}">
+        <p class="help is-danger" *ngIf="campoEsValido('NUMPAGPROY')">
+          Este campo debe llevar el formato: Página de inicio - Página de fin
+        </p>
+      </div>
+      <div class="field">
+        <label for="" class="label">Edición:</label>
+        <input class="input" type="text" formControlName="EDICPROY"
+          [ngClass]="{'is-danger' : campoEsValido('EDICPROY')}">
+        <p class="help is-danger" *ngIf="campoEsValido('EDICPROY')">
+          No se permiten los caracteres: {{signos}}
+        </p>
       </div>
       <div class="field">
         <label class="label">¿El proyecto ya fue realizado?</label>
@@ -218,11 +242,12 @@
       </div>
     </form>
   </div>
-  
-  <!--<span>Valid</span>
+ <!-- 
+  <span>Valid</span>
   <pre>{{ form.valid }}</pre>
   <br>
   
   <span>value</span>
   <pre>{{ form.value | json  }}</pre>
-  <br>-->
+  <br>
+ -->
