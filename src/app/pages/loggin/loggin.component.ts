@@ -23,7 +23,7 @@ export class LogginComponent implements OnInit {
       Swal.fire({  
         position: 'center',  
         icon: 'success',  
-        title: 'se a realizado una autenticación con exito, Bienvenido '+this.nameUser,  
+        title: 'Se ha realizado una autenticación con éxito, Bienvenido '+this.nameUser,  
         showConfirmButton: false,  
         timer: 2500  
       });
@@ -48,7 +48,7 @@ export class LogginComponent implements OnInit {
           Swal.fire({  
           position: 'center',  
           icon: 'success',  
-          title: 'se a realizado con exito una autenticación de usuario estandar',  
+          title: 'Se ha realizado con éxito una autenticación de usuario estandar',  
           showConfirmButton: false,  
           timer: 2500  
         });
@@ -57,7 +57,7 @@ export class LogginComponent implements OnInit {
           Swal.fire({  
           position: 'center',  
           icon: 'success',  
-          title: 'se a realizado una autenticación con exito, Bienvenido '+tipoUser,  
+          title: 'Se ha realizado una autenticación con éxito, Bienvenido '+tipoUser,  
           showConfirmButton: false,  
           timer: 2500  
         });

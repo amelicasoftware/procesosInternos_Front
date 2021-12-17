@@ -94,7 +94,7 @@ export class CapLibroCientificoComponent implements OnInit, OnDestroy {
       TPOACTPROY: new FormControl(''),
       INFADCPROY: new FormControl('', Validators.maxLength(3900)),
       AUTPROYINV: new FormControl(''),
-      NUMPAGPROY: new FormControl('', [Validators.maxLength(30), Validators.pattern("[1-9]+[ ]?-[ ]?[1-9]+")]),
+      NUMPAGPROY: new FormControl('', [Validators.maxLength(30), Validators.pattern("[1-9]+[0-9]*[ ]?-[ ]?[1-9]+[0-9]*")]),
       EDICPROY: new FormControl('', [Validators.maxLength(30), Validators.pattern("([0-9a-zA-ZáéíóúÁÉÍÓÚ]+[ ]?)+")]),
       CTDINTPROY: new FormControl('1'),
     });
