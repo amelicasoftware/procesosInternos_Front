@@ -14,7 +14,8 @@ import {Metodos} from '../metodos';
 export class LibrosDeDivulgacionComponent implements OnInit, OnDestroy {
   typeForm = new FormControl('Selecciona un formulario');
   charNoAc:string = "";
-  autor: FormControl = this.fb.control('', [Validators.required,Validators.pattern(Metodos.expreg())]);
+  autor: FormControl = this.fb.control('', [Validators.required, Validators.pattern(Metodos.expreg())]);
+  apellidoAutor: FormControl = this.fb.control('', [Validators.required, Validators.pattern(Metodos.expreg())]);
   pais = new FormControl('');
   form!: FormGroup;
   autores: String[] = [];
@@ -72,6 +73,7 @@ export class LibrosDeDivulgacionComponent implements OnInit, OnDestroy {
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(this.anioAct)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
+      listAutorAux: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl('', [Validators.required,Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
       VOLPROYINV: new FormControl(''),
       FTEPROYINV: new FormControl(''),
@@ -109,16 +111,22 @@ export class LibrosDeDivulgacionComponent implements OnInit, OnDestroy {
     return this.form.get('listAutor') as FormArray;
   }
 
+  get autoresArrAux() {
+    return this.form.get('listAutorAux') as FormArray;
+  }
+
   get paisesArr() {
     return this.form.get('CVEPAISPRO');
   }
 
-  addAutor(nombre: String, event: Event) {
+  addAutor(nombre: String, apellido: String, event: Event) {
     // event.preventDefault();
-    if (nombre !== '') {
-      this.autoresArr.push(this.fb.control(this.autor.value, Validators.required));
+    if (nombre !== '' && apellido) {
+      this.autoresArr.push(this.fb.control(`${this.autor.value} ${this.apellidoAutor.value}`, Validators.required));
+      this.autoresArrAux.push(this.fb.control(`${this.autor.value}||${this.apellidoAutor.value}`, Validators.required));
       console.log(this.autoresArr.length);
       this.autor.reset('');
+      this.apellidoAutor.reset('');
     } else {
 
     }
@@ -134,6 +142,7 @@ export class LibrosDeDivulgacionComponent implements OnInit, OnDestroy {
   }
   borrar(i: number) {
     this.autoresArr.removeAt(i);
+    this.autoresArrAux.removeAt(i);
   }
 
   guardar():number {
@@ -148,13 +157,13 @@ export class LibrosDeDivulgacionComponent implements OnInit, OnDestroy {
     this.form.controls.INSPROYINV.setValue(Metodos.cambioResumen(this.form.controls.INSPROYINV.value));
     this.form.controls.TPOACTPROY.setValue(Metodos.cambioResumen(this.form.controls.TPOACTPROY.value));
     this.form.controls.FTEPROYINV.setValue(Metodos.cambioResumen(this.form.controls.FTEPROYINV.value));
-    this.form.controls.AUTPROYINV.setValue(Metodos.cambioResumen(this.autoresArr.value.join(',')));
+    this.form.controls.AUTPROYINV.setValue(Metodos.cambioResumen(this.autoresArrAux.value.join(',')));
     this.form.controls.RSMPROYINV.setValue(Metodos.cambioResumen(this.form.controls.RSMPROYINV.value).replace(/(\r\n|\n|\r)/gm, " "));
     this.form.controls.INFADCPROY.setValue(Metodos.cambioResumen(this.form.controls.INFADCPROY.value).replace(/(\r\n|\n|\r)/gm, " "));
     this.form.controls.URLPROYINV.setValue(Metodos.cambioResumen(this.form.controls.URLPROYINV.value));
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
 
-    
+    this.form.removeControl('listAutorAux');
 
     // imprimir el valor del formulario, sólo si es válido
     if(!this.actualizacion){
@@ -198,7 +207,7 @@ export class LibrosDeDivulgacionComponent implements OnInit, OnDestroy {
   }
   limpiar(){
     this.autoresArr.clear();
-   
+    //this.autoresArrAux.clear();
     this.selectedCountry = [];
     this.buildForm();
     if(this.actualizacion)

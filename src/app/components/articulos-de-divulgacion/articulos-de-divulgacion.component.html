@@ -51,19 +51,27 @@
             <br />
           </span>
         </div>
-      </div>  
+      </div>
       <div class="field">
         <label class="label">Autor/es:</label>
         <div class="field has-addons">
           <div class="control has-icons-left">
-            <input type="text" class="input" placeholder="Escribe el nombre del autor" [formControl]="autor"
-              (keyup.enter)="addAutor(autor.value, $event)">
+            <input type="text" class="input" placeholder="Nombre del autor" [formControl]="autor"
+              (keyup.enter)="addAutor(autor.value, apellidoAutor.value, $event)">
             <span class="icon is-medium is-left">
               <i class="fa  fa-user"></i>
             </span>
           </div>
-          <div class="control"  (click)="addAutor(autor.value, $event)">
-            <button class="button is-info" [disabled]="autor.errors && autor.touched" >Agregar</button>
+          <div class="control has-icons-left">
+            <input type="text" class="input" placeholder="Apellido del autor" [formControl]="apellidoAutor"
+              (keyup.enter)="addAutor(autor.value, apellidoAutor.value, $event)">
+            <span class="icon is-medium is-left">
+              <i class="fa  fa-user"></i>
+            </span>
+          </div>
+          <div class="control" (click)="addAutor(autor.value, apellidoAutor.value, $event)">
+            <button class="button is-info"
+              [disabled]="autor.errors && autor.touched && apellidoAutor.errors && apellidoAutor.touched">Agregar</button>
           </div>
         </div>
         <p class="help is-danger" *ngIf="campoEsValido('listAutor')">
@@ -73,22 +81,20 @@
           Este campo es obligatorio y no se permiten los caracteres: {{signos}}
         </p>
       </div>
-  
       <label class="label" *ngIf="autoresArr.length>0">Lista de Autores</label>
-      <div formArrayName="listAutor">
-        <div class="field has-addons" *ngFor="let autor of autoresArr.controls; let i = index">
-          <div class="control has-icons-left">
-            <input type="text" class="input" [formControlName]="i" readonly="readonly">
-            <span class="icon is-medium is-left">
-              <i class="fa  fa-user"></i>
-            </span>
-          </div>
-          <div class="control" (click)="borrar(i)">
-            <a class="button is-danger">Eliminar</a>
-          </div>
+    <div formArrayName="listAutor">
+      <div class="field has-addons" *ngFor="let autor of autoresArr.controls; let i = index">
+        <div class="control has-icons-left">
+          <input type="text" class="input" [formControlName]="i" readonly="readonly">
+          <span class="icon is-medium is-left">
+            <i class="fa  fa-user"></i>
+          </span>
+        </div>
+        <div class="control" (click)="borrar(i)">
+          <a class="button is-danger">Eliminar</a>
         </div>
       </div>
-      
+    </div>    
       
   
       <div class="field">

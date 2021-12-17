@@ -25,6 +25,7 @@ import { DatosProyectoComponent } from './pages/datos-proyecto/datos-proyecto.co
 import { LogginComponent } from './pages/loggin/loggin.component';
 import { FooterComponent } from './components/footer/footer.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { FormatoAutoresPipe } from './formato-autores.pipe';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     HeaderComponent,
     DatosProyectoComponent,
     LogginComponent,
-    FooterComponent
+    FooterComponent,
+    FormatoAutoresPipe
   ],
   imports: [
     BrowserModule,

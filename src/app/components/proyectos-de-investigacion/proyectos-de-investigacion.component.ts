@@ -16,6 +16,7 @@ export class ProyectosDeInvestigacionComponent implements OnInit, OnDestroy {
   typeForm = new FormControl('Selecciona un formulario');
   charNoAc: string = "";
   autor: FormControl = this.fb.control('', [Validators.required, Validators.pattern(Metodos.expreg())]);
+  apellidoAutor: FormControl = this.fb.control('', [Validators.required, Validators.pattern(Metodos.expreg())]);
   pais = new FormControl('');
   form!: FormGroup;
   autores: String[] = [];
@@ -75,6 +76,7 @@ export class ProyectosDeInvestigacionComponent implements OnInit, OnDestroy {
       CVEPAISPRO: new FormControl([], [Validators.required, Validators.min(1)]),
       ANIOPROYINV: new FormControl('', [Validators.required, Validators.min(1980), Validators.max(2021)]),
       listAutor: this.fb.array([], [Validators.required, Validators.min(1)]),
+      listAutorAux: this.fb.array([], [Validators.required, Validators.min(1)]),
       listIns: this.fb.array([], [Validators.required, Validators.min(1)]),
       URLPROYINV: new FormControl('', [Validators.maxLength(200), Validators.pattern("http[s]?:(\/\/|s-ss-s).+")]),
       VOLPROYINV: new FormControl(''),
@@ -124,6 +126,10 @@ export class ProyectosDeInvestigacionComponent implements OnInit, OnDestroy {
     return this.form.get('listAutor') as FormArray;
   }
 
+  get autoresArrAux() {
+    return this.form.get('listAutorAux') as FormArray;
+  }
+
   get paisesArr() {
     return this.form.get('CVEPAISPRO');
   }
@@ -131,12 +137,14 @@ export class ProyectosDeInvestigacionComponent implements OnInit, OnDestroy {
     return this.form.get('listIns') as FormArray;
   }
 
-  addAutor(nombre: String, event: Event) {
+  addAutor(nombre: String, apellido: String, event: Event) {
     // event.preventDefault();
-    if (nombre !== '') {
-      this.autoresArr.push(this.fb.control(this.autor.value, Validators.required));
+    if (nombre !== '' && apellido) {
+      this.autoresArr.push(this.fb.control(`${this.autor.value} ${this.apellidoAutor.value}`, Validators.required));
+      this.autoresArrAux.push(this.fb.control(`${this.autor.value}||${this.apellidoAutor.value}`, Validators.required));
       console.log(this.autoresArr.length);
       this.autor.reset('');
+      this.apellidoAutor.reset('');
     } else {
 
     }
@@ -155,12 +163,19 @@ export class ProyectosDeInvestigacionComponent implements OnInit, OnDestroy {
 
   borrar(i: number) {
     this.autoresArr.removeAt(i);
+    this.autoresArrAux.removeAt(i);
   }
   borrarInst(i: number) {
     this.instArr.removeAt(i);
   }
 
   guardar() {
+
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+    
     console.log(this.autoresArr.value);
     console.log(this.paisesArr?.value);
     this.form.controls.AUTPROYINV.setValue('');
@@ -170,21 +185,16 @@ export class ProyectosDeInvestigacionComponent implements OnInit, OnDestroy {
     this.form.controls.TPOACTPROY.setValue(Metodos.cambioResumen(this.form.controls.TPOACTPROY.value));
     this.form.controls.FTEPROYINV.setValue(Metodos.cambioResumen(this.form.controls.FTEPROYINV.value));
     this.form.controls.INSPROYINV.setValue(Metodos.cambioResumen(this.instArr.value.join(',')));
-    this.form.controls.AUTPROYINV.setValue(Metodos.cambioResumen(this.autoresArr.value.join(',')));
+    this.form.controls.AUTPROYINV.setValue(Metodos.cambioResumen(this.autoresArrAux.value.join(',')));
     this.form.controls.RSMPROYINV.setValue(Metodos.cambioResumen(this.form.controls.RSMPROYINV.value).replace(/(\r\n|\n|\r)/gm, " "));
     this.form.controls.INFADCPROY.setValue(Metodos.cambioResumen(this.form.controls.INFADCPROY.value).replace(/(\r\n|\n|\r)/gm, " "));
     this.form.controls.URLPROYINV.setValue(Metodos.cambioResumen(this.form.controls.URLPROYINV.value));
     this.form.controls.TITPROYINV.setValue(this.formatoTitulo(this.form.controls.TITPROYINV.value));
+    console.log(typeof this.paisesArr?.value )
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
 
     
-
-    delete this.form.value.listIns;
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
-
+    this.form.removeControl('listAutorAux');
     // imprimir el valor del formulario, sólo si es válido
     if (!this.actualizacion) {
       this.servicesForm.postDatos(this.form).subscribe(mensaje => {
@@ -230,7 +240,7 @@ export class ProyectosDeInvestigacionComponent implements OnInit, OnDestroy {
     // this.erroalert();
   }
   limpiar() {
-
+    //this.autoresArr.clear();
     this.instArr.clear();
     //this.form.reset();
     this.buildForm();
