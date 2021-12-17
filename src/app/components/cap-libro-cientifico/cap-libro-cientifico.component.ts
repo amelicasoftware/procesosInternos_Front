@@ -145,7 +145,7 @@ export class CapLibroCientificoComponent implements OnInit, OnDestroy {
     // event.preventDefault();
     if (nombre !== '') {
       this.autoresLibArr.push(this.fb.control(`${this.autorLib.value} ${this.apellidosLib.value}`, Validators.required));
-      this.autoresLibArrAux.push(this.fb.control(`${this.autorLib.value} ${this.apellidosLib.value}`, Validators.required));
+      this.autoresLibArrAux.push(this.fb.control(`${this.autorLib.value}||${this.apellidosLib.value}`, Validators.required));
       console.log(this.autoresLibArr.length);
       this.autorLib.reset('');
       this.apellidosLib.reset('');
@@ -156,9 +156,11 @@ export class CapLibroCientificoComponent implements OnInit, OnDestroy {
 
   borrar(i: number) {
     this.autoresArr.removeAt(i);
+    this.autoresArrAux.removeAt(i);
   }
   borrarLib(i: number) {
     this.autoresLibArr.removeAt(i);
+    this.autoresLibArrAux.removeAt(i);
   }
 
   guardar(): number {
@@ -173,17 +175,18 @@ export class CapLibroCientificoComponent implements OnInit, OnDestroy {
     this.form.controls.INSPROYINV.setValue(Metodos.cambioResumen(this.form.controls.INSPROYINV.value));
     this.form.controls.TPOACTPROY.setValue(Metodos.cambioResumen(this.form.controls.TPOACTPROY.value));
     this.form.controls.FTEPROYINV.setValue(Metodos.cambioResumen(this.form.controls.FTEPROYINV.value));
-    this.form.controls.AUTPROYINV.setValue(Metodos.cambioResumen(this.autoresArr.value.join(',')));
+    this.form.controls.AUTPROYINV.setValue(Metodos.cambioResumen(this.autoresArrAux.value.join(',')));
     this.form.controls.URLPROYINV.setValue(Metodos.cambioResumen(this.form.controls.URLPROYINV.value));
     this.form.controls.RSMPROYINV.setValue(Metodos.cambioResumen(this.form.controls.RSMPROYINV.value).replace(/(\r\n|\n|\r)/gm, " "));
     this.form.controls.INFADCPROY.setValue(Metodos.cambioResumen(this.form.controls.INFADCPROY.value).replace(/(\r\n|\n|\r)/gm, " "));
-    this.form.controls.AUTPADPROY.setValue(Metodos.cambioResumen(this.autoresLibArr.value.join(',')));
+    this.form.controls.AUTPADPROY.setValue(Metodos.cambioResumen(this.autoresLibArrAux.value.join(',')));
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
-    delete this.form.value.listAutorLib;
     this.form.removeControl('listAutorAux');
     this.form.removeControl('listAutorLibAux');
-    this.form.removeControl('listAutorLib');
-
+    // console.log(this.form.controls.listAutorLib.value);
+    // (this.form.controls['listAutorLib'] as FormArray).clear();
+    // console.log(this.form.controls.listAutorLib.value);
+    
     // imprimir el valor del formulario, sólo si es válido
     if (!this.actualizacion) {
       this.servicesForm.postDatos(this.form).subscribe(mensaje => {
