@@ -4,40 +4,48 @@
     <form [formGroup]="form" class="box">
       <!-- ok -->
       <div class="field">
-        <label class="label">Autor:</label>
+        <label class="label">Autor/es:</label>
         <div class="field has-addons">
           <div class="control has-icons-left">
-            <input type="text" class="input" placeholder="Escribe el nombre del autor" [formControl]="autor"
-              (keyup.enter)="addAutor(autor.value, $event)">
+            <input type="text" class="input" placeholder="Nombre del autor" [formControl]="autor"
+              (keyup.enter)="addAutor(autor.value, apellidoAutor.value, $event)">
             <span class="icon is-medium is-left">
               <i class="fa  fa-user"></i>
             </span>
           </div>
-          <div class="control"  (click)="addAutor(autor.value, $event)">
-            <button class="button is-info" [disabled]="autor.errors && autor.touched" >Agregar</button>
+          <div class="control has-icons-left">
+            <input type="text" class="input" placeholder="Apellido del autor" [formControl]="apellidoAutor"
+              (keyup.enter)="addAutor(autor.value, apellidoAutor.value, $event)">
+            <span class="icon is-medium is-left">
+              <i class="fa  fa-user"></i>
+            </span>
+          </div>
+          <div class="control" (click)="addAutor(autor.value, apellidoAutor.value, $event)">
+            <button class="button is-info"
+              [disabled]="autor.errors && autor.touched && apellidoAutor.errors && apellidoAutor.touched">Agregar</button>
           </div>
         </div>
-        <p class="help is-danger" *ngIf="campoEsValido('listAutor')">
-          Debe agregar por lo menos un autor
+        <p class="help is-danger" *ngIf="campoEsValido('listAutor') || this.autoresArr.length<1">
+          Debe agregar solo un autor
         </p>
         <p class="help is-danger" *ngIf="autor.errors && autor.touched">
           Este campo es obligatorio y no se permiten los caracteres: {{signos}}
         </p>
       </div>
-      <label class="label" *ngIf="autoresArr.length>0 && 1>autoresArr.length">Autor</label>
-      <div formArrayName="listAutor">
-        <div class="field has-addons" *ngFor="let autor of autoresArr.controls; let i = index">
-          <div class="control has-icons-left">
-            <input type="text" class="input" [formControlName]="i" readonly="readonly">
-            <span class="icon is-medium is-left">
-              <i class="fa  fa-user"></i>
-            </span>
-          </div>
-          <div class="control" (click)="borrar(i)">
-            <a class="button is-danger">Eliminar</a>
-          </div>
+      <label class="label" *ngIf="autoresArr.length>0">Lista de Autores</label>
+    <div formArrayName="listAutor">
+      <div class="field has-addons" *ngFor="let autor of autoresArr.controls; let i = index">
+        <div class="control has-icons-left">
+          <input type="text" class="input" [formControlName]="i" readonly="readonly">
+          <span class="icon is-medium is-left">
+            <i class="fa  fa-user"></i>
+          </span>
+        </div>
+        <div class="control" (click)="borrar(i)">
+          <a class="button is-danger">Eliminar</a>
         </div>
       </div>
+    </div>
       <div class="field">
         <label for="" class="label">Título del proyecto:</label>
         <input class="input" type="text" formControlName="TITPROYINV"

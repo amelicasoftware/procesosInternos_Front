@@ -33,6 +33,8 @@ export class ServicesFormService {
   postDatos(form: any): Observable<any>{
     delete form.value.listAutor;
     delete form.value.listAutorLib;
+    delete form.value.listIns;
+
     console.log(`${this.urlService}sendRegisterOfProy/${JSON.stringify(form.value)}`);
     return this.http.post(`${this.urlService}sendRegisterOfProy/${JSON.stringify(form.value)}`, (mensaje: String) =>{
       console.log(mensaje);
@@ -57,6 +59,7 @@ export class ServicesFormService {
   postUpdateProject(form: any): Observable<any>{
     delete form.value.listAutor;
     delete form.value.listAutorLib;
+    delete form.value.listIns;
     console.log(`${this.urlService}sendUpdateOfProy/${JSON.stringify(form.value)}`);
     return this.http.post(`${this.urlService}sendUpdateOfProy/${JSON.stringify(form.value)}`, (mensaje: String) =>{
       console.log(mensaje);

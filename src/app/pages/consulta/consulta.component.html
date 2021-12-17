@@ -224,7 +224,7 @@
             ><br />
             <span><b>Título de artículo:</b> {{ proyecto.titproyinv }}</span
             ><br />
-            <span><b>Autor/es:</b> {{ proyecto.autproyinv }}</span
+            <span><b>Autor/es:</b> {{proyecto.autproyinv | formatoAutores }}</span
             ><br />
             <span><b>Resumen:</b> {{ proyecto.rsmproyinv }}</span
             ><br />
@@ -234,8 +234,9 @@
             <div
               class="cite"
               attr.id="{{ proyecto.cveproyinv }}_cite"
+              style="display: none;"
             >
-              {{ proyecto.autproyinv }}. ({{ proyecto.anioproyinv }}).
+            {{proyecto.autproyinv | formatoAutores }}. ({{ proyecto.anioproyinv }}).
               {{ proyecto.titproyinv }}. {{ proyecto.fteproyinv }} , {{ proyecto.volproyinv }} . <span  id="campo_ad" *ngIf="proyecto.numpagproy">
               {{ proyecto.numpagproy }} .</span
               >{{ proyecto.urlproyinv }}
@@ -291,7 +292,7 @@
             ><br />
             <span><b>Titulo del libro:</b> {{ proyecto.titproyinv }}</span
             ><br />
-            <span><b>Autor/es del libro:</b> {{ proyecto.autproyinv }}</span
+            <span><b>Autor/es del libro:</b> {{proyecto.autproyinv | formatoAutores }}</span
             ><br />
             <span><b>Editorial:</b> {{ proyecto.insproyinv }}</span
             ><br />
@@ -306,7 +307,7 @@
               attr.id="{{ proyecto.cveproyinv }}_cite"
               style="display: none"
             >
-              {{ proyecto.autproyinv }}. ({{ proyecto.anioproyinv }}).
+            {{proyecto.autproyinv | formatoAutores }}. ({{ proyecto.anioproyinv }}).
               {{ proyecto.titproyinv }}. {{ proyecto.insproyinv }}. {{ proyecto.urlproyinv }}
             </div>
           </div>
@@ -314,7 +315,7 @@
             class="content"
             *ngIf="proyecto.tpoproyinv == 'Conferencias especializadas'"
           >
-            <span><b>Ponente/conferencista:</b> {{ proyecto.autproyinv }}</span
+            <span><b>Ponente/conferencista:</b> {{proyecto.autproyinv | formatoAutores }}</span
             ><br />
             <span
               ><b>Título de la conferencia:</b> {{ proyecto.titproyinv }}</span
@@ -337,7 +338,7 @@
               attr.id="{{ proyecto.cveproyinv }}_cite"
               style="display: none;"
             >
-              {{ proyecto.autproyinv }}. ({{ proyecto.feccapproy.split('-') }}).
+            {{proyecto.autproyinv | formatoAutores }}. ({{ proyecto.feccapproy.split('-') }}).
               <i>{{ proyecto.titproyinv }}.</i>
               {{ proyecto.tpoactproy }} <span id="campo_ad" *ngIf="proyecto.urlproyinv">. {{ proyecto.urlproyinv }} </span>
             </div>
@@ -356,14 +357,14 @@
             ><br />
             <span><b>Año:</b> {{ proyecto.anioproyinv }}</span
             ><br />
-            <span><b>Autor/es:</b> {{ proyecto.autproyinv }}</span
+            <span><b>Autor/es:</b> {{proyecto.autproyinv | formatoAutores }}</span
               ><br />
             <div
               class="cite"
               attr.id="{{ proyecto.cveproyinv }}_cite"
               style="display: none;"
             >
-              {{ proyecto.autproyinv }}. ({{ proyecto.feccapproy.split('-')  }}). {{
+            {{proyecto.autproyinv | formatoAutores }}. ({{ proyecto.feccapproy.split('-')  }}). {{
                 proyecto.titproyinv }}. {{ proyecto.urlproyinv }}
             </div>
           </div>
@@ -376,7 +377,7 @@
             ><br />
             <span><b>Título del libro:</b> {{ proyecto.titproyinv }}</span
             ><br />
-            <span><b>Autor/es del libro:</b> {{ proyecto.autproyinv }}</span
+            <span><b>Autor/es del libro:</b> {{proyecto.autproyinv | formatoAutores }}</span
             ><br />
             <span><b>Editorial:</b> {{ proyecto.insproyinv }}</span
             ><br />
@@ -392,7 +393,7 @@
               attr.id="{{ proyecto.cveproyinv }}_cite"
               style="display: none;"
             >
-              {{ proyecto.autproyinv }}. ({{ proyecto.anioproyinv }}). {{ proyecto.titproyinv }}. <span  id="campo_ad" *ngIf="proyecto.numpagproy"> ( P. {{ proyecto.numpagproy }}).</span> {{ proyecto.insproyinv }}. {{ proyecto.urlproyinv }}
+            {{proyecto.autproyinv | formatoAutores }}. ({{ proyecto.anioproyinv }}). {{ proyecto.titproyinv }}. <span  id="campo_ad" *ngIf="proyecto.numpagproy"> ( P. {{ proyecto.numpagproy }}).</span> {{ proyecto.insproyinv }}. {{ proyecto.urlproyinv }}
             </div>
           </div>
           <div
@@ -414,7 +415,7 @@
             class="content"
             *ngIf="proyecto.tpoproyinv == 'Dirección de tesis'"
           >
-            <span><b>Autor:</b> {{ proyecto.autproyinv }}</span
+            <span><b>Autor:</b> {{proyecto.autproyinv | formatoAutores }}</span
             ><br />
             <span><b>Título del proyecto:</b> {{ proyecto.titproyinv }}</span
             ><br />
@@ -429,7 +430,7 @@
               attr.id="{{ proyecto.cveproyinv }}_cite"
               style="display: none"
             >
-              {{ proyecto.autproyinv }}. {{ proyecto.titproyinv }}. [fecha de
+            {{proyecto.autproyinv | formatoAutores }}. {{ proyecto.titproyinv }}. [fecha de
               consulta {{ fecha }}].
             </div>
           </div>
@@ -454,7 +455,7 @@
             <span><b>Síntesis:</b> {{ proyecto.rsmproyinv }}</span
             ><br />
             <span id="campo_ad" *ngIf="proyecto.autproyinv">
-              <b>Autor/es:</b> {{ proyecto.autproyinv }}</span>
+              <b>Autor/es:</b> {{proyecto.autproyinv | formatoAutores }}</span>
               <br />
             <span class="doi"id="campo_ad" *ngIf="proyecto.urlproyinv">
                 <b>DOI/Enlace:</b><br>  {{ proyecto.urlproyinv }} </span>
@@ -463,7 +464,7 @@
               attr.id="{{ proyecto.cveproyinv }}_cite"
               style="display: none;"
             >
-            <span id="campo_ad" *ngIf="proyecto.autproyinv"> {{ proyecto.autproyinv }}. </span> ({{ proyecto.anioproyinv }}).
+            <span id="campo_ad" *ngIf="proyecto.autproyinv"> {{proyecto.autproyinv | formatoAutores }}. </span> ({{ proyecto.anioproyinv }}).
               {{ proyecto.titproyinv }}. {{ proyecto.insproyinv }} . <span class="doi"id="campo_ad" *ngIf="proyecto.urlproyinv"> {{ proyecto.urlproyinv }} </span>
             </div>
           </div>
@@ -484,7 +485,7 @@
             ><br />
             <span><b>Año:</b> {{ proyecto.anioproyinv }}</span
             ><br />
-            <span><b>Coordinadores:</b> {{ proyecto.autproyinv }}</span
+            <span><b>Coordinadores:</b> {{proyecto.autproyinv | formatoAutores }}</span
             ><br />
             <span><b>Síntesis:</b> {{ proyecto.rsmproyinv }}</span
             ><br />
@@ -493,7 +494,7 @@
               attr.id="{{ proyecto.cveproyinv }}_cite"
               style="display: none"
             >
-              {{ proyecto.autproyinv }}. {{ proyecto.titproyinv }}. [fecha de
+            {{proyecto.autproyinv | formatoAutores }}. {{ proyecto.titproyinv }}. [fecha de
               consulta {{ fecha }}].
             </div>
           </div>
