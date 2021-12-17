@@ -169,6 +169,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   borrar(i: number) {
     this.autoresArr.removeAt(i);
+    this.autoresArrAux.removeAt(i);
   }
 
   guardar(): number {
