@@ -82,6 +82,42 @@ html, body {
     overflow-y: scroll;
   }
 
+  .paginador{
+    display: flex;
+    justify-content: center;
+  }
+  .my-pagination .ngx-pagination .current {
+    background: red;
+    padding: 0.5rem 0.625rem;
+  }
+  .my-pagination .ngx-pagination .pagination-previous {
+    background: #6a747d;
+    border-radius: 4px;
+  
+  }
+  .my-pagination .ngx-pagination .pagination-next {
+    background: #6a747d;
+    border-radius: 4px;
+    
+  }
+  .my-pagination .ngx-pagination .pagination-next a{
+    display: inline;
+    color: #fff;
+  }
+  .my-pagination .ngx-pagination .pagination-next a:hover{
+    display: inline;
+    background: #6a747d;
+  }
+  .my-pagination .ngx-pagination .pagination-previous a{
+    display: inline;
+    background: #6a747d;
+    color: #fff;
+  }
+  .my-pagination .ngx-pagination .pagination-previous a:hover {
+    display: inline;
+    background: #6a747d;
+  }
+
   /* Estilo para campos que no estan en el excel 
   #campo_ad{
     display: none;
