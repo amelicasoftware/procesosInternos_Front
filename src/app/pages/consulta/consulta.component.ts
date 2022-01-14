@@ -11,7 +11,7 @@ declare var $: any;
   styleUrls: ['./consulta.component.css']
 })
 export class ConsultaComponent implements OnInit {
-  title = 'Counsulta de proyectos de investigación';
+  title = 'Consulta de proyectos de investigación';
   headers = ["agdredproy",
     "alcproyinv",
     "anioproyinv",
@@ -45,6 +45,7 @@ export class ConsultaComponent implements OnInit {
   listFillterInicios: Array<String> = [];
   listFillterFines: Array<String> = [];
   stateSidebar = "show";
+  statePeriod = "hide";
   totalOfResults = String;
   banSearch = "false";
   f = new Date();
@@ -162,20 +163,44 @@ export class ConsultaComponent implements OnInit {
     }
   }
   validateViewMonth() {
+    var ngInstance=this;
     $(document).ready(function () {
       setTimeout(function () {
         $(document).ready(function () {
           var filtro = $(".containerFiltros").find("#fill-Mes label").first().html();
           console.log("validando filtro de mes view:::" + filtro);
-          if (filtro == "" || filtro == null) {
+          var sizeAnios = ngInstance.listFillterAnios != null ? ngInstance.listFillterAnios.length : 0;
+          var sizeMeses = ngInstance.listFillterMeses != null ? ngInstance.listFillterMeses.length : 0;
+          
+          if(sizeAnios>0){
+            if(sizeMeses==0){
+              if (ngInstance.dataBusqueda.PERIIN=="" || ngInstance.dataBusqueda.PERIFIN=="") {
+                ngInstance.statePeriod="show";
+                $(".containerFiltros").find(".fill-Periodo").attr("style", "display: block !important;");
+                
+              }else if(ngInstance.statePeriod=="show"){
+                $(".containerFiltros").find("#fill-Mes").attr("style", "display: none !important;");
+                console.log("ocultando filtro de mes periodo lleno:::");
+              }
+            }else{
+              ngInstance.statePeriod="hide";
+              $(".containerFiltros").find(".fill-Periodo").attr("style", "display: none !important;");
+              if (filtro == "" || filtro == null  ) {
+                console.log("ocultando filtro de mes sin año:::" + sizeAnios);
+                $(".containerFiltros").find("#fill-Mes").attr("style", "display: none !important;");
+              } else {
+                console.log("mostrando filtro de mes con año:::" + sizeAnios);
+                $(".containerFiltros").find("#fill-Mes").attr("style", "display: block !important;");
+              }
+            }
+            
+          }else{
+            console.log("sin seleccion de año:::" + sizeAnios);
             $(".containerFiltros").find("#fill-Mes").attr("style", "display: none !important;");
-            $(".containerFiltros").find(".fill-Periodo").attr("style", "display: none !important;");
-          } else {
-            $(".containerFiltros").find("#fill-Mes").attr("style", "display: block !important;");
-            $(".containerFiltros").find(".fill-Periodo").attr("style", "display: block !important;");
+            //$(".containerFiltros").find(".fill-Periodo").attr("style", "display: none !important;");
           }
         });
-      }, 1500);
+      }, 5500);
     });
   }
   prepareSearch() {

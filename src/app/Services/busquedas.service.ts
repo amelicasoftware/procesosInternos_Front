@@ -35,7 +35,7 @@ var dataBusqueda=JSON.parse(str);
     return this.http.get<any>(url).toPromise()
   }
   sendInfo() { 
-    var jsonInsert='{"TITPROYINV":"Articulo angular de prueba ANG",'+
+    var jsonInsert='{"TITPROYINV":"política social en america latina prueba cors firefox",'+
         '"TPOPROYINV":"Artículos científicos",'+
         '"ANIOPROYINV":1999,'+
         '"MESPROYINV":"Octubre",'+
@@ -55,14 +55,16 @@ var dataBusqueda=JSON.parse(str);
         '"AGDREDPROY":"si",'+
         '"TPOACTPROY":"comunicación",'+
         '"INFADCPROY":"Este articulo es una prueba",'+
-        '"CVEPAISPRO":"5"'+
+        '"CVEPAISPRO":"5",'+
+        '"NUMPAGPROY":"p",'+
+        '"EDICPROY":"p"'+
         '}';
         var url='http://148.215.24.22:9084/boardInvestigacion/service/ds/sendRegisterOfProy/'+jsonInsert
     return this.http.post<any>(url,"").toPromise()
   }
   editInfo() { 
     var jsonUpdate='{"CVEPROYINV":"34",'+
-        '"TITPROYINV":"política social en america latina",'+
+        '"TITPROYINV":"política social en america latina prueba edit cors firefox",'+
         '"TPOPROYINV":"Artículos científicos",'+
         '"ANIOPROYINV":2019,'+
         '"MESPROYINV":"Octubre",'+
@@ -82,7 +84,9 @@ var dataBusqueda=JSON.parse(str);
         '"AGDREDPROY":"si",'+
         '"TPOACTPROY":"comunicación",'+
         '"INFADCPROY":"Este articulo es una prueba",'+
-        '"CVEPAISPRO":"73,5"'+
+        '"CVEPAISPRO":"73,5",'+
+        '"NUMPAGPROY":"p",'+
+        '"EDICPROY":"p"'+
         '}';
         var url='http://148.215.24.22:9084/boardInvestigacion/service/ds/sendUpdateOfProy/'+jsonUpdate
     return this.http.post<any>(url,"").toPromise()

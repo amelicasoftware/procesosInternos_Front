@@ -18,7 +18,7 @@
       >
         Buscar
       </button>
-      <!--<button class="button is-4" (click)="createNewRegister()">New register</button>-->
+      <button class="button is-4" (click)="createNewRegister()">Hacer registro rapido</button>
     </div>
     <div class="container-options-filter">
       <h4 class="subtitle">Restringe los resultados por:</h4>
@@ -120,7 +120,7 @@
       <div
         class="filtro fill-Periodo"
         [ngStyle]="{
-          display: listFillterAnios.length > 0 ? 'initial' : 'none'
+          display: ( listFillterAnios.length > 0 && listFillterMeses.length == 0 && statePeriod == 'show') ? 'initial' : 'none'
         }"
       >
         <h5 class="tit-filter">Periodo:</h5>
@@ -152,7 +152,7 @@
         </div>
       </div>
       <div class="filtro fill-Apply">
-        <button class="btn-apply" (click)="prepareSearch()">Aplicar filtros</button>
+        <button class="btn-apply" (click)="prepareSearch()" style="cursor: pointer;">Aplicar filtros</button>
       </div>
     </div>
   </div>
