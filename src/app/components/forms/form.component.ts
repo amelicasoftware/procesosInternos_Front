@@ -21,7 +21,8 @@ export class FormComponent implements OnInit, OnDestroy {
   apellidoAutor: FormControl = this.fb.control('', [Validators.required, Validators.pattern(Metodos.expreg())]);
   pais = new FormControl('');
   form!: FormGroup;
-  anioAct: number = 2021;
+  anio: Date = new Date();
+  anioAct: number = this.anio.getFullYear();
   selectedCountry: any = [];
   autores: String[] = [];
   lista: any[] = [];
@@ -114,7 +115,7 @@ export class FormComponent implements OnInit, OnDestroy {
       integrantes: new FormControl(''),
       ALCPROYINV: new FormControl('', [Validators.required]),
       PRDPROYINV: new FormControl(''),
-      NUMPAGPROY: new FormControl('', [Validators.maxLength(30), Validators.pattern("[1-9]+[ ]?-[ ]?[1-9]+")]),
+      NUMPAGPROY: new FormControl('', [Validators.maxLength(30), Validators.pattern("[1-9]+[0-9]*[ ]?-[ ]?[1-9]+[0-9]*")]),
       EDICPROY: new FormControl(''),
       MESPROYINV: new FormControl(''),
       FECCAPPROY: new FormControl(''),

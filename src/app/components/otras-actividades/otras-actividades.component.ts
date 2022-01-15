@@ -23,7 +23,8 @@ export class OtrasActividadesComponent implements OnInit, OnDestroy {
   selectedCountry: any = [];
   institucion: FormControl = this.fb.control('', [Validators.required, Validators.pattern(this.charNoAc)]);
   signos: string = Metodos.simbolos();
-
+  anio: Date = new Date();
+  anioAct: number = this.anio.getFullYear();
   actualizacion = false;
 
   formSubscription!: Subscription;

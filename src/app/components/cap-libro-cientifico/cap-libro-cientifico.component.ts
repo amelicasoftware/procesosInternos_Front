@@ -25,7 +25,8 @@ export class CapLibroCientificoComponent implements OnInit, OnDestroy {
   lista: any[] = [];
   dato: boolean = true;
   selectedCountry: any = [];
-  anioAct: number = 2021;
+  anio: Date = new Date();
+  anioAct: number = this.anio.getFullYear();
   signos: string = Metodos.simbolos();
 
   formSubscription!: Subscription;

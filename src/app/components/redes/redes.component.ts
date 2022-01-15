@@ -24,7 +24,8 @@ export class RedesComponent implements OnInit, OnDestroy {
   dato: boolean = true;
   fecha: string = '';
   selectedCountry: any = [];
-  anioAct: number = 2021;
+  anio: Date = new Date();
+  anioAct: number = this.anio.getFullYear();
   signos: string = Metodos.simbolos();
   expreg: String = "(Enero|enero|Febrero|febrero|marzo|Marzo|Abril|abril|mayo|Mayo|junio|Junio|julio|Julio|Agosto|agosto|Septiembre|septiembre|octubre|Octubre|Noviembre|noviembre|Diciembre|diciembre)" +
     "[ ]?-[ ]?(Enero|enero|Febrero|febrero|marzo|Marzo|Abril|abril|mayo|Mayo|junio|Junio|julio|Julio|Agosto|agosto|Septiembre|septiembre|octubre|Octubre|Noviembre|noviembre|Diciembre|diciembre)";

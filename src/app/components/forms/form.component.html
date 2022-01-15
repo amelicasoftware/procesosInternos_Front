@@ -2,9 +2,9 @@
   <form [formGroup]="form" class="box">
 
     <!-- <h2>Formulario Artículos científicos</h2> -->
-
+    <FONT class="obligatorio" COLOR="red">*Obligatorio</FONT><br><br>
     <div class="field">
-      <label class="label"> DOI/Enlace:</label>
+      <label class="label"> DOI/Enlace: <FONT class="obligatorio"  COLOR="red">*</FONT></label>
       <input class="input" type="email" placeholder="https://www.redalyc.org/articulo.oa?id=10411213"
         formControlName="URLPROYINV" [ngClass]="{'is-danger' : campoEsValido('URLPROYINV')}">
       <p class="help is-danger" *ngIf="campoEsValido('URLPROYINV')">
@@ -12,7 +12,7 @@
       </p>
     </div>
     <div class="field">
-      <label class="label">Revista:</label>
+      <label class="label">Revista: <FONT class="obligatorio"  COLOR="red">*</FONT></label>
       <input class="input" type="text" formControlName="FTEPROYINV"
         [ngClass]="{'is-danger' : campoEsValido('FTEPROYINV')}">
       <p class="help is-danger" *ngIf="campoEsValido('FTEPROYINV')">
@@ -27,7 +27,7 @@
       </p>
     </div>
     <div class="field">
-      <label class="label">Año</label>
+      <label class="label">Año <FONT class="obligatorio"  COLOR="red">*</FONT></label>
       <div class="control">
         <input type="number" class="input" placeholder="" formControlName="ANIOPROYINV" ngModel name="anioActual"
           [ngClass]="{ 'is-danger': campoEsValido('ANIOPROYINV') }" />
@@ -38,14 +38,14 @@
       </div>
     </div>
     <div class="field">
-      <label class="label">País:</label>
+      <label class="label">País: <FONT class="obligatorio"  COLOR="red">*</FONT></label>
       <ng-select class="select is-multiple" [multiple]="true" [formControl]="pais" [ngModel]="selectedCountry">
         <ng-option *ngFor="let item of lista" [value]="item.cveentnac">{{item.nomentnac}}</ng-option>
       </ng-select>
       <p class="help is-danger" *ngIf="campoEsValido('CVEPAISPRO')">Debe agregar por lo menos un país</p>
     </div>
     <div class="field">
-      <label for="" class="label">Título de artículo:</label>
+      <label for="" class="label">Título de artículo: <FONT class="obligatorio"  COLOR="red">*</FONT></label>
       <input class="input" type="text" formControlName="TITPROYINV"
         [ngClass]="{'is-danger' : campoEsValido('TITPROYINV')}">
       <p class="help is-danger" *ngIf="campoEsValido('TITPROYINV')">
@@ -53,7 +53,7 @@
       </p>
     </div>
     <div class="field">
-      <label class="label">Autor/es:</label>
+      <label class="label">Autor/es: <FONT class="obligatorio"  COLOR="red">*</FONT></label>
       <div class="field has-addons">
         <div class="control has-icons-left">
           <input type="text" class="input" placeholder="Nombre del autor" [formControl]="autor"
@@ -115,7 +115,7 @@
     
 
     <div class="field">
-      <label class="label">Alcance</label>
+      <label class="label">Alcance <FONT class="obligatorio"  COLOR="red">*</FONT></label>
       <div class="select" [ngClass]="{'is-danger' : campoEsValido('ALCPROYINV')}">
         <select formControlName="ALCPROYINV">
           <option value="Institucional">Institucional</option>
@@ -128,7 +128,7 @@
     </div>
 
     <div class="field">
-      <label class="label">¿El proyecto ya fue realizado?</label>
+      <label class="label">¿El proyecto ya fue realizado? <FONT class="obligatorio"  COLOR="red">*</FONT></label>
       <div class="control">
         <label class="radio">
           <input type="radio" name="REAPROYINV" formControlName="REAPROYINV" value=1 (click)="deshabilitar()">
@@ -143,7 +143,7 @@
     </div>
 
     <div class="field" *ngIf="des == true">
-      <label class="label">¿Quisiera que este proyecto formara parte de la agenda de eventos de Redalyc?</label>
+      <label class="label">¿Quisiera que este proyecto formara parte de la agenda de eventos de Redalyc? <FONT class="obligatorio"  COLOR="red">*</FONT></label>
       <div class="control">
         <label class="radio">
           <input type="radio" name="AGDREDPROY" formControlName="AGDREDPROY" value="si">

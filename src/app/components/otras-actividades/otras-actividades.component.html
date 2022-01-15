@@ -1,7 +1,8 @@
 <div class="container is-widescreen">
     <form [formGroup]="form" class="box">
+      <FONT class="obligatorio" COLOR="red">*Obligatorio</FONT><br><br>
       <div class="field">
-        <label for="" class="label">Actividad:</label>
+        <label for="" class="label">Actividad: <FONT class="obligatorio" COLOR="red">*</FONT></label>
         <input class="input" type="text" formControlName="TITPROYINV"
           [ngClass]="{'is-danger' : campoEsValido('TITPROYINV')}">
         <p class="help is-danger" *ngIf="campoEsValido('TITPROYINV')">
@@ -10,7 +11,7 @@
       </div>
       
       <div class="field">
-        <label class="label">Tipo de actividad:</label>
+        <label class="label">Tipo de actividad: <FONT class="obligatorio" COLOR="red">*</FONT></label>
         <input class="input" type="text" formControlName="TPOACTPROY"
           [ngClass]="{'is-danger' : campoEsValido('TPOACTPROY')}">
         <p class="help is-danger" *ngIf="campoEsValido('TPOACTPROY')">
@@ -18,14 +19,14 @@
         </p>
       </div>
 
-      <label class="label">Año: </label>
+      <label class="label">Año: <FONT class="obligatorio" COLOR="red">*</FONT></label>
       <input class="input" type="number" formControlName="ANIOPROYINV"
         [ngClass]="{'is-danger' : campoEsValido('ANIOPROYINV')}">
       <p class="help is-danger" *ngIf="campoEsValido('ANIOPROYINV')">
-        Este campo solo acepta caracteres numericos entre 1980 y 2021
+        Este campo solo acepta caracteres numericos entre 1980 y {{anioAct}}
       </p>
       <div class="field">
-        <label class="label">Institución</label>
+        <label class="label">Institución <FONT class="obligatorio" COLOR="red">*</FONT></label>
         <input class="input" type="text" formControlName="INSPROYINV"
           [ngClass]="{'is-danger' : campoEsValido('INSPROYINV')}">
         <p class="help is-danger" *ngIf="campoEsValido('INSPROYINV')">
@@ -42,7 +43,7 @@
     </div>
   
     <div class="field">
-      <label class="label">Alcance</label>
+      <label class="label">Alcance <FONT class="obligatorio" COLOR="red">*</FONT></label>
       <div class="select" [ngClass]="{'is-danger' : campoEsValido('ALCPROYINV')}">
         <select formControlName="ALCPROYINV">
           <option value="Institucional">Institucional</option>
@@ -55,7 +56,7 @@
     </div>
      <!-- ok -->
      <div class="field">
-      <label class="label">¿El proyecto ya fue realizado?</label>
+      <label class="label">¿El proyecto ya fue realizado? <FONT class="obligatorio" COLOR="red">*</FONT></label>
       <div class="control">
         <label class="radio">
           <input type="radio" name="REAPROYINV" formControlName="REAPROYINV" value=1 (click)="deshabilitar()">
@@ -70,7 +71,7 @@
     </div>    
         
     <div class="field" *ngIf="des == true">
-      <label class="label">¿Quisiera que este proyecto formara parte de la agenda de eventos de Redalyc?</label>
+      <label class="label">¿Quisiera que este proyecto formara parte de la agenda de eventos de Redalyc? <FONT class="obligatorio" COLOR="red">*</FONT></label>
       <div class="control">
         <label class="radio">
           <input type="radio" name="AGDREDPROY" formControlName="AGDREDPROY" value="si">

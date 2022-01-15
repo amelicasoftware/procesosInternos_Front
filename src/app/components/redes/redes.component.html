@@ -1,7 +1,8 @@
 <div class="container is-widescreen">
   <form [formGroup]="form" class="box">
+    <FONT class="obligatorio" COLOR="red">*Obligatorio</FONT><br><br>
     <div class="field">
-      <label for="" class="label">Nombre de la red/grupo:</label>
+      <label for="" class="label">Nombre de la red/grupo: <FONT class="obligatorio" COLOR="red">*</FONT></label>
       <input
         class="input"
         type="text"
@@ -13,7 +14,7 @@
       </p>
     </div>
     <div class="field">
-      <label class="label">Instituciones participantes</label>
+      <label class="label">Instituciones participantes <FONT class="obligatorio" COLOR="red">*</FONT></label>
       <div class="field has-addons">
         <div class="control has-icons-left">
           <input type="text" class="input" placeholder="Escribe el nombre de la institucion" [formControl]="institucion"
@@ -59,7 +60,7 @@
       </div>
     </div>
     <div class="field">
-      <label class="label">Países participantes:</label>
+      <label class="label">Países participantes: <FONT class="obligatorio" COLOR="red">*</FONT></label>
       <ng-select
         class="select is-multiple"
         [multiple]="true"
@@ -100,7 +101,7 @@
         </span>
     </div>
     <div class="field">
-      <label class="label">Año</label>
+      <label class="label">Año <FONT class="obligatorio" COLOR="red">*</FONT></label>
       <div class="control">
         <input
           type="number"
@@ -121,7 +122,7 @@
     </div>
     
     <div class="field">
-      <label class="label">Coordinadores:</label>
+      <label class="label">Coordinadores: <FONT class="obligatorio" COLOR="red">*</FONT></label>
       <div class="field has-addons">
         <div class="control has-icons-left">
           <input type="text" class="input" placeholder="Nombre del coordinador" [formControl]="autor"
@@ -174,7 +175,7 @@
       <p class="help is-danger" *ngIf="campoEsValido('RSMPROYINV')">Este campo no admite los caracteres: ?, ", #, /</p>
     </div>
     <div class="field">
-      <label class="label">Alcance</label>
+      <label class="label">Alcance <FONT class="obligatorio" COLOR="red">*</FONT></label>
       <div class="select" [ngClass]="{'is-danger' : campoEsValido('ALCPROYINV')}">
         <select formControlName="ALCPROYINV">
           <option value="Institucional">Institucional</option>
@@ -187,7 +188,7 @@
     </div>
              <!-- ok -->
              <div class="field">
-              <label class="label">¿El proyecto ya fue realizado?</label>
+              <label class="label">¿El proyecto ya fue realizado? <FONT class="obligatorio" COLOR="red">*</FONT></label>
               <div class="control">
                 <label class="radio">
                   <input type="radio" name="REAPROYINV" formControlName="REAPROYINV" value=1 (click)="deshabilitar()">
@@ -202,7 +203,7 @@
             </div>
         
             <div class="field" *ngIf="des == true">
-              <label class="label">¿Quisiera que este proyecto formara parte de la agenda de eventos de Redalyc?</label>
+              <label class="label">¿Quisiera que este proyecto formara parte de la agenda de eventos de Redalyc? <FONT class="obligatorio" COLOR="red">*</FONT></label>
               <div class="control">
                 <label class="radio">
                   <input type="radio" name="AGDREDPROY" formControlName="AGDREDPROY" value="si">
