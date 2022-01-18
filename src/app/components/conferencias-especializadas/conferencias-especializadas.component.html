@@ -1,7 +1,8 @@
    <div class="container is-widescreen">
       <form [formGroup]="form" class="box">
+        <FONT class="obligatorio" COLOR="red">*Obligatorio</FONT><br><br>
     <div class="field">
-      <label class="label">Ponente/Conferencista (s):
+      <label class="label">Ponente/Conferencista (s): <FONT class="obligatorio" COLOR="red">*</FONT>
       </label>
       <div class="field has-addons">
         <div class="control has-icons-left">
@@ -45,7 +46,7 @@
       </div>
     </div>
     <div class="field">
-      <label class="label">Titulo de la conferencia</label>
+      <label class="label">Titulo de la conferencia <FONT class="obligatorio" COLOR="red">*</FONT></label>
       <div class="control">
         <input
           type="text"
@@ -64,7 +65,7 @@
       </div>
     </div>
     <div class="field">
-      <label class="label">Tipo de participación</label>
+      <label class="label">Tipo de participación <FONT class="obligatorio" COLOR="red">*</FONT></label>
       <div class="control">
         <input
           type="text"
@@ -83,7 +84,7 @@
       </div>
     </div>
     <div class="field">
-      <label class="label">Evento</label>
+      <label class="label">Evento <FONT class="obligatorio" COLOR="red">*</FONT></label>
       <div class="control">
         <input
           type="text"
@@ -103,7 +104,7 @@
     </div>
 
     <div class="field">
-      <label class="label">Institución organizadora</label>
+      <label class="label">Institución organizadora <FONT class="obligatorio" COLOR="red">*</FONT><</label>
       <div class="control">
         <input
           type="text"
@@ -125,7 +126,7 @@
 
     
     <div class="field">
-      <label class="label">País:</label>
+      <label class="label">País: <FONT class="obligatorio" COLOR="red">*</FONT></label>
       <ng-select
         class="select is-multiple"
         [multiple]="true"
@@ -142,7 +143,7 @@
     </div>
 
     <div class="field">
-      <label class="label">Año</label>
+      <label class="label">Año <FONT class="obligatorio" COLOR="red">*</FONT></label>
       <div class="control">
         <input
           type="number"
@@ -163,7 +164,7 @@
     </div>
 
     <div class="field">
-      <label class="label">Alcance</label>
+      <label class="label">Alcance <FONT class="obligatorio" COLOR="red">*</FONT></label>
       <div class="select" [ngClass]="{'is-danger' : campoEsValido('ALCPROYINV')}">
         <select formControlName="ALCPROYINV">
           <option value="Institucional">Institucional</option>
@@ -184,7 +185,7 @@
       </p>
     </div>
     <div class="field">
-      <label class="label">¿El proyecto ya fue realizado?</label>
+      <label class="label">¿El proyecto ya fue realizado? <FONT class="obligatorio" COLOR="red">*</FONT></label>
       <div class="control">
         <label class="radio">
           <input type="radio" name="REAPROYINV" formControlName="REAPROYINV" value=1 (click)="deshabilitar()">
@@ -199,7 +200,7 @@
     </div>
 
     <div class="field" *ngIf="des == true">
-      <label class="label">¿Quisiera que este proyecto formara parte de la agenda de eventos de Redalyc?</label>
+      <label class="label">¿Quisiera que este proyecto formara parte de la agenda de eventos de Redalyc? <FONT class="obligatorio" COLOR="red">*</FONT></label>
       <div class="control">
         <label class="radio">
           <input type="radio" name="AGDREDPROY" formControlName="AGDREDPROY" value="si">

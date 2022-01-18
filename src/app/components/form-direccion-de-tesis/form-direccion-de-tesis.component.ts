@@ -23,7 +23,8 @@ export class FormDireccionDeTesisComponent implements OnInit, OnDestroy {
   lista: any[] = [];
   dato: boolean = true;
   signos: string = Metodos.simbolos();
-
+  anio: Date = new Date();
+  anioAct: number = this.anio.getFullYear();
   actualizacion = false;
 
   formSubscription!: Subscription;

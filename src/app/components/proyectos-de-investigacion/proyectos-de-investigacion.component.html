@@ -2,8 +2,9 @@
 
     <!-- ok -->
        <form [formGroup]="form" class="box">
+        <FONT class="obligatorio" COLOR="red">*Obligatorio</FONT><br><br>
          <div class="field">
-           <label for="" class="label">Título del proyecto:</label>
+           <label for="" class="label">Título del proyecto: <FONT class="obligatorio" COLOR="red">*</FONT></label>
            <input class="input" type="text" formControlName="TITPROYINV"
              [ngClass]="{'is-danger' : campoEsValido('TITPROYINV')}">
            <p class="help is-danger" *ngIf="campoEsValido('TITPROYINV')">
@@ -12,7 +13,7 @@
          </div>
 
          <div class="field">
-          <label class="label">Instituciones participantes</label>
+          <label class="label">Instituciones participantes <FONT class="obligatorio" COLOR="red">*</FONT></label>
           <div class="field has-addons">
             <div class="control has-icons-left">
               <input type="text" class="input" placeholder="Escribe el nombre de la institucion" [formControl]="institucion"
@@ -59,7 +60,7 @@
         </div>
          <!-- ok -->  
           <div class="field">
-            <label class="label">País de instituciones participantes:</label>
+            <label class="label">País de instituciones participantes: <FONT class="obligatorio" COLOR="red">*</FONT></label>
             <ng-select
               class="select is-multiple"
               [multiple]="true"
@@ -76,7 +77,7 @@
           </div>
           <!-- ok -->
           <div class="field">
-            <label class="label">Periodo:</label>
+            <label class="label">Periodo: <FONT class="obligatorio" COLOR="red">*</FONT></label>
             <input class="input" type="text" formControlName="PRDPROYINV"
             placeholder="Junio - Agosto"
             [ngClass]="{ 'is-danger': campoEsValido('PRDPROYINV') }"
@@ -91,11 +92,11 @@
 
           <!-- ok -->
       <div class="field">
-        <label class="label">Año: </label>
+        <label class="label">Año: <FONT class="obligatorio" COLOR="red">*</FONT></label>
         <input class="input" type="number" formControlName="ANIOPROYINV"
           [ngClass]="{'is-danger' : campoEsValido('ANIOPROYINV')}">
         <p class="help is-danger" *ngIf="campoEsValido('ANIOPROYINV')">
-          Este campo solo acepta caracteres numericos entre 1980 y 2021
+          Este campo solo acepta caracteres numericos entre 1980 y {{anioAct}}
         </p>
       </div>
 
@@ -115,7 +116,7 @@
 
            <!-- ok -->
       <div class="field">
-        <label class="label">Alcance</label>
+        <label class="label">Alcance <FONT class="obligatorio" COLOR="red">*</FONT></label>
         <div class="select" [ngClass]="{'is-danger' : campoEsValido('ALCPROYINV')}">
           <select formControlName="ALCPROYINV">
             <option value="Institucional">Institucional</option>
@@ -128,7 +129,7 @@
       </div>
    <!-- Campo adicional al excel -->
    <div class="field">
-    <label class="label">Autor/es:</label>
+    <label class="label">Autor/es: <FONT class="obligatorio" COLOR="red">*</FONT></label>
     <div class="field has-addons">
       <div class="control has-icons-left">
         <input type="text" class="input" placeholder="Nombre del autor" [formControl]="autor"
@@ -182,7 +183,7 @@
   </div>
          <!-- ok -->
          <div class="field">
-          <label class="label">¿El proyecto ya fue realizado?</label>
+          <label class="label">¿El proyecto ya fue realizado? <FONT class="obligatorio" COLOR="red">*</FONT></label>
           <div class="control">
             <label class="radio">
               <input type="radio" name="REAPROYINV" formControlName="REAPROYINV" value=1 (click)="deshabilitar()">
@@ -197,7 +198,7 @@
         </div>
     
         <div class="field" *ngIf="des == true">
-          <label class="label">¿Quisiera que este proyecto formara parte de la agenda de eventos de Redalyc?</label>
+          <label class="label">¿Quisiera que este proyecto formara parte de la agenda de eventos de Redalyc? <FONT class="obligatorio" COLOR="red">*</FONT></label>
           <div class="control">
             <label class="radio">
               <input type="radio" name="AGDREDPROY" formControlName="AGDREDPROY" value="si">

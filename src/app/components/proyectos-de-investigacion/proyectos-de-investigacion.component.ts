@@ -25,7 +25,8 @@ export class ProyectosDeInvestigacionComponent implements OnInit, OnDestroy {
   institucion: FormControl = this.fb.control('', [Validators.required, Validators.pattern(this.charNoAc)]);
   selectedCountry: any = [];
   signos: string = Metodos.simbolos();
-
+  anio: Date = new Date();
+  anioAct: number = this.anio.getFullYear();
   actualizacion = false;
 
   formSubscription!: Subscription;

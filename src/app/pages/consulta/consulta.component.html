@@ -212,24 +212,24 @@
             class="content"
             *ngIf="proyecto.tpoproyinv == 'Artículos científicos'"
           >
-          <span class="doi"><b>DOI/Enlace:</b><br>{{ proyecto.urlproyinv }}</span
+          <span class="doi"><br>{{ proyecto.urlproyinv }}</span
             ><br />
-            <span><b>Revista:</b> {{ proyecto.fteproyinv }}</span
+            <span>{{ proyecto.fteproyinv }}</span
             ><br />
-            <span><b>Volúmen:</b> {{ proyecto.volproyinv }}</span
+            <span>{{ proyecto.volproyinv }}</span
             ><br />
-            <span><b>Año:</b> {{ proyecto.anioproyinv }}</span
+            <span> {{ proyecto.anioproyinv }}</span
             ><br />
-            <span><b>País:</b> {{ proyecto.nomentnac }}</span
+            <span>{{ proyecto.nomentnac }}</span
             ><br />
-            <span><b>Título de artículo:</b> {{ proyecto.titproyinv }}</span
+            <span> {{ proyecto.titproyinv }}</span
             ><br />
-            <span><b>Autor/es:</b> {{proyecto.autproyinv | formatoAutores }}</span
+            <span> {{proyecto.autproyinv | formatoAutores }}</span
             ><br />
-            <span><b>Resumen:</b> {{ proyecto.rsmproyinv }}</span
+            <span> {{ proyecto.rsmproyinv }}</span
             ><br />
             <span  id="campo_ad" *ngIf="proyecto.numpagproy">
-              <b>Número de página inicio – Número de pagina fin:</b> {{ proyecto.numpagproy }}</span
+              {{ proyecto.numpagproy }}</span
             ><br />
             <div
               class="cite"
@@ -246,32 +246,32 @@
             class="content"
             *ngIf="proyecto.tpoproyinv == 'Capítulos de libro científico'"
           >
-          <span class="doi"><b>DOI/Enlace:</b><br>{{ proyecto.urlproyinv }}</span
+          <span class="doi"><br>{{ proyecto.urlproyinv }}</span
             ><br />
-            <span><b>Titulo del libro:</b> {{ proyecto.fteproyinv }}</span
+            <span>{{ proyecto.fteproyinv }}</span
             ><br />
-            <span><b>Autor/es del libro:</b> {{ proyecto.autpadproy }}</span
+            <span> {{ proyecto.autpadproy }}</span
             ><br />
-            <span><b>Editorial:</b> {{ proyecto.insproyinv }}</span
+            <span> {{ proyecto.insproyinv }}</span
             ><br />
-            <span><b>País:</b> {{ proyecto.nomentnac }}</span
+            <span> {{ proyecto.nomentnac }}</span
             ><br />
-            <span><b>Año:</b> {{ proyecto.anioproyinv }}</span
+            <span>{{ proyecto.anioproyinv }}</span
             ><br />
-            <span><b>Titulo del capítulo:</b> {{ proyecto.titproyinv }}</span
+            <span>{{ proyecto.titproyinv }}</span
             ><br />
-            <span><b>Autor/es del capítulo:</b> {{ proyecto.autproyinv }}</span
+            <span>{{ proyecto.autproyinv }}</span
             ><br />
-            <span><b>Resumen:</b> {{ proyecto.rsmproyinv }}</span
+            <span>{{ proyecto.rsmproyinv }}</span
             ><br />
             <span id="campo_ad" *ngIf="proyecto.volproyinv">
-              <b>Volúmen:</b> {{ proyecto.volproyinv }}</span>
+              {{ proyecto.volproyinv }}</span>
               <br />
               <span  id="campo_ad" *ngIf="proyecto.numpagproy">
-                <b>Número de página inicio – Número de pagina fin:</b> {{ proyecto.numpagproy }}</span
+                {{ proyecto.numpagproy }}</span
               ><br />
               <span id="campo_ad" *ngIf="proyecto.edicproy">
-                <b>Edición:</b> {{ proyecto.edicproy }}</span>
+               {{ proyecto.edicproy }}</span>
                 <br />
             <div
               class="cite"
@@ -288,19 +288,19 @@
             class="content"
             *ngIf="proyecto.tpoproyinv == 'Libro científico'"
           >
-          <span class="doi"><b>DOI/Enlace:</b><br> {{ proyecto.urlproyinv }} </span
+          <span class="doi"><br> {{ proyecto.urlproyinv }} </span
             ><br />
-            <span><b>Titulo del libro:</b> {{ proyecto.titproyinv }}</span
+            <span> {{ proyecto.titproyinv }}</span
             ><br />
-            <span><b>Autor/es del libro:</b> {{proyecto.autproyinv | formatoAutores }}</span
+            <span> {{proyecto.autproyinv | formatoAutores }}</span
             ><br />
-            <span><b>Editorial:</b> {{ proyecto.insproyinv }}</span
+            <span> {{ proyecto.insproyinv }}</span
             ><br />
-            <span><b>País:</b> {{ proyecto.nomentnac }}</span
+            <span> {{ proyecto.nomentnac }}</span
             ><br />
-            <span><b>Año:</b> {{ proyecto.anioproyinv }}</span
+            <span> {{ proyecto.anioproyinv }}</span
             ><br />
-            <span><b>Resumen:</b> {{ proyecto.rsmproyinv }}</span
+            <span> {{ proyecto.rsmproyinv }}</span
             ><br />
             <div
               class="cite"
@@ -315,24 +315,24 @@
             class="content"
             *ngIf="proyecto.tpoproyinv == 'Conferencias especializadas'"
           >
-            <span><b>Ponente/conferencista:</b> {{proyecto.autproyinv | formatoAutores }}</span
+            <span>{{proyecto.autproyinv | formatoAutores }}</span
             ><br />
             <span
-              ><b>Título de la conferencia:</b> {{ proyecto.titproyinv }}</span
+              > {{ proyecto.titproyinv }}</span
             ><br />
-            <span><b>Tipo de participación:</b> {{ proyecto.alcproyinv }}</span
+            <span> {{ proyecto.alcproyinv }}</span
             ><br />
-            <span><b>Evento:</b> {{ proyecto.tpoactproy }}</span
+            <span>{{ proyecto.tpoactproy }}</span
             ><br />
             <span
-              ><b>Institución organizadora:</b> {{ proyecto.insproyinv }}</span
+              > {{ proyecto.insproyinv }}</span
             ><br />
-            <span><b>País:</b> {{ proyecto.nomentnac }}</span
+            <span> {{ proyecto.nomentnac }}</span
             ><br />
-            <span><b>Año:</b> {{ proyecto.anioproyinv }}</span
+            <span> {{ proyecto.anioproyinv }}</span
             ><br />
             <span class="doi"id="campo_ad" *ngIf="proyecto.urlproyinv">
-              <b>DOI/Enlace:</b><br>  {{ proyecto.urlproyinv }} </span>
+               {{ proyecto.urlproyinv }} </span>
             <div
               class="cite"
               attr.id="{{ proyecto.cveproyinv }}_cite"
@@ -347,17 +347,17 @@
             class="content"
             *ngIf="proyecto.tpoproyinv == 'Artículos de divulgación'"
           >
-            <span class="doi"><b>DOI/Enlace:</b><br>  {{ proyecto.urlproyinv }} </span
+            <span class="doi"><br>  {{ proyecto.urlproyinv }} </span
             ><br />
-            <span><b>Título del escrito:</b> {{ proyecto.titproyinv }}</span
+            <span>{{ proyecto.titproyinv }}</span
             ><br />
-            <span><b>Lugar de publicación:</b> {{ proyecto.fteproyinv }}</span
+            <span> {{ proyecto.fteproyinv }}</span
             ><br />
-            <span><b>País:</b> {{ proyecto.nomentnac }}</span
+            <span> {{ proyecto.nomentnac }}</span
             ><br />
-            <span><b>Año:</b> {{ proyecto.anioproyinv }}</span
+            <span> {{ proyecto.anioproyinv }}</span
             ><br />
-            <span><b>Autor/es:</b> {{proyecto.autproyinv | formatoAutores }}</span
+            <span> {{proyecto.autproyinv | formatoAutores }}</span
               ><br />
             <div
               class="cite"
@@ -373,20 +373,20 @@
             class="content"
             *ngIf="proyecto.tpoproyinv == 'Libros de divulgación'"
           >
-          <span class="doi"><b>DOI/Enlace:</b><br>{{ proyecto.urlproyinv }}</span
+          <span class="doi"><br>{{ proyecto.urlproyinv }}</span
             ><br />
-            <span><b>Título del libro:</b> {{ proyecto.titproyinv }}</span
+            <span>{{ proyecto.titproyinv }}</span
             ><br />
-            <span><b>Autor/es del libro:</b> {{proyecto.autproyinv | formatoAutores }}</span
+            <span> {{proyecto.autproyinv | formatoAutores }}</span
             ><br />
-            <span><b>Editorial:</b> {{ proyecto.insproyinv }}</span
+            <span> {{ proyecto.insproyinv }}</span
             ><br />
-            <span><b>País:</b> {{ proyecto.nomentnac }}</span
+            <span> {{ proyecto.nomentnac }}</span
             ><br />
-            <span><b>Año:</b> {{ proyecto.anioproyinv }}</span
+            <span> {{ proyecto.anioproyinv }}</span
             ><br />
             <span  id="campo_ad" *ngIf="proyecto.numpagproy">
-              <b>Número de páginas:</b> {{ proyecto.numpagproy }}</span
+               {{ proyecto.numpagproy }}</span
             ><br />
             <div
               class="cite"
@@ -400,30 +400,30 @@
             class="content"
             *ngIf="proyecto.tpoproyinv == 'Otras Actividades'"
           >
-            <span><b>Actividad:</b> {{ proyecto.titproyinv }}</span
+            <span> {{ proyecto.titproyinv }}</span
             ><br />
-            <span><b>Tipo de actividad:</b> {{ proyecto.tpoactproy }}</span
+            <span> {{ proyecto.tpoactproy }}</span
             ><br />
-            <span><b>Año:</b> {{ proyecto.anioproyinv }}</span
+            <span> {{ proyecto.anioproyinv }}</span
             ><br />
-            <span><b>Institución:</b> {{ proyecto.insproyinv }}</span
+            <span> {{ proyecto.insproyinv }}</span
             ><br />
-            <span><b>Resumen:</b> {{ proyecto.rsmproyinv }}</span
+            <span>{{ proyecto.rsmproyinv }}</span
             ><br />
           </div>
           <div
             class="content"
             *ngIf="proyecto.tpoproyinv == 'Dirección de tesis'"
           >
-            <span><b>Autor:</b> {{proyecto.autproyinv | formatoAutores }}</span
+            <span> {{proyecto.autproyinv | formatoAutores }}</span
             ><br />
-            <span><b>Título del proyecto:</b> {{ proyecto.titproyinv }}</span
+            <span> {{ proyecto.titproyinv }}</span
             ><br />
-            <span><b>Carrera/Programa:</b> {{ proyecto.fteproyinv }}</span
+            <span> {{ proyecto.fteproyinv }}</span
             ><br />
-            <span><b>Institución:</b> {{ proyecto.insproyinv }}</span
+            <span> {{ proyecto.insproyinv }}</span
             ><br />
-            <span><b>Año:</b> {{ proyecto.anioproyinv }}</span
+            <span> {{ proyecto.anioproyinv }}</span
             ><br />
             <div
               class="cite"
@@ -438,27 +438,27 @@
             class="content"
             *ngIf="proyecto.tpoproyinv == 'Proyectos de investigación'"
           >
-            <span><b>Título del proyecto:</b> {{ proyecto.titproyinv }}</span
+            <span> {{ proyecto.titproyinv }}</span
             ><br />
             <span
-              ><b>Instituciones participantes:</b>
+              >
               {{ proyecto.insproyinv }}</span
             ><br />
             <span
-              ><b>País de instituciones participantes:</b>
+              >
               {{ proyecto.nomentnac }}</span
             ><br />
-            <span><b>Periodo:</b> {{ proyecto.prdproyinv }}</span
+            <span> {{ proyecto.prdproyinv }}</span
             ><br />
-            <span><b>Año:</b> {{ proyecto.anioproyinv }}</span
+            <span> {{ proyecto.anioproyinv }}</span
             ><br />
-            <span><b>Síntesis:</b> {{ proyecto.rsmproyinv }}</span
+            <span> {{ proyecto.rsmproyinv }}</span
             ><br />
             <span id="campo_ad" *ngIf="proyecto.autproyinv">
-              <b>Autor/es:</b> {{proyecto.autproyinv | formatoAutores }}</span>
+               {{proyecto.autproyinv | formatoAutores }}</span>
               <br />
             <span class="doi"id="campo_ad" *ngIf="proyecto.urlproyinv">
-                <b>DOI/Enlace:</b><br>  {{ proyecto.urlproyinv }} </span>
+                {{ proyecto.urlproyinv }} </span>
             <div
               class="cite"
               attr.id="{{ proyecto.cveproyinv }}_cite"
@@ -472,22 +472,22 @@
             class="content"
             *ngIf="proyecto.tpoproyinv == 'Redes de investigación'"
           >
-            <span><b>Nombre de la red/grupo:</b> {{ proyecto.titproyinv }}</span
+            <span> {{ proyecto.titproyinv }}</span
             ><br />
             <span
-              ><b>Instituciones participantes:</b>
+              >
               {{ proyecto.insproyinv }}</span
             ><br />
-            <span><b>Países participantes:</b> {{ proyecto.nomentnac }}</span
+            <span> {{ proyecto.nomentnac }}</span
             ><br />
-            <span><b>Cantidad de integrantes:</b> {{ proyecto.ctdintproy }}</span><br />
-            <span><b>Periodo:</b> {{ proyecto.prdproyinv }}</span
+            <span> {{ proyecto.ctdintproy }}</span><br />
+            <span> {{ proyecto.prdproyinv }}</span
             ><br />
-            <span><b>Año:</b> {{ proyecto.anioproyinv }}</span
+            <span> {{ proyecto.anioproyinv }}</span
             ><br />
-            <span><b>Coordinadores:</b> {{proyecto.autproyinv | formatoAutores }}</span
+            <span> {{proyecto.autproyinv | formatoAutores }}</span
             ><br />
-            <span><b>Síntesis:</b> {{ proyecto.rsmproyinv }}</span
+            <span> {{ proyecto.rsmproyinv }}</span
             ><br />
             <div
               class="cite"
@@ -530,8 +530,8 @@
         <pagination-controls 
         class="my-pagination"
         (pageChange)="p = $event"
-        previousLabel="Previous"
-        nextLabel="Next"
+        previousLabel="Previo"
+        nextLabel="Siguiente"
       ></pagination-controls>
     </div>
   </div>
