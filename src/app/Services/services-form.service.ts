@@ -1,6 +1,6 @@
 import { Injectable, Output, EventEmitter} from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { JsonPipe } from '@angular/common';
 import { environment } from '../../environments/environment';
 import { FormControl } from '@angular/forms';
@@ -21,6 +21,7 @@ export class ServicesFormService {
   @Output() updateForm: EventEmitter<any> = new EventEmitter();
   @Output() estado: EventEmitter<any> = new EventEmitter();
 
+
   constructor(
     private http: HttpClient
   ) { }
@@ -31,14 +32,20 @@ export class ServicesFormService {
   }
 
   postDatos(form: any): Observable<any>{
+    const options = {
+      headers: new HttpHeaders().append('key', 'value'),
+      params: new HttpParams().append('key', 'value')
+    }
     delete form.value.listAutor;
     delete form.value.listAutorLib;
     delete form.value.listIns;
+    console.log('hasta aqui 2');
 
     console.log(`${this.urlService}sendRegisterOfProy/${JSON.stringify(form.value)}`);
     return this.http.post(`${this.urlService}sendRegisterOfProy/${JSON.stringify(form.value)}`, (mensaje: String) =>{
+      console.log('si la mando');
       console.log(mensaje);
-    });
+    }, options);xdxdx
   }
 
   getAllProjects(): Observable<any>{

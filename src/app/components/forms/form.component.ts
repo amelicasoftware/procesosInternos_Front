@@ -190,7 +190,7 @@ export class FormComponent implements OnInit, OnDestroy {
     this.form.controls.INFADCPROY.setValue(Metodos.cambioResumen(this.form.controls.INFADCPROY.value).replace(/(\r\n|\n|\r)/gm, " "));
     this.form.controls.URLPROYINV.setValue(Metodos.cambioResumen(this.form.controls.URLPROYINV.value));
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
-
+    console.log('llego hasta aqui');
     this.form.removeControl('listAutorAux');
     // imprimir el valor del formulario, sólo si es válido
     if (!this.actualizacion) {
