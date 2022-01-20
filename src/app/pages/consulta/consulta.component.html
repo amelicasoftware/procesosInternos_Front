@@ -18,7 +18,11 @@
       >
         Buscar
       </button>
-      <button class="button is-4" (click)="createNewRegister()">Hacer registro rapido</button>
+      <!--<button class="button is-4" (click)="createNewRegister()">Hacer registro rapido</button>-->
+      <button class="button is-4" 
+              (click)="cleanAllDataSearch()" 
+              [ngStyle]="{ display: banCleanAll == 'show' ? 'initial' : 'none' }">
+              <i class="fa fa-retweet" style="margin: 0 5px 0 0;"></i>Limpiar</button>
     </div>
     <div class="container-options-filter">
       <h4 class="subtitle">Restringe los resultados por:</h4>
@@ -27,7 +31,7 @@
         [ngStyle]="{ display: data ? 'inline-block' : 'none' }"
       >
         Total de resultados:<br />
-        <b>{{ totalOfResults }}</b>
+        <b>{{ fromPage }} </b>a <b>{{ toPage }} </b>de: <b>{{ totalOfResults }}</b>
       </div>
     </div>
   </div>
@@ -531,7 +535,8 @@
         class="my-pagination"
         (pageChange)="p = $event"
         previousLabel="Previo"
-        nextLabel="Siguiente"
+        nextLabel="Siguiente" 
+        (pageChange)="handlePageChange($event)"
       ></pagination-controls>
     </div>
   </div>
