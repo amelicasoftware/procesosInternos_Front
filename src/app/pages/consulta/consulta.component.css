@@ -230,3 +230,13 @@ body {
 .form-tres{
   box-shadow: 0px 2px 4px rgb(153 0 255 / 50%);
 }
+
+.card-header-title{
+  
+  align-self: left;
+ 
+}
+
+.titles{
+  width: 100%;
+}
