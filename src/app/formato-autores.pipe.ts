@@ -14,7 +14,7 @@ export class FormatoAutoresPipe implements PipeTransform {
       value = value.split(',');
       for(this.i=0; this.i<value.length; this.i++)
       {
-        this.resultado += (value[this.i].split('||').reverse()).toString().replace(',',' ');
+        this.resultado += (value[this.i].split('-').reverse()).toString().replace(',',' ');
         if(this.i<value.length-1)
           this.resultado += ', ';
         console.log("2.- "+this.resultado);
