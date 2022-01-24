@@ -132,14 +132,14 @@ export class DatosProyectoComponent implements OnInit, AfterViewInit {
               let listaAutores = this.dataForm.autproyinv.split(',');
               listaAutores.forEach((autor: any) => this.inicioAutoresAux(autor));
               listaAutores.forEach((autor: any) => {
-                autor = autor.replace('||', ' ');
+                autor = autor.replace('_', ' ');
                 this.inicioAutores(autor)
               });
             } else if (nameProp === 'AUTPADPROY' && this.dataForm.autpadproy !== null) {
               let listaAutores = this.dataForm.autpadproy.split(',');
               listaAutores.forEach((autor: any) => this.listaAutoresPadreAux(autor));
               listaAutores.forEach((autor: any) => {
-                autor = autor.replace('||', ' ');
+                autor = autor.replace('_', ' ');
                 this.listaAutoresPadre(autor)
               });
             } else if ((nameProp === 'INSPROYINV' && this.dataForm.insproyinv !== null && this.form.get('listIns') !== null)) {

@@ -133,7 +133,7 @@ export class CapLibroCientificoComponent implements OnInit, OnDestroy {
     // event.preventDefault();
     if (nombre !== '' && apellido !== '') {
       this.autoresArr.push(this.fb.control(`${this.autor.value} ${this.apellidos.value}`, Validators.required));
-      this.autoresArrAux.push(this.fb.control(`${this.autor.value}||${this.apellidos.value}`, Validators.required));
+      this.autoresArrAux.push(this.fb.control(`${this.autor.value}_${this.apellidos.value}`, Validators.required));
       console.log(this.autoresArr.length);
       this.autor.reset('');
       this.apellidos.reset('');
@@ -146,7 +146,7 @@ export class CapLibroCientificoComponent implements OnInit, OnDestroy {
     // event.preventDefault();
     if (nombre !== '') {
       this.autoresLibArr.push(this.fb.control(`${this.autorLib.value} ${this.apellidosLib.value}`, Validators.required));
-      this.autoresLibArrAux.push(this.fb.control(`${this.autorLib.value}||${this.apellidosLib.value}`, Validators.required));
+      this.autoresLibArrAux.push(this.fb.control(`${this.autorLib.value}_${this.apellidosLib.value}`, Validators.required));
       console.log(this.autoresLibArr.length);
       this.autorLib.reset('');
       this.apellidosLib.reset('');

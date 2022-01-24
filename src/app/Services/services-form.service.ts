@@ -32,10 +32,6 @@ export class ServicesFormService {
   }
 
   postDatos(form: any): Observable<any>{
-    const options = {
-      headers: new HttpHeaders().append('key', 'value'),
-      params: new HttpParams().append('key', 'value')
-    }
     delete form.value.listAutor;
     delete form.value.listAutorLib;
     delete form.value.listIns;
@@ -45,7 +41,7 @@ export class ServicesFormService {
     return this.http.post(`${this.urlService}sendRegisterOfProy/${JSON.stringify(form.value)}`, (mensaje: String) =>{
       console.log('si la mando');
       console.log(mensaje);
-    }, options);xdxdx
+    });
   }
 
   getAllProjects(): Observable<any>{
@@ -98,5 +94,18 @@ export class ServicesFormService {
     this.actualizacion = true;
     this.estado.emit(this.actualizacion);
     console.log('emito estado', this.actualizacion);
+  }
+
+  sendInfo(form: any) { 
+    delete form.value.listAutor;
+    delete form.value.listAutorLib;
+    delete form.value.listIns;
+    console.log('envio 2');
+
+    console.log(`${this.urlService}sendRegisterOfProy/${JSON.stringify(form.value)}`);
+    let jsonInsert=this.urlService+'sendRegisterOfProy/'+JSON.stringify(form.value);
+    console.log('url', jsonInsert);
+    let url=`${this.urlService}sendRegisterOfProy/${JSON.stringify(form.value)}`;
+    return this.http.post<any>(jsonInsert,"").toPromise()
   }
 }

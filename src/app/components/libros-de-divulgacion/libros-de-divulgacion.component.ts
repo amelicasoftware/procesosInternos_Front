@@ -124,7 +124,7 @@ export class LibrosDeDivulgacionComponent implements OnInit, OnDestroy {
     // event.preventDefault();
     if (nombre !== '' && apellido) {
       this.autoresArr.push(this.fb.control(`${this.autor.value} ${this.apellidoAutor.value}`, Validators.required));
-      this.autoresArrAux.push(this.fb.control(`${this.autor.value}||${this.apellidoAutor.value}`, Validators.required));
+      this.autoresArrAux.push(this.fb.control(`${this.autor.value}_${this.apellidoAutor.value}`, Validators.required));
       console.log(this.autoresArr.length);
       this.autor.reset('');
       this.apellidoAutor.reset('');

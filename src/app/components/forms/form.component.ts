@@ -21,8 +21,7 @@ export class FormComponent implements OnInit, OnDestroy {
   apellidoAutor: FormControl = this.fb.control('', [Validators.required, Validators.pattern(Metodos.expreg())]);
   pais = new FormControl('');
   form!: FormGroup;
-  anio: Date = new Date();
-  anioAct: number = this.anio.getFullYear();
+  anioAct: number = 2021;
   selectedCountry: any = [];
   autores: String[] = [];
   lista: any[] = [];
@@ -115,7 +114,7 @@ export class FormComponent implements OnInit, OnDestroy {
       integrantes: new FormControl(''),
       ALCPROYINV: new FormControl('', [Validators.required]),
       PRDPROYINV: new FormControl(''),
-      NUMPAGPROY: new FormControl('', [Validators.maxLength(30), Validators.pattern("[1-9]+[0-9]*[ ]?-[ ]?[1-9]+[0-9]*")]),
+      NUMPAGPROY: new FormControl('', [Validators.maxLength(30), Validators.pattern("[1-9]+[ ]?-[ ]?[1-9]+")]),
       EDICPROY: new FormControl(''),
       MESPROYINV: new FormControl(''),
       FECCAPPROY: new FormControl(''),
@@ -159,7 +158,7 @@ export class FormComponent implements OnInit, OnDestroy {
     // event.preventDefault();
     if (nombre !== '' && apellido) {
       this.autoresArr.push(this.fb.control(`${this.autor.value} ${this.apellidoAutor.value}`, Validators.required));
-      this.autoresArrAux.push(this.fb.control(`${this.autor.value}||${this.apellidoAutor.value}`, Validators.required));
+      this.autoresArrAux.push(this.fb.control(`${this.autor.value}_${this.apellidoAutor.value}`, Validators.required));
       console.log(this.autoresArr.length);
       this.autor.reset('');
       this.apellidoAutor.reset('');
@@ -191,7 +190,7 @@ export class FormComponent implements OnInit, OnDestroy {
     this.form.controls.INFADCPROY.setValue(Metodos.cambioResumen(this.form.controls.INFADCPROY.value).replace(/(\r\n|\n|\r)/gm, " "));
     this.form.controls.URLPROYINV.setValue(Metodos.cambioResumen(this.form.controls.URLPROYINV.value));
     this.form.controls.CVEPAISPRO.setValue(this.paisesArr?.value.join(','));
-    console.log('llego hasta aqui');
+
     this.form.removeControl('listAutorAux');
     // imprimir el valor del formulario, sólo si es válido
     if (!this.actualizacion) {
