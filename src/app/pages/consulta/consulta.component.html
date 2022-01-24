@@ -18,7 +18,11 @@
       >
         Buscar
       </button>
-      <button class="button is-4" (click)="createNewRegister()">Hacer registro rapido</button>
+      <!--<button class="button is-4" (click)="createNewRegister()">Hacer registro rapido</button>-->
+      <button class="button is-4" 
+              (click)="cleanAllDataSearch()" 
+              [ngStyle]="{ display: banCleanAll == 'show' ? 'initial' : 'none' }">
+              <i class="fa fa-retweet" style="margin: 0 5px 0 0;"></i>Limpiar</button>
     </div>
     <div class="container-options-filter">
       <h4 class="subtitle">Restringe los resultados por:</h4>
@@ -27,7 +31,7 @@
         [ngStyle]="{ display: data ? 'inline-block' : 'none' }"
       >
         Total de resultados:<br />
-        <b>{{ totalOfResults }}</b>
+        <b>{{ fromPage }} </b>a <b>{{ toPage }} </b>de: <b>{{ totalOfResults }}</b>
       </div>
     </div>
   </div>
@@ -171,331 +175,334 @@
         'margin-left': stateSidebar == 'show' ? '0%' : '0'
       }"
     >
-      <div
-        class="card prueba"
-        [ngStyle]="{'box-shadow': shadowCard}"
-        *ngFor="
-          let proyecto of data | paginate: { itemsPerPage: 10, currentPage: p };
-          index as i
-        "
-        attr.id="card{{ proyecto.cveproyinv }}"
-      >
-        <header
-          class="card-header"
-          style="display: flex; justify-content: flex-end"
-          *ngIf="usuario == 'administrador'"
+    
+        <div
+          class="card prueba"
+          [ngStyle]="{'box-shadow': shadowCard}"
+          *ngFor="
+            let proyecto of data | paginate: { itemsPerPage: 10, currentPage: p };
+            index as i
+          "
+          attr.id="card{{ proyecto.cveproyinv }}"
         >
-          <div>
-            <p class="card-header-title">
-              {{ proyecto.cveproyinv }}
-            </p>
-          </div>
-          <div
-            style="display: flex; justify-content: space-evenly; padding: 10px"
+        <div attr.id="img{{proyecto.cveproyinv }}">
+          <header
+            class="card-header"
+            style="display: flex; justify-content: flex-end"
+            *ngIf="usuario == 'administrador'"
           >
-            <span class="info"
-              ><i
-                class="fa fa-edit fa-1x"
-                style="color: #276cda; cursor: pointer; margin: 5px"
-                [routerLink]="['/proyecto', proyecto.cveproyinv, proyecto.tpoproyinv]"
-              ></i
-            ></span>
-            <span
-              (click)="deleteProyecto(proyecto.cveproyinv)"
-              style="cursor: pointer"
-              ><i class="fa fa-times-circle fa-1x" style="color: red"></i
-            ></span>
-          </div>
-        </header>
-        <div class="card-content">
-          <div
-            class="content"
-            *ngIf="proyecto.tpoproyinv == 'Artículos científicos'"
-          >
-          <span class="doi"><br>{{ proyecto.urlproyinv }}</span
-            ><br />
-            <span>{{ proyecto.fteproyinv }}</span
-            ><br />
-            <span>{{ proyecto.volproyinv }}</span
-            ><br />
-            <span> {{ proyecto.anioproyinv }}</span
-            ><br />
-            <span>{{ proyecto.nomentnac }}</span
-            ><br />
-            <span> {{ proyecto.titproyinv }}</span
-            ><br />
-            <span> {{proyecto.autproyinv | formatoAutores }}</span
-            ><br />
-            <span> {{ proyecto.rsmproyinv }}</span
-            ><br />
-            <span  id="campo_ad" *ngIf="proyecto.numpagproy">
-              {{ proyecto.numpagproy }}</span
-            ><br />
-            <div
-              class="cite"
-              attr.id="{{ proyecto.cveproyinv }}_cite"
-              style="display: none;"
-            >
-            {{proyecto.autproyinv | formatoAutores }}. ({{ proyecto.anioproyinv }}).
-              {{ proyecto.titproyinv }}. {{ proyecto.fteproyinv }} , {{ proyecto.volproyinv }} . <span  id="campo_ad" *ngIf="proyecto.numpagproy">
-              {{ proyecto.numpagproy }} .</span
-              >{{ proyecto.urlproyinv }}
+            <div class="titles">
+              <p class="card-header-title">
+                {{ proyecto.tpoproyinv }}
+              </p>
             </div>
-          </div>
-          <div
-            class="content"
-            *ngIf="proyecto.tpoproyinv == 'Capítulos de libro científico'"
-          >
-          <span class="doi"><br>{{ proyecto.urlproyinv }}</span
-            ><br />
-            <span>{{ proyecto.fteproyinv }}</span
-            ><br />
-            <span> {{ proyecto.autpadproy }}</span
-            ><br />
-            <span> {{ proyecto.insproyinv }}</span
-            ><br />
-            <span> {{ proyecto.nomentnac }}</span
-            ><br />
-            <span>{{ proyecto.anioproyinv }}</span
-            ><br />
-            <span>{{ proyecto.titproyinv }}</span
-            ><br />
-            <span>{{ proyecto.autproyinv }}</span
-            ><br />
-            <span>{{ proyecto.rsmproyinv }}</span
-            ><br />
-            <span id="campo_ad" *ngIf="proyecto.volproyinv">
-              {{ proyecto.volproyinv }}</span>
-              <br />
+            <div
+              style="display: flex; justify-content: space-evenly; padding: 10px"
+            >
+              <span class="info"
+                ><i
+                  class="fa fa-edit fa-1x"
+                  style="color: #276cda; cursor: pointer; margin: 5px"
+                  [routerLink]="['/proyecto', proyecto.cveproyinv, proyecto.tpoproyinv]"
+                ></i
+              ></span>
+              <span
+                (click)="deleteProyecto(proyecto.cveproyinv)"
+                style="cursor: pointer"
+                ><i class="fa fa-times-circle fa-1x" style="color: red"></i
+              ></span>
+            </div>
+          </header>
+          <div class="card-content">
+            <div
+              class="content"
+              *ngIf="proyecto.tpoproyinv == 'Artículos científicos'"
+            >
+            <span class="doi"><br>{{ proyecto.urlproyinv }}</span
+              ><br />
+              <span>{{ proyecto.fteproyinv }}</span
+              ><br />
+              <span>{{ proyecto.volproyinv }}</span
+              ><br />
+              <span> {{ proyecto.anioproyinv }}</span
+              ><br />
+              <span>{{ proyecto.nomentnac }}</span
+              ><br />
+              <span> {{ proyecto.titproyinv }}</span
+              ><br />
+              <span> {{proyecto.autproyinv | formatoAutores }}</span
+              ><br />
+              <span> {{ proyecto.rsmproyinv }}</span
+              ><br />
               <span  id="campo_ad" *ngIf="proyecto.numpagproy">
                 {{ proyecto.numpagproy }}</span
               ><br />
-              <span id="campo_ad" *ngIf="proyecto.edicproy">
-               {{ proyecto.edicproy }}</span>
-                <br />
-            <div
-              class="cite"
-              attr.id="{{ proyecto.cveproyinv }}_cite"
-              style="display: none;"
-            >
-              {{ proyecto.autproyinv }}. ({{ proyecto.anioproyinv }}).
-              {{ proyecto.titproyinv }}. {{ proyecto.autpadproy }} (Ed).
-              {{ proyecto.fteproyinv }}. ( <span id="campo_ad" *ngIf="proyecto.edicproy"> {{ proyecto.edicproy }} ed., </span> <span id="campo_ad" *ngIf="proyecto.volproyinv"> Vol. {{ proyecto.volproyinv }} </span><span  id="campo_ad" *ngIf="proyecto.numpagproy">
-                , pp. {{ proyecto.numpagproy }}</span>). {{ proyecto.insproyinv }}. {{ proyecto.urlproyinv }}
+              <div
+                class="cite"
+                attr.id="{{ proyecto.cveproyinv }}_cite"
+                style="display: none;"
+              >
+              {{proyecto.autproyinv | formatoAutores }}. ({{ proyecto.anioproyinv }}).
+                {{ proyecto.titproyinv }}. {{ proyecto.fteproyinv }} , {{ proyecto.volproyinv }} . <span  id="campo_ad" *ngIf="proyecto.numpagproy">
+                {{ proyecto.numpagproy }} .</span
+                >{{ proyecto.urlproyinv }}
+              </div>
             </div>
-          </div>
-          <div
-            class="content"
-            *ngIf="proyecto.tpoproyinv == 'Libro científico'"
-          >
-          <span class="doi"><br> {{ proyecto.urlproyinv }} </span
-            ><br />
-            <span> {{ proyecto.titproyinv }}</span
-            ><br />
-            <span> {{proyecto.autproyinv | formatoAutores }}</span
-            ><br />
-            <span> {{ proyecto.insproyinv }}</span
-            ><br />
-            <span> {{ proyecto.nomentnac }}</span
-            ><br />
-            <span> {{ proyecto.anioproyinv }}</span
-            ><br />
-            <span> {{ proyecto.rsmproyinv }}</span
-            ><br />
             <div
-              class="cite"
-              attr.id="{{ proyecto.cveproyinv }}_cite"
-              style="display: none"
+              class="content"
+              *ngIf="proyecto.tpoproyinv == 'Capítulos de libro científico'"
             >
-            {{proyecto.autproyinv | formatoAutores }}. ({{ proyecto.anioproyinv }}).
-              {{ proyecto.titproyinv }}. {{ proyecto.insproyinv }}. {{ proyecto.urlproyinv }}
-            </div>
-          </div>
-          <div
-            class="content"
-            *ngIf="proyecto.tpoproyinv == 'Conferencias especializadas'"
-          >
-            <span>{{proyecto.autproyinv | formatoAutores }}</span
-            ><br />
-            <span
-              > {{ proyecto.titproyinv }}</span
-            ><br />
-            <span> {{ proyecto.alcproyinv }}</span
-            ><br />
-            <span>{{ proyecto.tpoactproy }}</span
-            ><br />
-            <span
-              > {{ proyecto.insproyinv }}</span
-            ><br />
-            <span> {{ proyecto.nomentnac }}</span
-            ><br />
-            <span> {{ proyecto.anioproyinv }}</span
-            ><br />
-            <span class="doi"id="campo_ad" *ngIf="proyecto.urlproyinv">
-               {{ proyecto.urlproyinv }} </span>
-            <div
-              class="cite"
-              attr.id="{{ proyecto.cveproyinv }}_cite"
-              style="display: none;"
-            >
-            {{proyecto.autproyinv | formatoAutores }}. ({{ proyecto.feccapproy.split('-') }}).
-              <i>{{ proyecto.titproyinv }}.</i>
-              {{ proyecto.tpoactproy }} <span id="campo_ad" *ngIf="proyecto.urlproyinv">. {{ proyecto.urlproyinv }} </span>
-            </div>
-          </div>
-          <div
-            class="content"
-            *ngIf="proyecto.tpoproyinv == 'Artículos de divulgación'"
-          >
-            <span class="doi"><br>  {{ proyecto.urlproyinv }} </span
-            ><br />
-            <span>{{ proyecto.titproyinv }}</span
-            ><br />
-            <span> {{ proyecto.fteproyinv }}</span
-            ><br />
-            <span> {{ proyecto.nomentnac }}</span
-            ><br />
-            <span> {{ proyecto.anioproyinv }}</span
-            ><br />
-            <span> {{proyecto.autproyinv | formatoAutores }}</span
+            <span class="doi"><br>{{ proyecto.urlproyinv }}</span
               ><br />
-            <div
-              class="cite"
-              attr.id="{{ proyecto.cveproyinv }}_cite"
-              style="display: none;"
-            >
-            {{proyecto.autproyinv | formatoAutores }}. ({{ proyecto.feccapproy.split('-')  }}). {{
-                proyecto.titproyinv }}. {{ proyecto.urlproyinv }}
-            </div>
-          </div>
-
-          <div
-            class="content"
-            *ngIf="proyecto.tpoproyinv == 'Libros de divulgación'"
-          >
-          <span class="doi"><br>{{ proyecto.urlproyinv }}</span
-            ><br />
-            <span>{{ proyecto.titproyinv }}</span
-            ><br />
-            <span> {{proyecto.autproyinv | formatoAutores }}</span
-            ><br />
-            <span> {{ proyecto.insproyinv }}</span
-            ><br />
-            <span> {{ proyecto.nomentnac }}</span
-            ><br />
-            <span> {{ proyecto.anioproyinv }}</span
-            ><br />
-            <span  id="campo_ad" *ngIf="proyecto.numpagproy">
-               {{ proyecto.numpagproy }}</span
-            ><br />
-            <div
-              class="cite"
-              attr.id="{{ proyecto.cveproyinv }}_cite"
-              style="display: none;"
-            >
-            {{proyecto.autproyinv | formatoAutores }}. ({{ proyecto.anioproyinv }}). {{ proyecto.titproyinv }}. <span  id="campo_ad" *ngIf="proyecto.numpagproy"> ( P. {{ proyecto.numpagproy }}).</span> {{ proyecto.insproyinv }}. {{ proyecto.urlproyinv }}
-            </div>
-          </div>
-          <div
-            class="content"
-            *ngIf="proyecto.tpoproyinv == 'Otras Actividades'"
-          >
-            <span> {{ proyecto.titproyinv }}</span
-            ><br />
-            <span> {{ proyecto.tpoactproy }}</span
-            ><br />
-            <span> {{ proyecto.anioproyinv }}</span
-            ><br />
-            <span> {{ proyecto.insproyinv }}</span
-            ><br />
-            <span>{{ proyecto.rsmproyinv }}</span
-            ><br />
-          </div>
-          <div
-            class="content"
-            *ngIf="proyecto.tpoproyinv == 'Dirección de tesis'"
-          >
-            <span> {{proyecto.autproyinv | formatoAutores }}</span
-            ><br />
-            <span> {{ proyecto.titproyinv }}</span
-            ><br />
-            <span> {{ proyecto.fteproyinv }}</span
-            ><br />
-            <span> {{ proyecto.insproyinv }}</span
-            ><br />
-            <span> {{ proyecto.anioproyinv }}</span
-            ><br />
-            <div
-              class="cite"
-              attr.id="{{ proyecto.cveproyinv }}_cite"
-              style="display: none"
-            >
-            {{proyecto.autproyinv | formatoAutores }}. {{ proyecto.titproyinv }}. [fecha de
-              consulta {{ fecha }}].
-            </div>
-          </div>
-          <div
-            class="content"
-            *ngIf="proyecto.tpoproyinv == 'Proyectos de investigación'"
-          >
-            <span> {{ proyecto.titproyinv }}</span
-            ><br />
-            <span
+              <span>{{ proyecto.fteproyinv }}</span
+              ><br />
+              <span> {{ proyecto.autpadproy }}</span
+              ><br />
+              <span> {{ proyecto.insproyinv }}</span
+              ><br />
+              <span> {{ proyecto.nomentnac }}</span
+              ><br />
+              <span>{{ proyecto.anioproyinv }}</span
+              ><br />
+              <span>{{ proyecto.titproyinv }}</span
+              ><br />
+              <span>{{ proyecto.autproyinv }}</span
+              ><br />
+              <span>{{ proyecto.rsmproyinv }}</span
+              ><br />
+              <span id="campo_ad" *ngIf="proyecto.volproyinv">
+                {{ proyecto.volproyinv }}</span>
+                <br />
+                <span  id="campo_ad" *ngIf="proyecto.numpagproy">
+                  {{ proyecto.numpagproy }}</span
+                ><br />
+                <span id="campo_ad" *ngIf="proyecto.edicproy">
+                {{ proyecto.edicproy }}</span>
+                  <br />
+              <div
+                class="cite"
+                attr.id="{{ proyecto.cveproyinv }}_cite"
+                style="display: none;"
               >
-              {{ proyecto.insproyinv }}</span
-            ><br />
-            <span
+                {{ proyecto.autproyinv }}. ({{ proyecto.anioproyinv }}).
+                {{ proyecto.titproyinv }}. {{ proyecto.autpadproy }} (Ed).
+                {{ proyecto.fteproyinv }}. ( <span id="campo_ad" *ngIf="proyecto.edicproy"> {{ proyecto.edicproy }} ed., </span> <span id="campo_ad" *ngIf="proyecto.volproyinv"> Vol. {{ proyecto.volproyinv }} </span><span  id="campo_ad" *ngIf="proyecto.numpagproy">
+                  , pp. {{ proyecto.numpagproy }}</span>). {{ proyecto.insproyinv }}. {{ proyecto.urlproyinv }}
+              </div>
+            </div>
+            <div
+              class="content"
+              *ngIf="proyecto.tpoproyinv == 'Libro científico'"
+            >
+            <span class="doi"><br> {{ proyecto.urlproyinv }} </span
+              ><br />
+              <span> {{ proyecto.titproyinv }}</span
+              ><br />
+              <span> {{proyecto.autproyinv | formatoAutores }}</span
+              ><br />
+              <span> {{ proyecto.insproyinv }}</span
+              ><br />
+              <span> {{ proyecto.nomentnac }}</span
+              ><br />
+              <span> {{ proyecto.anioproyinv }}</span
+              ><br />
+              <span> {{ proyecto.rsmproyinv }}</span
+              ><br />
+              <div
+                class="cite"
+                attr.id="{{ proyecto.cveproyinv }}_cite"
+                style="display: none"
               >
-              {{ proyecto.nomentnac }}</span
-            ><br />
-            <span> {{ proyecto.prdproyinv }}</span
-            ><br />
-            <span> {{ proyecto.anioproyinv }}</span
-            ><br />
-            <span> {{ proyecto.rsmproyinv }}</span
-            ><br />
-            <span id="campo_ad" *ngIf="proyecto.autproyinv">
-               {{proyecto.autproyinv | formatoAutores }}</span>
-              <br />
-            <span class="doi"id="campo_ad" *ngIf="proyecto.urlproyinv">
+              {{proyecto.autproyinv | formatoAutores }}. ({{ proyecto.anioproyinv }}).
+                {{ proyecto.titproyinv }}. {{ proyecto.insproyinv }}. {{ proyecto.urlproyinv }}
+              </div>
+            </div>
+            <div
+              class="content"
+              *ngIf="proyecto.tpoproyinv == 'Conferencias especializadas'"
+            >
+              <span>{{proyecto.autproyinv | formatoAutores }}</span
+              ><br />
+              <span
+                > {{ proyecto.titproyinv }}</span
+              ><br />
+              <span> {{ proyecto.alcproyinv }}</span
+              ><br />
+              <span>{{ proyecto.tpoactproy }}</span
+              ><br />
+              <span
+                > {{ proyecto.insproyinv }}</span
+              ><br />
+              <span> {{ proyecto.nomentnac }}</span
+              ><br />
+              <span> {{ proyecto.anioproyinv }}</span
+              ><br />
+              <span class="doi"id="campo_ad" *ngIf="proyecto.urlproyinv">
                 {{ proyecto.urlproyinv }} </span>
-            <div
-              class="cite"
-              attr.id="{{ proyecto.cveproyinv }}_cite"
-              style="display: none;"
-            >
-            <span id="campo_ad" *ngIf="proyecto.autproyinv"> {{proyecto.autproyinv | formatoAutores }}. </span> ({{ proyecto.anioproyinv }}).
-              {{ proyecto.titproyinv }}. {{ proyecto.insproyinv }} . <span class="doi"id="campo_ad" *ngIf="proyecto.urlproyinv"> {{ proyecto.urlproyinv }} </span>
-            </div>
-          </div>
-          <div
-            class="content"
-            *ngIf="proyecto.tpoproyinv == 'Redes de investigación'"
-          >
-            <span> {{ proyecto.titproyinv }}</span
-            ><br />
-            <span
+              <div
+                class="cite"
+                attr.id="{{ proyecto.cveproyinv }}_cite"
+                style="display: none;"
               >
-              {{ proyecto.insproyinv }}</span
-            ><br />
-            <span> {{ proyecto.nomentnac }}</span
-            ><br />
-            <span> {{ proyecto.ctdintproy }}</span><br />
-            <span> {{ proyecto.prdproyinv }}</span
-            ><br />
-            <span> {{ proyecto.anioproyinv }}</span
-            ><br />
-            <span> {{proyecto.autproyinv | formatoAutores }}</span
-            ><br />
-            <span> {{ proyecto.rsmproyinv }}</span
-            ><br />
+              {{proyecto.autproyinv | formatoAutores }}. ({{ proyecto.feccapproy.split('-') }}).
+                <i>{{ proyecto.titproyinv }}.</i>
+                {{ proyecto.tpoactproy }} <span id="campo_ad" *ngIf="proyecto.urlproyinv">. {{ proyecto.urlproyinv }} </span>
+              </div>
+            </div>
             <div
-              class="cite"
-              attr.id="{{ proyecto.cveproyinv }}_cite"
-              style="display: none"
+              class="content"
+              *ngIf="proyecto.tpoproyinv == 'Artículos de divulgación'"
             >
-            {{proyecto.autproyinv | formatoAutores }}. {{ proyecto.titproyinv }}. [fecha de
-              consulta {{ fecha }}].
+              <span class="doi"><br>  {{ proyecto.urlproyinv }} </span
+              ><br />
+              <span>{{ proyecto.titproyinv }}</span
+              ><br />
+              <span> {{ proyecto.fteproyinv }}</span
+              ><br />
+              <span> {{ proyecto.nomentnac }}</span
+              ><br />
+              <span> {{ proyecto.anioproyinv }}</span
+              ><br />
+              <span> {{proyecto.autproyinv | formatoAutores }}</span
+                ><br />
+              <div
+                class="cite"
+                attr.id="{{ proyecto.cveproyinv }}_cite"
+                style="display: none;"
+              >
+              {{proyecto.autproyinv | formatoAutores }}. ({{ proyecto.feccapproy.split('-')  }}). {{
+                  proyecto.titproyinv }}. {{ proyecto.urlproyinv }}
+              </div>
+            </div>
+
+            <div
+              class="content"
+              *ngIf="proyecto.tpoproyinv == 'Libros de divulgación'"
+            >
+            <span class="doi"><br>{{ proyecto.urlproyinv }}</span
+              ><br />
+              <span>{{ proyecto.titproyinv }}</span
+              ><br />
+              <span> {{proyecto.autproyinv | formatoAutores }}</span
+              ><br />
+              <span> {{ proyecto.insproyinv }}</span
+              ><br />
+              <span> {{ proyecto.nomentnac }}</span
+              ><br />
+              <span> {{ proyecto.anioproyinv }}</span
+              ><br />
+              <span  id="campo_ad" *ngIf="proyecto.numpagproy">
+                {{ proyecto.numpagproy }}</span
+              ><br />
+              <div
+                class="cite"
+                attr.id="{{ proyecto.cveproyinv }}_cite"
+                style="display: none;"
+              >
+              {{proyecto.autproyinv | formatoAutores }}. ({{ proyecto.anioproyinv }}). {{ proyecto.titproyinv }}. <span  id="campo_ad" *ngIf="proyecto.numpagproy"> ( P. {{ proyecto.numpagproy }}).</span> {{ proyecto.insproyinv }}. {{ proyecto.urlproyinv }}
+              </div>
+            </div>
+            <div
+              class="content"
+              *ngIf="proyecto.tpoproyinv == 'Otras Actividades'"
+            >
+              <span> {{ proyecto.titproyinv }}</span
+              ><br />
+              <span> {{ proyecto.tpoactproy }}</span
+              ><br />
+              <span> {{ proyecto.anioproyinv }}</span
+              ><br />
+              <span> {{ proyecto.insproyinv }}</span
+              ><br />
+              <span>{{ proyecto.rsmproyinv }}</span
+              ><br />
+            </div>
+            <div
+              class="content"
+              *ngIf="proyecto.tpoproyinv == 'Dirección de tesis'"
+            >
+              <span> {{proyecto.autproyinv | formatoAutores }}</span
+              ><br />
+              <span> {{ proyecto.titproyinv }}</span
+              ><br />
+              <span> {{ proyecto.fteproyinv }}</span
+              ><br />
+              <span> {{ proyecto.insproyinv }}</span
+              ><br />
+              <span> {{ proyecto.anioproyinv }}</span
+              ><br />
+              <div
+                class="cite"
+                attr.id="{{ proyecto.cveproyinv }}_cite"
+                style="display: none"
+              >
+              {{proyecto.autproyinv | formatoAutores }}. {{ proyecto.titproyinv }}. [fecha de
+                consulta {{ fecha }}].
+              </div>
+            </div>
+            <div
+              class="content"
+              *ngIf="proyecto.tpoproyinv == 'Proyectos de investigación'"
+            >
+              <span> {{ proyecto.titproyinv }}</span
+              ><br />
+              <span
+                >
+                {{ proyecto.insproyinv }}</span
+              ><br />
+              <span
+                >
+                {{ proyecto.nomentnac }}</span
+              ><br />
+              <span> {{ proyecto.prdproyinv }}</span
+              ><br />
+              <span> {{ proyecto.anioproyinv }}</span
+              ><br />
+              <span> {{ proyecto.rsmproyinv }}</span
+              ><br />
+              <span id="campo_ad" *ngIf="proyecto.autproyinv">
+                {{proyecto.autproyinv | formatoAutores }}</span>
+                <br />
+              <span class="doi"id="campo_ad" *ngIf="proyecto.urlproyinv">
+                  {{ proyecto.urlproyinv }} </span>
+              <div
+                class="cite"
+                attr.id="{{ proyecto.cveproyinv }}_cite"
+                style="display: none;"
+              >
+              <span id="campo_ad" *ngIf="proyecto.autproyinv"> {{proyecto.autproyinv | formatoAutores }}. </span> ({{ proyecto.anioproyinv }}).
+                {{ proyecto.titproyinv }}. {{ proyecto.insproyinv }} . <span class="doi"id="campo_ad" *ngIf="proyecto.urlproyinv"> {{ proyecto.urlproyinv }} </span>
+              </div>
+            </div>
+            <div
+              class="content"
+              *ngIf="proyecto.tpoproyinv == 'Redes de investigación'"
+            >
+              <span> {{ proyecto.titproyinv }}</span
+              ><br />
+              <span
+                >
+                {{ proyecto.insproyinv }}</span
+              ><br />
+              <span> {{ proyecto.nomentnac }}</span
+              ><br />
+              <span> {{ proyecto.ctdintproy }}</span><br />
+              <span> {{ proyecto.prdproyinv }}</span
+              ><br />
+              <span> {{ proyecto.anioproyinv }}</span
+              ><br />
+              <span> {{proyecto.autproyinv | formatoAutores }}</span
+              ><br />
+              <span> {{ proyecto.rsmproyinv }}</span
+              ><br />
+              <div
+                class="cite"
+                attr.id="{{ proyecto.cveproyinv }}_cite"
+                style="display: none"
+              >
+              {{proyecto.autproyinv | formatoAutores }}. {{ proyecto.titproyinv }}. [fecha de
+                consulta {{ fecha }}].
+              </div>
             </div>
           </div>
         </div>
@@ -519,7 +526,7 @@
             <a
               rel="nofollow"
               class="button-busq"
-              (click)="generateImage('card' + proyecto.cveproyinv)"
+              (click)="generateImage('img' + proyecto.cveproyinv)"
               >Descargar Imagen</a
             >
           </div>
@@ -531,7 +538,8 @@
         class="my-pagination"
         (pageChange)="p = $event"
         previousLabel="Previo"
-        nextLabel="Siguiente"
+        nextLabel="Siguiente" 
+        (pageChange)="handlePageChange($event)"
       ></pagination-controls>
     </div>
   </div>
