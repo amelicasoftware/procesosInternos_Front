@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  urlServices: 'http://148.215.24.22:9084/boardInvestigacion/service/ds/'
+  urlServices: 'http://148.215.24.22:9084/boardInvestigacion/service/ds/',
+  url:'http://127.0.0.1:4200/#/'
 };
 
 /*

@@ -4,6 +4,8 @@ import html2canvas from 'html2canvas';
 import { saveAs } from 'file-saver';
 import Swal from 'sweetalert2';
 import { ServicesFormService } from '../../Services/services-form.service';
+import { environment } from 'src/environments/environment';
+
 declare var $: any;
 @Component({
   selector: 'app-consulta',
@@ -48,14 +50,14 @@ export class ConsultaComponent implements OnInit {
   statePeriod = "hide";
   totalOfResults = 0;
   banSearch = "false";
-  totalDocumentos=0;
-  totalPaginas=0;
-  totalArticulos=0;
-  pageSize=10;
-  toPage=this.pageSize;
+  totalDocumentos = 0;
+  totalPaginas = 0;
+  totalArticulos = 0;
+  pageSize = 10;
+  toPage = this.pageSize;
   fromPage = (this.pageSize - this.pageSize) + 1;
-  banCleanAll="hide";
-  page= 1;
+  banCleanAll = "hide";
+  page = 1;
   f = new Date();
   meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo",
     "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre",
@@ -121,6 +123,8 @@ export class ConsultaComponent implements OnInit {
   usuario: any;
   loacalitems;
   shadowCard = '0px 2px 4px rgb(255 0 255 / 50%)!important;'
+  url = environment.url;
+
   constructor(
     private service: BusquedasService,
     private servicesFormService: ServicesFormService
@@ -138,7 +142,13 @@ export class ConsultaComponent implements OnInit {
     this.prepareSearch();
     this.usuario = this.loacalitems;
     console.log(typeof this.loacalitems);
-
+    let loacalitems = localStorage.getItem("nameUser");
+    if (loacalitems === 'administrador') {
+      console.log('eres admin');
+    } else {
+      window.location.href = this.url + "loggin";
+      console.log('no eres admin');
+    }
   }
 
   myFunction(ancho: Number) {
@@ -156,12 +166,12 @@ export class ConsultaComponent implements OnInit {
   }
   generateImage(id: String) {
     console.log(id);
-    html2canvas(document.querySelector('#' + id+' .card-content') as HTMLInputElement).then(function (canvas) {
+    html2canvas(document.querySelector('#' + id + ' .card-content') as HTMLInputElement).then(function (canvas) {
 
       saveAs(canvas.toDataURL(), 'file-name.png');
     });
   }
-  cleanAllDataSearch(){
+  cleanAllDataSearch() {
     this.dataBusqueda = {
       "TITPROYINV": "",
       "TPOPROYINV": "",
@@ -177,7 +187,7 @@ export class ConsultaComponent implements OnInit {
     this.listFillterMeses = [];
     this.listFillterInicios = [];
     this.listFillterFines = [];
-    this.banCleanAll="hide";
+    this.banCleanAll = "hide";
     this.prepareSearch();
   }
   validatePeriod() {
@@ -190,7 +200,7 @@ export class ConsultaComponent implements OnInit {
     }
   }
   validateViewMonth() {
-    var ngInstance=this;
+    var ngInstance = this;
     $(document).ready(function () {
       setTimeout(function () {
         $(document).ready(function () {
@@ -198,21 +208,21 @@ export class ConsultaComponent implements OnInit {
           console.log("validando filtro de mes view:::" + filtro);
           var sizeAnios = ngInstance.listFillterAnios != null ? ngInstance.listFillterAnios.length : 0;
           var sizeMeses = ngInstance.listFillterMeses != null ? ngInstance.listFillterMeses.length : 0;
-          
-          if(sizeAnios>0){
-            if(sizeMeses==0){
-              if (ngInstance.dataBusqueda.PERIIN=="" || ngInstance.dataBusqueda.PERIFIN=="") {
-                ngInstance.statePeriod="show";
+
+          if (sizeAnios > 0) {
+            if (sizeMeses == 0) {
+              if (ngInstance.dataBusqueda.PERIIN == "" || ngInstance.dataBusqueda.PERIFIN == "") {
+                ngInstance.statePeriod = "show";
                 $(".containerFiltros").find(".fill-Periodo").attr("style", "display: block !important;");
-                
-              }else if(ngInstance.statePeriod=="show"){
+
+              } else if (ngInstance.statePeriod == "show") {
                 $(".containerFiltros").find("#fill-Mes").attr("style", "display: none !important;");
                 console.log("ocultando filtro de mes periodo lleno:::");
               }
-            }else{
-              ngInstance.statePeriod="hide";
+            } else {
+              ngInstance.statePeriod = "hide";
               $(".containerFiltros").find(".fill-Periodo").attr("style", "display: none !important;");
-              if (filtro == "" || filtro == null  ) {
+              if (filtro == "" || filtro == null) {
                 console.log("ocultando filtro de mes sin año:::" + sizeAnios);
                 $(".containerFiltros").find("#fill-Mes").attr("style", "display: none !important;");
               } else {
@@ -220,8 +230,8 @@ export class ConsultaComponent implements OnInit {
                 $(".containerFiltros").find("#fill-Mes").attr("style", "display: block !important;");
               }
             }
-            
-          }else{
+
+          } else {
             console.log("sin seleccion de año:::" + sizeAnios);
             $(".containerFiltros").find("#fill-Mes").attr("style", "display: none !important;");
             //$(".containerFiltros").find(".fill-Periodo").attr("style", "display: none !important;");
@@ -241,20 +251,20 @@ export class ConsultaComponent implements OnInit {
       console.log(this.data);
       console.log("total of results::" + this.totalOfResults);
       if (this.toPage > this.totalDocumentos) {
-          this.toPage = this.totalDocumentos;
+        this.toPage = this.totalDocumentos;
       }
       var sizeTipos = this.listFillterTipos != null ? this.listFillterTipos.length : 0;
       var sizeAlcances = this.listFillterAlcances != null ? this.listFillterAlcances.length : 0;
       var sizeAnios = this.listFillterAnios != null ? this.listFillterAnios.length : 0;
       var sizeMeses = this.listFillterMeses != null ? this.listFillterMeses.length : 0;
-      if(sizeTipos>0 || sizeAlcances>0 || sizeAnios>0 || sizeMeses>0 || this.dataBusqueda.TITPROYINV!="" 
-      || this.dataBusqueda.TPOPROYINV!="" || this.dataBusqueda.ALCPROYINV!="" || this.dataBusqueda.ANIOPROYINV!=""
-      || this.dataBusqueda.MESPROYINV!="" ){
-        this.banCleanAll="show";
-      }else{
-        this.banCleanAll="hide";
+      if (sizeTipos > 0 || sizeAlcances > 0 || sizeAnios > 0 || sizeMeses > 0 || this.dataBusqueda.TITPROYINV != ""
+        || this.dataBusqueda.TPOPROYINV != "" || this.dataBusqueda.ALCPROYINV != "" || this.dataBusqueda.ANIOPROYINV != ""
+        || this.dataBusqueda.MESPROYINV != "") {
+        this.banCleanAll = "show";
+      } else {
+        this.banCleanAll = "hide";
       }
-      
+
     });
     this.getFilters();
     this.validateViewMonth();
@@ -542,12 +552,12 @@ export class ConsultaComponent implements OnInit {
   }
   handlePageChange(event: number): void {
     this.page = event;
-    this.fromPage=((this.page*this.pageSize)-this.pageSize)+1;
-    this.toPage=((this.page*this.pageSize));  
+    this.fromPage = ((this.page * this.pageSize) - this.pageSize) + 1;
+    this.toPage = ((this.page * this.pageSize));
     if (this.toPage > this.totalDocumentos) {
-        this.toPage = this.totalDocumentos;
+      this.toPage = this.totalDocumentos;
     }
-    console.log("pagina seleccionada:::"+this.page);
+    console.log("pagina seleccionada:::" + this.page);
   }
 
   // getColor(country) { (2)

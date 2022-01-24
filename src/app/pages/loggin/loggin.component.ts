@@ -36,6 +36,7 @@ export class LogginComponent implements OnInit {
   }
   prepareSearch(){
     console.log("para iniciar session:::"+this.user.name+" :: "+this.user.password);
+
     this.service.getDataSession(this.user).then(res=>{
       var str=JSON.stringify(res);
       
@@ -44,14 +45,25 @@ export class LogginComponent implements OnInit {
       var tipoUser=this.respuesta=="normal" ? "usuario" : this.respuesta=="admin" ? "administrador" : "error";
       console.log(this.data);
       console.log("respuesta al entrar::"+this.respuesta);
-      if(tipoUser=="usuario"){
-          Swal.fire({  
+      if(this.respuesta === 'normal'){
+        Swal.fire({  
           position: 'center',  
-          icon: 'success',  
-          title: 'Se ha realizado con éxito una autenticación de usuario estandar',  
+          icon: 'error',  
+          title: 'Usuario no registrado',  
           showConfirmButton: false,  
           timer: 2500  
         });
+        localStorage.removeItem('nameUser');
+      }
+      if(tipoUser=="usuario"){
+        //   Swal.fire({  
+        //   position: 'center',  
+        //   icon: 'success',  
+        //   title: 'Se ha realizado con éxito una autenticación de usuario estandar',  
+        //   showConfirmButton: false,  
+        //   timer: 2500  
+        // });
+        localStorage.removeItem('nameUser');
       }
       else if(tipoUser=="administrador"){
           Swal.fire({  

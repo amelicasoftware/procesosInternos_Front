@@ -6,6 +6,7 @@ import { Subscription } from "rxjs";
 import { Router } from '@angular/router';
 import { Metodos } from '../../components/metodos';
 import * as moment from 'moment';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -30,7 +31,7 @@ export class DatosProyectoComponent implements OnInit, AfterViewInit {
   tipoForm!: string;
   clientesSubscription!: Subscription;
   nombreForm: any;
-
+  url = environment.url;
 
   constructor(
     private servicesForm: ServicesFormService,
@@ -95,6 +96,14 @@ export class DatosProyectoComponent implements OnInit, AfterViewInit {
     console.log(this.tipoForm);
 
     this.servicesForm.activarUpdate();
+
+    let loacalitems = localStorage.getItem("nameUser");
+    if (loacalitems === 'administrador') {
+      console.log('eres admin');
+    } else {
+      window.location.href = this.url + "loggin";
+      console.log('no eres admin');
+    }
 
   }
 
