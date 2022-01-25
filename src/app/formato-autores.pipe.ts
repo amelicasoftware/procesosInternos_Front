@@ -9,12 +9,12 @@ export class FormatoAutoresPipe implements PipeTransform {
   resultado: String = "";
   transform(value: any, args?: any): any {
     console.log("value = "+value+"  1.- "+this.resultado);
-    if(value != null && value.includes('|'))
+    if(value != null && value.includes('_'))
     {
       value = value.split(',');
       for(this.i=0; this.i<value.length; this.i++)
       {
-        this.resultado += (value[this.i].split('-').reverse()).toString().replace(',',' ');
+      this.resultado += (value[this.i].split('_').reverse()).toString().replace(',',' ');
         if(this.i<value.length-1)
           this.resultado += ', ';
         console.log("2.- "+this.resultado);
